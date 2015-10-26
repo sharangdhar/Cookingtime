@@ -259,14 +259,22 @@ button:hover
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;  
+    user-select: none; 
+     
 }
+
+
+.add_panel:hover
+{
+    background-color: #eaeaea;
+}
+
 
 .add_square
 {
     height: 40px;
     width: 40px;
-    background-color: #bbb;
+    background-color: hsla(0, 0%, 40%, 0.4);
     
     position: absolute;
     top: 0;
@@ -276,6 +284,8 @@ button:hover
     
     
 }
+
+
 
 .add_plus_ver
 {
@@ -370,6 +380,11 @@ select
     
 }
 
+select:hover
+{
+    background-color: #eaeaea;
+}
+
 .input_wrapper
 {
     margin-top: 35px;
@@ -412,6 +427,13 @@ select
     border: none;
     height: 25px;
     background-color: #bbb;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;  
 }
 
 .overflow_auto
