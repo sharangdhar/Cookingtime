@@ -425,6 +425,7 @@ select:hover
 #calculator_return
 {
     border: none;
+    width: 125px;
     height: 25px;
     background-color: #bbb;
     

@@ -16,7 +16,7 @@ function slide(direction)
         return;
     }
     
-    var offset = slider.width() - 200;
+    var offset = 0.85 * slider.width();
     if(direction === "right")
     {
         offset = -1 * offset;
