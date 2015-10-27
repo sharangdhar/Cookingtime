@@ -104,15 +104,15 @@
                                     <div class="input_row  mass">
                                         <input style="number" class="input_number" id="calc_mass">                            
                                         <select name="unit" id="calc_unit">
+                                            <option value="oz">oz</option>
                                             <option value="lb">lb</option>
-                                            <option value="oz">Oz</option>
-                                            <option value="gram">Grams</option>
+                                            <option value="kg">kg</option>
                                         </select>
                                     </div>
                                 
                                     <div class="input_row">
-                                        <button id="calculate">Calculate</button>
-                                        <input type="text" id="calculator_return" readonly>
+                                        <button data-constant="4.186" data-wattage="1000" id="calc_btn">Calculate</button>
+                                        <input type="text" id="calc_ret" readonly>
                                     </div>
                                 </div>
                                         
@@ -295,5 +295,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="src/bs/js/bootstrap.min.js"></script>
     <script src="src/js/carousel.js"></script>
+    <script src="src/js/calculate.js"></script>
+    
 </body>
 </html>
