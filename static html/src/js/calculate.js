@@ -60,8 +60,19 @@ function calculate()
     
 
     min = sec / 60;
-    $('#calc_ret').val(min + ' min');
+
+    var left_over = min - Math.floor(min);
+    if(left_over > 0.017)
+    {
+        var extra_sec = left_over * 60;
+        $('#calc_ret').val(Math.floor(min) + ' min, ' + Math.floor(extra_sec) + ' sec');
+    }
+    else
+    {
+        $('#calc_ret').val(min + ' min');
+    }
     
+    return;
 }
 
 
