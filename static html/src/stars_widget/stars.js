@@ -8,7 +8,7 @@ $(document).ready(function()
     
     stars.children().mouseover(function(e){stars_mouseover(e);});
     stars.children().mouseleave(function(e){stars_mouseleave(e);});
-    stars.children().click(function(e){stars_click(e);});
+    stars.children().mouseup(function(e){stars_up(e);});
 });
 
 
@@ -37,7 +37,7 @@ function stars_mouseleave(e)
     set_stars(widget, parseInt(widget.attr('data-stars')));
 }
 
-function stars_click(e)
+function stars_up(e)
 {
     var val = parseInt($(e.target).attr('data-num'));
     var widget = $(e.target).parent();

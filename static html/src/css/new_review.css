@@ -28,3 +28,10 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.result
+{
+    margin: 0px;
+    position: absolute;
+    background-color: white;
+}
