@@ -261,7 +261,14 @@ button:hover
     margin-top: 20px;
 }
 
-
+#create_item_btn
+{
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    
+    margin-bottom: 50px;
+}
 
 
 .bulk_sidebar_inner_panel
@@ -570,7 +577,7 @@ select:hover
 
 #carousel_right_button
 {
-    right: 16px; 
+    right: 15px; 
 }
 
 #photo_panel
