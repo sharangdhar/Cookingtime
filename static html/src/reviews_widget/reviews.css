@@ -1,0 +1,94 @@
+
+#review_sort
+{
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#review_sort_col_wrapper
+{
+    width: 160px;
+}
+
+#review_top_row
+{
+    margin-top: 35px;
+    overflow: auto;
+}
+
+#review_add_panel
+{
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#review_average
+{
+    margin-top: 7px;
+}
+#review_sort
+{
+    margin-top: 5px;   
+}
+
+@media (max-width: 767px)
+{
+    #review_add_panel, #review_average
+    {
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+    }
+    
+     #review_average
+     {
+         width: 160px;
+         margin-top: 0px;
+     }
+     
+     #review_sort
+     {
+         margin-top: 20px;
+     }
+}
+
+.review
+{
+    background-color: white;
+    margin-top: 30px;
+    padding: 30px;
+    
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.review_top_matter
+{
+    overflow: auto;
+}
+.review_title
+{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+
+.review_rating
+{
+    float: left;
+}
+.review_date
+{
+    float: right;
+}
+
+.review_text
+{
+    margin-top: 20px;
+    text-indent: 20px;
+    line-height: 150%;
+}
+

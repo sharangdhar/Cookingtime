@@ -8,3 +8,4 @@
 - https://en.wikipedia.org/wiki/Lorem_ipsum
 - http://stackoverflow.com/questions/7646538/disable-vertical-scroll-bar-on-div-overflow-auto
 - http://stackoverflow.com/questions/10277323/get-real-width-of-elements-with-jquery
+- http://trentrichardson.com/2013/12/16/sort-dom-elements-jquery/

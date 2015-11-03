@@ -2,13 +2,27 @@ $(document).ready(function()
 {
     $("#carousel_left_button").click(function(){slide("left");});
     $("#carousel_right_button").click(function(){slide("right");});
+    $("#carousel_upload_button").click(function()
+    {
+        $("#carousel_upload_box").toggle(200);
+        
+        var btn = $("#carousel_upload_button");
+        if(btn.text() === "Upload")
+        {
+            btn.text("Cancel");
+        }
+        else
+        {
+            btn.text("Upload");
+        }
+    });
     
 });
 
 function slide(direction)
 {
-    slider = $("#carousel_slider");
-    left = parseInt(slider.css("left"));
+    var slider = $("#carousel_slider");
+    var left = parseInt(slider.css("left"));
     
     // If we're already at the end, don't go any further
     /*
@@ -37,8 +51,8 @@ function slide(direction)
 
     
     
-    new_left = left + offset;
-    new_left_str = new_left.toString() + "px";
+    var new_left = left + offset;
+    var new_left_str = new_left.toString() + "px";
     
     slider.animate({"left":new_left_str}, 300);
 }
