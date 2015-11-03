@@ -602,6 +602,7 @@ select:hover
 
 #carousel_slider
 {
+    float:left;
     white-space: nowrap;
     position: relative; 
     height: 210px;
@@ -667,4 +668,15 @@ input
 .inline_button
 {
     font-size: 15px;
+}
+
+
+#add_link
+{
+    margin-top: 20px;
+    display: none;
+}
+#add_link_text
+{
+    width: 100%;
 }
