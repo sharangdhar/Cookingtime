@@ -47,9 +47,12 @@
             <div id="first_row">
                 <div id="photo_column" class="col-md-8 col-md-push-4">
                     <div id="photo_panel" class="panel">
+
                         <div id="carousel_left_button">
                             <img src="img/left_arrow.svg" class="carousel_button_img">
                         </div>
+                        <button id="carousel_upload">Upload</button>
+
                         <div id="carousel_slider">
                             <img src="img/placeholder_wide.png" class="carousel_img">
                             <img src="img/placeholder_wide.png" class="carousel_img">
@@ -59,11 +62,11 @@
                             <img src="img/placeholder_tall.png" class="carousel_img">
                             <img src="img/placeholder_wide.png" class="carousel_img">
                         </div>
-                            
                         <div id="carousel_right_button">
                             <img src="img/right_arrow.svg" class="carousel_button_img">
                         </div>
                     </div><!-- photo panel -->
+
                 </div><!-- photo column -->
                 <div id="info_column" class="col-md-4 col-md-pull-8">
                     <div id="info_panel" class="panel">
@@ -158,6 +161,19 @@
                                 Average: ★★★☆☆
                             </div>
                             <div class="col-md-4 col-sm-4">
+                                
+                                
+                                
+                                <div id="review_sort_col_wrapper">
+                                    <select name="review_sort" id="review_sort">
+                                        <option value="top">Top Rated</option>
+                                        <option value="rec">Recent</option>
+                                    </select>
+                                <button>Sort</button>
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-4 col-sm-4 overflow_auto">
                                 <div id="review_add_panel" class="add_panel">
                                     Add a review
                         
@@ -166,16 +182,6 @@
                                         <div class="add_plus_hor"></div>
                                     </div><!-- add_square -->
                                 </div><!-- bulk_sidebar_add_panel -->
-                            </div>
-                        
-                            <div class="col-md-4 col-sm-4 overflow_auto">
-                                <div id="review_sort_col_wrapper">
-                                    <select name="review_sort" id="review_sort">
-                                        <option value="top">Top Rated</option>
-                                        <option value="rec">Recent</option>
-                                    </select>
-                                <button>Sort</button>
-                                </div>
                             </div>
                         </div>
                         

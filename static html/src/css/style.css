@@ -126,7 +126,7 @@ nav a
 
 button
 {
-    background-color: inherit;
+    background-color:hsla(0, 0%, 0%, 0);
     border: none;
     font-size: 20px;
     text-decoration: underline;
@@ -400,6 +400,7 @@ select
     height: 25px;
     min-width: 75px;
     
+    /*
     -webkit-appearance: none;
     -webkit-border-radius: 0px;
     
@@ -417,7 +418,7 @@ select
         10px 10px,
         25px 25px;
       background-repeat: no-repeat;
-    
+    */
 }
 
 select:hover
@@ -492,7 +493,6 @@ select:hover
 #review_sort_col_wrapper
 {
     width: 160px;
-    float: right;
 }
 
 #review_top_row
@@ -579,6 +579,15 @@ select:hover
 #carousel_right_button
 {
     right: 15px; 
+}
+
+#carousel_upload
+{
+    position: absolute;
+    z-index:5;
+    background-color: hsla(0, 0%, 100%, 0.5);
+    top: 216px;
+    left: 46px;
 }
 
 #photo_panel
