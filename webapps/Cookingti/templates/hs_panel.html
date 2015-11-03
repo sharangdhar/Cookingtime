@@ -1,0 +1,15 @@
+{% load stars_to_uni %}
+
+<div class="panel panel_3-2">
+   <a href="{% url type item.id %}">
+       <img src="{% if item.photos %}{% url 'photo' item.photos.1.id %}{% else %}{% url "static" img/placeholder.png %}
+        {% endif %}" class="panel_img-2">
+        
+        <div class="panel_preamble_text-2">
+            <div class="panel_name panel_preamble_line">{{ item.name }}</div>
+            <div class="panel_stars panel_preamble_line">{{ item.stars | stars_to_uni }}</div>
+            <div class="panel_extra panel_preamble_line">{{ item.extra }}</div>
+        
+        </div> <!-- Panel preamble text -->
+    </a>
+</div><!-- Panel -->

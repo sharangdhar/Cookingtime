@@ -1,0 +1,31 @@
+<div id="enter_time_panel" class="panel">
+    <h3>Enter Microwave Cooking Time - PLACEHOLDER</h3>
+    
+    <div class="input_wrapper">
+        <div class="input_row state">
+            <select name="state" id="enter_state">
+                <option value="frozen">Frozen</option>
+                <option value="refrigerated">Refrigerated</option>
+                <option value="room">Room temp</option>
+            </select>
+        </div>
+        
+        <div class="input_row  mass">
+            <input style="number" class="input_number" id="enter_mass">                            
+            <select name="unit" id="enter_unit">
+                <option value="lb">lb</option>
+                <option value="oz">Oz</option>
+                <option value="gram">Grams</option>
+            </select>
+        </div>
+        
+        <div class="input_row">
+            <input style="number" class="input_number" id="enter_min" placeholder="min">
+            :
+            <input style="number" class="input_number" id="enter_sec" placeholder="sec">
+            
+            <button id="enter_submit">Submit</button>
+        </div>
+        
+    </div>
+</div><!-- enter time panel -->

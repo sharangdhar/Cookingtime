@@ -1,0 +1,42 @@
+{% load staticfiles %}
+
+{% block main %}
+    <div class="jumbotron">
+        <input type="text" class="jumbo_search">
+        <button>Search</button>
+        <div class="or">or</div>
+        <button class="scan_button">Scan Barcode</button>
+    </div>
+
+    <div class="cols_cont">
+        <h1>Latest</h1>
+        
+        <div id='foods_col' class="col-md-4 col-sm-4">
+            <h2>Foods</h2>
+        
+            {% for food in foods %}
+                {% include "hs_panel.html" width item=food type="food" %}
+            {% endfor %}
+        </div> <!-- Food col -->
+    
+        <div id='recipies_col' class="col-md-4 col-sm-4">
+            <h2>Recipies</h2>
+        
+            {% for recipe in recipes %}
+                {% include "hs_panel.html" width item=recipe type="recipe"%}
+            {% endfor %}
+        </div><!-- Recipies col -->
+        
+        <div id='equipment_col' class="col-md-4 col-sm-4">
+            <h2>Equipment</h2>
+            
+            {% for equipment in equipments %}
+                {% include "hs_panel.html" width item = equipment type="equip" %}
+            {% endfor %}
+    </div><!-- 3 col cont -->
+    
+    {% if page_type == "search" %}
+        <button id="create_item_btn"><a href="#">Don't see what you're looking for? Add it to our database</a></button>
+    {% endif %}
+    
+{% endblock %}
