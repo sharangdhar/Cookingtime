@@ -1,6 +1,11 @@
 $(document).ready(function()
 {
     $("#review_sort").change(function(e){review_sort(e);}); 
+    
+    $('#review_add_panel').click(function()
+    {
+        $('#new_review').toggle(200);
+    });
 });
 
 function review_sort(e)
