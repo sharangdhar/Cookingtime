@@ -31,7 +31,7 @@
 
 ### /post_img
 
-    ?item_id=...&user_id=...&data=...
+    item_id=...&user_id=...&data=...
 
 - item_id is the id of the food/recipe/equipment
 - user_id is the id of the user
@@ -45,7 +45,7 @@
 
 ### /post_time
 
-    ?item_id=...&constant=...
+    item_id=...&constant=...
 
 - item_id is the id of the food/recipe/equipment
 - constant is the heating constant
@@ -60,7 +60,7 @@
 
 ###/post_review
 
-    ?item_id=...&title=...&stars=...&text=...
+    item_id=...&title=...&stars=...&text=...
 - return is 
     - error code
         - on error
