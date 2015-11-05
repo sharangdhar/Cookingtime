@@ -1,7 +1,20 @@
 # AJAX API
 
 <hr>
+## General
 
+### Status codes
+
+- "Success"
+- "Error"
+
+### Error object
+
+- field_name: error_html
+    - field_name is the name attribute of the form element that generated the error
+    - error_html is the html to be displayed
+
+<hr>
 ## Get
 
 
@@ -10,7 +23,7 @@
 #### Return
     
     {
-        "type":"type"
+        "status":"error_code"
         "items":["<div>...</div>","<div>...</div>"]
     }
 
@@ -18,16 +31,6 @@
 
 ## Post
 
-### General
-
-### Error codes
-
-- "Success"
-- "Error"
-
-### Error object
-
-- field_name: error_html
 
 ### /post_img
 
@@ -50,7 +53,7 @@
 - item_id is the id of the food/recipe/equipment
 - constant is the heating constant
 - return
-    - error code
+    - status code
         - on failure
             - array of error objects
         - on success
@@ -62,7 +65,7 @@
 
     item_id=...&title=...&stars=...&text=...
 - return is 
-    - error code
+    - status code
         - on error
             - "error": array of error objects
         - on success
