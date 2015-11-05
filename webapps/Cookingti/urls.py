@@ -17,7 +17,12 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^Cookingti/', include('Cookingti.urls')),
-    url(r'^$', include('Cookingti.urls')),
+  
+	url(r'^$', 'Cookingti.views.home', name='home'),
+	url(r'^home$', 'Cookingti.views.home', name='home'),
+	url(r'^profile$', 'Cookingti.views.profile',name='profile'),
+	url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
+	url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'Cookingti/login.html'}, name='login'),
+	url(r'^register$', 'Cookingti.views.register', name='register'),
+
 ]

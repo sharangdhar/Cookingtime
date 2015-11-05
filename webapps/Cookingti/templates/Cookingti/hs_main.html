@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+
 {% load staticfiles %}
 
 {% block main %}
@@ -15,7 +17,7 @@
             <h2>Foods</h2>
         
             {% for food in foods %}
-                {% include "hs_panel.html" width item=food type="food" %}
+                {% include "hs_panel.html" %}
             {% endfor %}
         </div> <!-- Food col -->
     
@@ -23,7 +25,7 @@
             <h2>Recipies</h2>
         
             {% for recipe in recipes %}
-                {% include "hs_panel.html" width item=recipe type="recipe"%}
+                {% include "hs_panel.html" %}
             {% endfor %}
         </div><!-- Recipies col -->
         
@@ -31,7 +33,7 @@
             <h2>Equipment</h2>
             
             {% for equipment in equipments %}
-                {% include "hs_panel.html" width item = equipment type="equip" %}
+                {% include "hs_panel.html"  %}
             {% endfor %}
     </div><!-- 3 col cont -->
     
