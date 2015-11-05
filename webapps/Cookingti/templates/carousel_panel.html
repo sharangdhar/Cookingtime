@@ -1,6 +1,15 @@
 {% load staticfiles %}
 
 <div id="photo_panel" class="panel">
+        
+    <div id="carousel_upload_box">
+        <input type="file" id="carousel_file">
+        <button id="carousel_submit">Submit</button>
+    </div>
+    <button id="carousel_upload_button">Upload</button>
+    
+
+
     <div id="carousel_left_button">
         <img src="img/left_arrow.svg" class="carousel_button_img">
     </div>
@@ -10,11 +19,15 @@
         <img src="img/placeholder_tall.png" class="carousel_img">
         <img src="img/placeholder_wide.png" class="carousel_img">
         <img src="img/placeholder_tall.png" class="carousel_img">
+        <img src="img/placeholder_tall.png" class="carousel_img">
+        <img src="img/placeholder_wide.png" class="carousel_img">
     </div>
-        
     <div id="carousel_right_button">
         <img src="img/right_arrow.svg" class="carousel_button_img">
     </div>
     
-    <script src="src/js/carousel.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="src/carousel_widget/carousel.css">
+    <script src="src/carousel_widget/carousel.js"></script>
+    
 </div><!-- photo panel -->

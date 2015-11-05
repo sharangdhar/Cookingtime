@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 {% block main %}
-    <h1>Food_name</h1>
+    <h1>{{ item.name }}</h1>
     
     <div class="content">
         
@@ -30,7 +30,6 @@
                         <div id="enter_time_column" class="col-md-6 col-sm-6">
                             {% include "enter_time_panel.html" %}
                         </div> <!-- enter time column -->
-                        <script src="src/js/calculate.js"></script>
                     </div> <!-- time row -->
                 {% endif %}
                 
