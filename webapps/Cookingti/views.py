@@ -26,11 +26,14 @@ def home(request):
 	return render(request, 'Cookingti/hs_main.html', context)
 
 
-
 def profile(request):
 	context = {'page_name': request.user.username}
 	return render(request, 'Cookingti/profile.html', context)
 
+
+def item(request):
+	context = {'page_name': 'Item'}
+	return render(request, 'Cookingti/item_main.html', context)
 
 def register(request):
 
