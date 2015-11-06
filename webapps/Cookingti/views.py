@@ -22,19 +22,19 @@ from Cookingti.forms import *
 
 
 def home(request):
-	context = {}
+	context = {'page_name':'Home'}
 	return render(request, 'Cookingti/hs_main.html', context)
 
 
 
 def profile(request):
-	context = {}
+	context = {'page_name': request.user.username}
 	return render(request, 'Cookingti/profile.html', context)
 
 
 def register(request):
 
-	context = {}
+	context = {'page_name':'Register'}
 
 	if request.user.is_authenticated():
 		return redirect('/Cookingti/profile')

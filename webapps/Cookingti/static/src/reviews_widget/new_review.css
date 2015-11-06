@@ -1,0 +1,37 @@
+.simple_cont
+{
+    overflow: auto;
+    margin-top: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 50px;
+}
+
+#new_review
+{
+    display: none;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+#new_review_title
+{
+    width: 300px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#new_review_area
+{
+    width:100%; 
+    border: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.result
+{
+    margin: 0px;
+    position: absolute;
+    background-color: white;
+}

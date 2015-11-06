@@ -13,7 +13,16 @@ $(document).ready(function()
 
 function calculate()
 {
-    var mass = parseFloat($('#calc_mass').val());
+    $("#mass_error").remove();
+    
+    var mass = $('#calc_mass').val();
+    if(mass === "" || isNaN(mass))
+    {
+        $("#mass_row").append($("<span id='mass_error'>Enter valid value</span>"));
+        return;
+    }
+    mass = parseFloat(mass);
+    
     var mass_unit = $('#calc_unit option:selected').val();
     if(mass_unit === 'lb')
     {

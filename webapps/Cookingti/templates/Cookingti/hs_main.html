@@ -4,14 +4,23 @@
 
 {% block main %}
     <div class="jumbotron">
-        <input type="text" class="jumbo_search">
-        <button>Search</button>
+        <input type="text" class="jumbo_search" id="search_input" value="">
+        <button id="search_button">Search</button>
         <div class="or">or</div>
         <button class="scan_button">Scan Barcode</button>
+        <script src="{% static 'src/search_widget/search.js' %}"></script>
     </div>
 
     <div class="cols_cont">
-        <h1>Latest</h1>
+        
+        {% if page_type == "search" %}
+            </h1>Search</h1>
+            <input type="test" placeholder="name">
+            <button id="create_item_btn"><a href="#">Don't see what you're looking for? Add it to our database</a></button>
+        {% else %}
+            <h1>Latest</h1>
+        {% endif %}
+        
         
         <div id='foods_col' class="col-md-4 col-sm-4">
             <h2>Foods</h2>
@@ -37,8 +46,5 @@
             {% endfor %}
     </div><!-- 3 col cont -->
     
-    {% if page_type == "search" %}
-        <button id="create_item_btn"><a href="#">Don't see what you're looking for? Add it to our database</a></button>
-    {% endif %}
     
 {% endblock %}

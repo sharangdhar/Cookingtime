@@ -126,7 +126,7 @@ nav a
 
 button
 {
-    background-color: inherit;
+    background-color:hsla(0, 0%, 0%, 0);
     border: none;
     font-size: 20px;
     text-decoration: underline;
@@ -271,7 +271,6 @@ button:hover
 }
 
 
-
 .bulk_sidebar_inner_panel
 {
     background-color: white;
@@ -284,6 +283,7 @@ button:hover
     margin-top: 20px;
     
 }
+
 .add_panel
 {
     background-color: white;
@@ -401,6 +401,7 @@ select
     height: 25px;
     min-width: 75px;
     
+    /*
     -webkit-appearance: none;
     -webkit-border-radius: 0px;
     
@@ -418,7 +419,7 @@ select
         10px 10px,
         25px 25px;
       background-repeat: no-repeat;
-    
+    */
 }
 
 select:hover
@@ -437,6 +438,7 @@ select:hover
     width: 250px;
     margin-left: auto;
     margin-right: auto;
+    white-space: nowrap;
 }
 
 
@@ -446,37 +448,6 @@ select:hover
     height: 25px;
 }
 
-#calc_mass, #enter_mass
-{
-    margin-right: 15px;
-    width: 75px;
-}
-
-#enter_min, #enter_sec
-{
-    width: 40px;
-    text-align:center;
-}
-
-#enter_sec
-{
-    margin-right: 20px;
-}
-
-#calc_ret
-{
-    border: none;
-    width: 125px;
-    height: 25px;
-    background-color: #bbb;
-    
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;  
-}
 
 .overflow_auto
 {
@@ -484,102 +455,6 @@ select:hover
 }
 
 
-#review_sort
-{
-    width: 100px;
-}
-
-#review_sort_col_wrapper
-{
-    width: 160px;
-    float: right;
-}
-
-#review_top_row
-{
-    margin-top: 35px;
-    overflow: auto;
-}
-#review_add_panel
-{
-    max-width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media (max-width: 767px)
-{
-    #review_sort_col_wrapper, #review_add_panel, #review_average
-    {
-        float: none;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 20px;
-    }
-    
-     #review_average
-     {
-         width: 160px;
-         margin-top: 0px;
-     }
-}
-
-.review
-{
-    background-color: white;
-    margin-top: 30px;
-    padding: 30px;
-    
-    padding-left: 40px;
-    padding-right: 40px;
-}
-
-.review_title
-{
-    font-size: 20px;
-}
-
-
-.review_rating
-{
-    float: right;
-}
-
-.review_text
-{
-    margin-top: 20px;
-    text-indent: 20px;
-    line-height: 150%;
-}
-
-#carousel_left_button, #carousel_right_button
-{   
-    height: 250px;
-    text-align: center;
-    
-    position: absolute;
-    top: 0px;
-    width: 30px;
-    
-    background-color: hsla(0, 0%, 73%, 0.25);
-    
-    z-index: 5;
-}
-
-#carousel_left_button:hover, #carousel_right_button:hover
-{    
-    background-color: hsla(0, 0%, 73%, 0.75);
-}
-
-#carousel_left_button
-{
-    left: 16px;
-}
-
-#carousel_right_button
-{
-    right: 16px; 
-}
 
 #photo_panel
 {
@@ -601,38 +476,17 @@ select:hover
     user-select: none;  
 }
 
-#carousel_slider
-{
-    white-space: nowrap;
-    position: relative; 
-    height: 210px;
-    left: 30px;
-}
-.carousel_img
-{
-    height: 100%;
-}
 
-.carousel_button_img
-{
-    width: 75%;
-    opacity: 0.75;
-    
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.carousel_button_img:hover
-{
-    opacity: 1;
-}
 
 .form_list
 {
     list-style-type: none;
 }
 
+.form_li
+{
+    margin-top: 4px;
+}
 
 .form_wrap
 {
@@ -666,13 +520,4 @@ input
     font-size: 15px;
 }
 
-.center
-{
-    margin-left: auto;
-    margin-right: auto;
-}
 
-.form_list li
-{
-	margin-top: 4px;
-}

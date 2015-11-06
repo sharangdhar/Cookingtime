@@ -28,7 +28,7 @@ class Review(models.Model):
 		return self.review
 
 class Food(models.Model):
-	amazon_id = models.IntegerField()
+	amazon_id = models.IntegerField(blank=True)
 	name = models.CharField(max_length=TEXT_SIZE)
 	reviews = models.ForeignKey(Review)
 	date = models.DateTimeField(auto_now_add=True)
