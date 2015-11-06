@@ -42,7 +42,7 @@ def search(request):
 		
 	if not request.GET['query'] or request.GET['query'] is None:
 		pritn("no query")
-		raise Http404();
+		raise Http404()
 	
 	query = request.GET['query']
 	
@@ -69,8 +69,15 @@ def profile(request):
 	return render(request, 'Cookingti/profile.html', context)
 
 
-def item(request):
-	context = {'page_name': 'Item'}
+#valid item types are 'food','recipe', 'equipment'
+def item(request, item_type='', id = -1):
+	
+	if request.method != 'GET':
+		print("not get")
+		raise Http404()
+	
+	context = {'page_name': 'Item', 'page_type': item_type}
+
 	return render(request, 'Cookingti/item_main.html', context)
 
 def register(request):

@@ -27,8 +27,6 @@ urlpatterns = [
 
 	url(r'^search$', 'Cookingti.views.search', name='search'),
 
-	url(r'^item$', 'Cookingti.views.item', name='item'),
-
-
+	url(r'^item/(?P<item_type>[\w-]+)/(?P<id>\d+)$', 'Cookingti.views.item', name='food_item'),
 
 ]
