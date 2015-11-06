@@ -9,3 +9,4 @@
 - http://stackoverflow.com/questions/7646538/disable-vertical-scroll-bar-on-div-overflow-auto
 - http://stackoverflow.com/questions/10277323/get-real-width-of-elements-with-jquery
 - http://trentrichardson.com/2013/12/16/sort-dom-elements-jquery/
+- http://stackoverflow.com/questions/18153234/center-a-column-using-twitter-bootstrap-3

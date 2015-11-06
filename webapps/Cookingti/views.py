@@ -42,7 +42,7 @@ def register(request):
 	# Just display the registration form if this is a GET request.
 	if request.method == 'GET':
 		context['form'] = RegistrationForm()
-		return render(request, 'Cookingti/registration.html', context)
+		return render(request, 'Cookingti/register.html', context)
 
     # Creates a bound form from the request POST parameters and makes the 
     # form available in the request context dictionary.
@@ -52,9 +52,7 @@ def register(request):
 
     # Validates the form.
 	if not form.is_valid():
-
-		context['errors'] = form.errors
-		return render(request, 'Cookingti/registration.html', context)
+		return render(request, 'Cookingti/register.html', context)
 
 
     # Logs in the new user and redirects to his/her todo list

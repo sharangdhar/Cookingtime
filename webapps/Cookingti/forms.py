@@ -4,17 +4,19 @@ from django.contrib.auth.models import User
 
 
 class RegistrationForm(forms.Form):
-    username = forms.CharField(max_length = 20, widget = forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(max_length = 20, widget = forms.TextInput(attrs={"placeholder":"username"}))
     password1 = forms.CharField(max_length = 200, 
-                                label='Password', widget = forms.PasswordInput(attrs={'class': 'form-control'}))                         
+                                label='Password', widget = forms.PasswordInput(attrs={"placeholder":"password"}))                         
     password2 = forms.CharField(max_length = 200, 
-                                label='Confirm password',widget = forms.PasswordInput(attrs={'class': 'form-control'}))
+                                label='Confirm password',widget = forms.PasswordInput(attrs={"placeholder":"confirm"}))
     firstname = forms.CharField(max_length = 200, 
-                                label='Firstname', widget = forms.TextInput(attrs={'class': 'form-control'}))
+                                label='Firstname', widget = forms.TextInput(attrs={"placeholder":"first name"}))
     lastname = forms.CharField(max_length = 200, 
-                                label='Lastname', widget = forms.TextInput(attrs={'class': 'form-control'}))
+                                label='Lastname', widget = forms.TextInput(attrs={"placeholder":"last name"}))
     email = forms.EmailField(max_length = 50, 
-                                label='Email', widget = forms.EmailInput(attrs={'class': 'form-control'}))
+                                label='Email', widget = forms.EmailInput(attrs={"placeholder":"email"}))
+    
+    # Need wattage, do we really need first/last name?
    
 
     def clean(self):
