@@ -24,9 +24,13 @@
     
     {
         "status":"error_code"
-        "items":["<div>...</div>","<div>...</div>"]
+        "error":array of error objects
+        "food":["<div>...</div>","<div>...</div>"]
+        "recipe":["<div>...</div>","<div>...</div>"]
+        "equipment":["<div>...</div>","<div>...</div>"]
     }
 
+- Each item should be generated the same way as the homescreen's views, but on the hs_panel.html template directly
 <hr>
 
 ## Post
