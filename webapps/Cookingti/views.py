@@ -30,6 +30,7 @@ def home(request):
 	 
 	return render(request, 'Cookingti/hs_main.html', context)
 
+<<<<<<< HEAD
 def search(request):
 	
 	if request.method != 'GET':
@@ -62,11 +63,17 @@ def search(request):
 	
 	return HttpResponse(response_text, content_type="application/json")
 	
+=======
+>>>>>>> d92f50a156cc2c2d42914e33173f55d64b593c1e
 
 def profile(request):
 	context = {'page_name': request.user.username}
 	return render(request, 'Cookingti/profile.html', context)
 
+
+def item(request):
+	context = {'page_name': 'Item'}
+	return render(request, 'Cookingti/item_main.html', context)
 
 def register(request):
 

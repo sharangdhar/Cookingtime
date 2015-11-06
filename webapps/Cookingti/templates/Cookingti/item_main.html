@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+
 {% load staticfiles %}
 
 {% block main %}
@@ -8,10 +10,10 @@
         
         <div id="first_row">
             <div id="photo_column" class="col-md-8 col-md-push-4">
-                {% include "carousel_panel.html" %}
+                {% include "Cookingti/carousel_panel.html" %}
             </div><!-- photo column -->
             <div id="info_column" class="col-md-4 col-md-pull-8">
-                {% include "info_panel.html" %}
+                {% include "Cookingti/info_panel.html" %}
             </div><!-- info column -->
         </div><!-- first row -->
         
@@ -24,26 +26,23 @@
                 {% if page_type == "food" %}
                     <div id="time_row" class="row">
                         <div id="calculator_column" class="col-md-6 col-sm-6">
-                            {% include "calculator_panel.html" %}
+                            {% include "Cookingti/calculator_panel.html" %}
                         </div> <!-- calculator column -->
                         
                         <div id="enter_time_column" class="col-md-6 col-sm-6">
-                            {% include "enter_time_panel.html" %}
+                            {% include "Cookingti/enter_time_panel.html" %}
                         </div> <!-- enter time column -->
                     </div> <!-- time row -->
                 {% endif %}
                 
                 
-            {% include "reviews_panel.html" %}
+            {% include "Cookingti/reviews_panel.html" %}
                 
                 
             </div> <!-- bulk column -->
             
             
-            
-            <div id="bulk_sidebar_column" class="col-md-4 col-md-pull-8">
-                {% include "bulk_sidebar_panel.html" %}
-            </div><!-- bulk sidebar column -->
+        
             
             
         </div><!-- second row -->
