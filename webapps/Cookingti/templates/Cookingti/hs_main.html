@@ -13,27 +13,23 @@
 
     <div class="cols_cont">
         
-        {% if page_type == "search" %}
-            </h1>Search</h1>
-            <input type="test" placeholder="name">
-            <button id="create_item_btn"><a href="#">Don't see what you're looking for? Add it to our database</a></button>
-        {% else %}
-            <h1>Latest</h1>
-        {% endif %}
+
+        <h1 id="hs_title">Latest</h1>
+
         
         
         <div id='foods_col' class="col-md-4 col-sm-4">
             <h2>Foods</h2>
         
-            {% for food in foods %}
-                {% include "hs_panel.html" %}
+            {% for food_ in foods_ %}
+                {% include "Cookingti/hs_panel.html" with item=food_%}
             {% endfor %}
         </div> <!-- Food col -->
     
         <div id='recipies_col' class="col-md-4 col-sm-4">
             <h2>Recipies</h2>
         
-            {% for recipe in recipes %}
+            {% for recipe_ in recipes_ %}
                 {% include "hs_panel.html" %}
             {% endfor %}
         </div><!-- Recipies col -->
@@ -41,7 +37,7 @@
         <div id='equipment_col' class="col-md-4 col-sm-4">
             <h2>Equipment</h2>
             
-            {% for equipment in equipments %}
+            {% for equipment_ in equipments_ %}
                 {% include "hs_panel.html"  %}
             {% endfor %}
     </div><!-- 3 col cont -->

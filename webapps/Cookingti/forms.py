@@ -16,7 +16,6 @@ class RegistrationForm(forms.Form):
     email = forms.EmailField(max_length = 50, 
                                 label='Email', widget = forms.EmailInput(attrs={"placeholder":"email"}))
     
-    # Need wattage, do we really need first/last name?
    
 
     def clean(self):

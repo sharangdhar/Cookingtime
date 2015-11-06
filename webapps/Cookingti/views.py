@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.http import HttpResponse
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from mimetypes import guess_type
 from django.core import serializers
 
@@ -23,9 +23,45 @@ from Cookingti.forms import *
 
 def home(request):
 	context = {'page_name':'Home'}
+	
+	context['foods_'] = Food.objects.all();
+	context['recipies_'] = Recipe.objects.all();
+	context['equipments_'] = Equipment.objects.all();
+	 
 	return render(request, 'Cookingti/hs_main.html', context)
 
+def search(request):
+	
+	if request.method != 'GET':
+		print("not get")
+		raise Http404();
+	
+	if not request.GET['type'] or request.GET['type'] is None:
+		print("no type")
+		raise Http404();
+		
+	if not request.GET['query'] or request.GET['query'] is None:
+		pritn("no query")
+		raise Http404();
+	
+	query = request.GET['query']
+	
+	if request.GET['type'] == 'food':
+		items = Food.objects.filter(name__contains=query)
+	elif request.GET['type'] == 'recipe':
+		items = Food.objects.filter(name__contains=query)
+	elif request.GET['type'] == 'equipment':
+		items = Equipment.objects.filter(name__contains=query)
+	else:
+		print('bad type')
+		raise Http404()
 
+	item_html = []
+	for item in items:
+		item_html = render(request, 'Cookingti/hs_panel.html', {item:item})
+	
+	return HttpResponse(response_text, content_type="application/json")
+	
 
 def profile(request):
 	context = {'page_name': request.user.username}

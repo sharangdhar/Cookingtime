@@ -28,11 +28,13 @@ class Review(models.Model):
 		return self.review
 
 class Food(models.Model):
-	amazon_id = models.IntegerField(blank=True)
+	amazon_id = models.IntegerField(blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE)
-	reviews = models.ForeignKey(Review)
+	reviews = models.ForeignKey(Review, blank=True, null=True)
+	stars = models.IntegerField(blank=True, null=True)
 	date = models.DateTimeField(auto_now_add=True)
-	photos = models.ForeignKey(Photo)
+	photos = models.ForeignKey(Photo, null=True)
+
 	def __unicode_(self):
 		return self.name
 
