@@ -20,6 +20,7 @@ class Photo(models.Model):
 
 class Review(models.Model):
 	user = models.ForeignKey(User)
+	title = models.CharField(max_length=TEXT_SIZE, default="")
 	stars = models.IntegerField(default=0, blank=False)
 	review = models.CharField(max_length = TEXT_SIZE)
 	date = models.DateTimeField(auto_now_add=True)

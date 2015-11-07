@@ -2,6 +2,7 @@ from django import forms
 
 from django.contrib.auth.models import User
 
+from Cookingti.models import *
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length = 20, widget = forms.TextInput(attrs={"placeholder":"username"}))
@@ -41,9 +42,9 @@ class RegistrationForm(forms.Form):
 #Form for changing the password
 class ChangePasswordForm(forms.Form):
     password1 = forms.CharField(max_length = 200, 
-                                label='Password', widget = forms.PasswordInput(attrs={'class': 'form-control'}))                         
+                                label='Password', widget = forms.PasswordInput())                         
     password2 = forms.CharField(max_length = 200, 
-                                label='Confirm password',widget = forms.PasswordInput(attrs={'class': 'form-control'}))
+                                label='Confirm password',widget = forms.PasswordInput())
 
     def clean(self):
         # Calls our parent (forms.Form) .clean function, gets a dictionary
@@ -62,5 +63,17 @@ class ChangePasswordForm(forms.Form):
 #Form for getting the initial email to send reset password link to
 class ResetPasswordForm(forms.Form):
     email = forms.EmailField(max_length = 50, 
-                                label='Enter Registered Email ID', widget = forms.EmailInput(attrs={'class': 'form-control'}))
+                                label='Enter Registered Email ID', widget = forms.EmailInput())
+
+
+class ReviewForm(forms.Form):
+    class Meta:
+        model = Review
+        exclude = ('user','date','photos')
+
+class PhotoForm(forms.Form):
+    class Meta:
+        model = Image
+        exclude = ('user',)
+
 

@@ -79,8 +79,9 @@ def item(request, item_type='', id = -1):
 
 	
 	item_flag = True
+
 	# item flag will be true if user enters wrong url
-	if (item_type=='food' or item_type=='recipe' or item_type=='equipment'):
+	if (item_type=='food' or item_type=='recipe' or item_type=='equip'):
 		item_flag = False
 
 	if (item_flag or (id < 0)):
@@ -96,7 +97,7 @@ def item(request, item_type='', id = -1):
 		item_new = Equipment.objects.all().filter(pk = id)
 
 	
-	context = {'page_name': 'Item', 'page_type': item_type, 'item':  item_new}
+	context = {'page_name': 'Item', 'type': item_type, 'item':  item_new, 'user': request.user}
 
 	return render(request, 'Cookingti/item_main.html', context)
 
