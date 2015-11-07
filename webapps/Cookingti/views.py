@@ -27,7 +27,7 @@ def home(request):
 	context['foods_'] = Food.objects.all();
 	context['recipies_'] = Recipe.objects.all();
 	context['equipments_'] = Equipment.objects.all()
-	session = {'type': '', 'item':  ''}
+	session = {'page_type': '', 'item':  ''}
 	return render(request, 'Cookingti/hs_main.html', context)
 
 def search(request):
@@ -66,7 +66,7 @@ def search(request):
 
 def profile(request):
 	context = {'page_name': request.user.username}
-	session = {'type': '', 'item':  ''}
+	session = {'page_type': '', 'item':  ''}
 	return render(request, 'Cookingti/profile.html', context)
 
 
@@ -89,6 +89,7 @@ def item(request, item_type='', id = -1):
 		print ("wrong parameters")
 		raise Http404()
 
+	print item_type
 
 	if item_type == 'food':
 		item_new = Food.objects.all().filter(pk = id)
@@ -98,9 +99,9 @@ def item(request, item_type='', id = -1):
 		item_new = Equipment.objects.all().filter(pk = id)
 
 	
-	context = {'page_name': 'Item', 'type': item_type, 'item':  item_new, 'user': request.user}
+	context = {'page_name': 'Item', 'page_type': item_type, 'item':  item_new, 'user': request.user}
 	#created to keep track of information across this method and postReview method
-	session = {'type': item_type, 'item':  item_new}
+	session = {'page_type': item_type, 'item':  item_new}
 	return render(request, 'Cookingti/item_main.html', context)
 
 
@@ -138,6 +139,9 @@ def register(request):
 
 	login(request, new_user)
 
+	new_person = Person(user= new_user, wattage=request.POST["wattage"])
+	new_person.save()
+
 	return redirect('/Cookingti/')
 
 
@@ -145,7 +149,7 @@ def postReview(request):
 	# We might not need the GET part depending on how the front end is 
 	# being handled
 		
-	context = {'page_name': 'Item', 'type':session['type'],
+	context = {'page_name': 'Item', 'page_type':session['page_type'],
 	 'item':session['item']}
 
 	if request.method == 'GET':
@@ -167,7 +171,7 @@ def postImage(request):
 	# We might not need the GET part depending on how the front end is 
 	# being handled
 		
-	context = {'page_name': 'Item', 'type':session['type'],
+	context = {'page_name': 'Item', 'page_type':session['page_type'],
 	 'item':session['item']}
 
 	if request.method == 'GET':

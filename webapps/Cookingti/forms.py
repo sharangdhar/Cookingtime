@@ -16,8 +16,7 @@ class RegistrationForm(forms.Form):
                                 label='Lastname', widget = forms.TextInput(attrs={"placeholder":"last name"}))
     email = forms.EmailField(max_length = 50, 
                                 label='Email', widget = forms.EmailInput(attrs={"placeholder":"email"}))
-    
-   
+    wattage = forms.IntegerField(label='Wattage', widget = forms.NumberInput(attrs={"placeholder":"wattage"}))
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
