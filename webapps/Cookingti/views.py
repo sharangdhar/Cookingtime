@@ -69,16 +69,38 @@ def profile(request):
 	return render(request, 'Cookingti/profile.html', context)
 
 
+
 #valid item types are 'food','recipe', 'equipment'
 def item(request, item_type='', id = -1):
 	
 	if request.method != 'GET':
 		print("not get")
 		raise Http404()
+
 	
-	context = {'page_name': 'Item', 'page_type': item_type}
+	item_flag = True
+	# item flag will be true if user enters wrong url
+	if (item_type=='food' or item_type=='recipe' or item_type=='equipment'):
+		item_flag = False
+
+	if (item_flag or (id < 0)):
+		print ("wrong parameters")
+		raise Http404()
+
+
+	if item_type == 'food':
+		item_new = Food.objects.all().filter(pk = id)
+	elif item_type == 'recipe':
+		item_new = Recipe.objects.all().filter(pk = id)
+	else:
+		item_new = Equipment.objects.all().filter(pk = id)
+
+	
+	context = {'page_name': 'Item', 'page_type': item_type, 'item':  item_new}
 
 	return render(request, 'Cookingti/item_main.html', context)
+
+
 
 def register(request):
 

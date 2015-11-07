@@ -58,6 +58,7 @@ class Equipment(models.Model):
 
 class Recipe(models.Model):
 	user = models.ForeignKey(User)
+	name = models.CharField(max_length=TEXT_SIZE, default="")
 	reviews = models.ForeignKey(Review)
 	foods  = models.ManyToManyField(Food)
 	text = models.CharField(max_length = TEXT_SIZE)
