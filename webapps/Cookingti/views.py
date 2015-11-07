@@ -26,8 +26,8 @@ def home(request):
 	
 	context['foods_'] = Food.objects.all();
 	context['recipies_'] = Recipe.objects.all();
-	context['equipments_'] = Equipment.objects.all();
-	 
+	context['equipments_'] = Equipment.objects.all()
+	session = {'type': '', 'item':  ''}
 	return render(request, 'Cookingti/hs_main.html', context)
 
 def search(request):
@@ -66,6 +66,7 @@ def search(request):
 
 def profile(request):
 	context = {'page_name': request.user.username}
+	session = {'type': '', 'item':  ''}
 	return render(request, 'Cookingti/profile.html', context)
 
 
@@ -98,7 +99,8 @@ def item(request, item_type='', id = -1):
 
 	
 	context = {'page_name': 'Item', 'type': item_type, 'item':  item_new, 'user': request.user}
-
+	#created to keep track of information across this method and postReview method
+	session = {'type': item_type, 'item':  item_new}
 	return render(request, 'Cookingti/item_main.html', context)
 
 
@@ -139,13 +141,33 @@ def register(request):
 	return redirect('/Cookingti/')
 
 
+def postReview(request):
+	# We might not need the GET part depending on how the front end is 
+	# being handled
+		
+	context = {'page_name': 'Item', 'type':session['type'],
+	 'item':session['item']}
+
+	if request.method == 'GET':
+		context['form'] = ReviewForm()
+		return render(request,  'Cookingti/item_main.html', context)
+
+	#date will be added automatically
+	new_entry = ReviewForm(user=request.user)
+	form = ReviewForm(request.POST, instance = new_entry)
+	if not form.is_valid():
+		context['form'] = form
+		return render(request,'Cookingti/item_main.html', context)
+	form.save()
+	return render(request,'Cookingti/item_main.html', context)
 
 
 
+def postImage(request):
+	return
 
-
-
-
+def postTime(request):
+	return
 
 
 

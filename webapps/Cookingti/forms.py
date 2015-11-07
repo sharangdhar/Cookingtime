@@ -69,11 +69,11 @@ class ResetPasswordForm(forms.Form):
 class ReviewForm(forms.Form):
     class Meta:
         model = Review
-        exclude = ('user','date','photos')
+        exclude = ('user','date')
 
 class PhotoForm(forms.Form):
     class Meta:
-        model = Image
+        model = Photo
         exclude = ('user',)
 
 
