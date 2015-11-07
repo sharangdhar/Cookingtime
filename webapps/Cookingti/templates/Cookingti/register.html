@@ -17,7 +17,8 @@
                             <li>{{ form.firstname }}{{ form.firstname.errors.as_text }}</li>
                             <li>{{ form.lastname }}{{ form.lastname.errors.as_text }}</li>
                             
-                            <li><input type="text" name="wattage" placeholder="wattage"></li>
+                            <!--<li><input type="text" name="wattage" placeholder="wattage"></li> -->
+                            <li>{{ form.wattage }}{{ form.wattage.errors.as_text }}</li>
                             <li>or <button class="inline_button">Scan Barcode</button></li>
                             
                             <li>{{ form.password1 }}{{ form.password1.errors.as_text }}</li>

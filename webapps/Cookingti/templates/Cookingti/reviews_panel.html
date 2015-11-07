@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <div id="reviews_panel" class="panel">
     <h3>Reviews - PLACEHOLDER</h3>
     
@@ -37,11 +39,11 @@
 
         <button>Submit</button>
 
-        <link rel="stylesheet" href="src/stars_widget/stars.css">
-        <link rel="stylesheet" href="src/reviews_widget/new_review.css">
-        <link rel="stylesheet" href="src/reviews_widget/reviews.css">
-        <script src="src/reviews_widget/reviews.js"></script>
-        <script src="src/stars_widget/stars.js"></script>
+        <link rel="stylesheet" href="{% static "src/stars_widget/stars.css" %}">
+        <link rel="stylesheet" href="{% static "src/reviews_widget/new_review.css" %}">
+        <link rel="stylesheet" href="{% static "src/reviews_widget/reviews.css" %}">
+        <script src="{% static "src/reviews_widget/reviews.js" %}"></script>
+        <script src="{% static "src/stars_widget/stars.js" %}"></script>
 
     </div><!-- new review -->
     

@@ -41,6 +41,13 @@ INSTALLED_APPS = (
     'Cookingti',
 )
 
+LOGIN_URL = "/Cookingti/login"
+
+
+LOGIN_REDIRECT_URL = "/Cookingti/home"
+
+
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -69,6 +76,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'webapps.wsgi.application'
 

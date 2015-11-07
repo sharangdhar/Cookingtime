@@ -26,11 +26,10 @@ def home(request):
 	
 	context['foods_'] = Food.objects.all();
 	context['recipies_'] = Recipe.objects.all();
-	context['equipments_'] = Equipment.objects.all();
-	 
+	context['equipments_'] = Equipment.objects.all()
+	session = {'page_type': '', 'item':  ''}
 	return render(request, 'Cookingti/hs_main.html', context)
 
-<<<<<<< HEAD
 def search(request):
 	
 	if request.method != 'GET':
@@ -43,7 +42,7 @@ def search(request):
 		
 	if not request.GET['query'] or request.GET['query'] is None:
 		pritn("no query")
-		raise Http404();
+		raise Http404()
 	
 	query = request.GET['query']
 	
@@ -63,17 +62,49 @@ def search(request):
 	
 	return HttpResponse(response_text, content_type="application/json")
 	
-=======
->>>>>>> d92f50a156cc2c2d42914e33173f55d64b593c1e
+
 
 def profile(request):
 	context = {'page_name': request.user.username}
+	session = {'page_type': '', 'item':  ''}
 	return render(request, 'Cookingti/profile.html', context)
 
 
-def item(request):
-	context = {'page_name': 'Item'}
+
+#valid item types are 'food','recipe', 'equipment'
+def item(request, item_type='', id = -1):
+	
+	if request.method != 'GET':
+		print("not get")
+		raise Http404()
+
+	
+	item_flag = True
+
+	# item flag will be true if user enters wrong url
+	if (item_type=='food' or item_type=='recipe' or item_type=='equip'):
+		item_flag = False
+
+	if (item_flag or (id < 0)):
+		print ("wrong parameters")
+		raise Http404()
+
+	print item_type
+
+	if item_type == 'food':
+		item_new = Food.objects.all().filter(pk = id)
+	elif item_type == 'recipe':
+		item_new = Recipe.objects.all().filter(pk = id)
+	else:
+		item_new = Equipment.objects.all().filter(pk = id)
+
+	
+	context = {'page_name': 'Item', 'page_type': item_type, 'item':  item_new, 'user': request.user}
+	#created to keep track of information across this method and postReview method
+	session = {'page_type': item_type, 'item':  item_new}
 	return render(request, 'Cookingti/item_main.html', context)
+
+
 
 def register(request):
 
@@ -108,16 +139,57 @@ def register(request):
 
 	login(request, new_user)
 
+	new_person = Person(user= new_user, wattage=request.POST["wattage"])
+	new_person.save()
+
 	return redirect('/Cookingti/')
 
 
+def postReview(request):
+	# We might not need the GET part depending on how the front end is 
+	# being handled
+		
+	context = {'page_name': 'Item', 'page_type':session['page_type'],
+	 'item':session['item']}
+
+	if request.method == 'GET':
+		context['form'] = ReviewForm()
+		return render(request,  'Cookingti/item_main.html', context)
+
+	#date will be added automatically
+	new_entry = ReviewForm(user=request.user)
+	form = ReviewForm(request.POST, instance = new_entry)
+	if not form.is_valid():
+		context['form'] = form
+		return render(request,'Cookingti/item_main.html', context)
+	form.save()
+	return render(request,'Cookingti/item_main.html', context)
 
 
 
+def postImage(request):
+	# We might not need the GET part depending on how the front end is 
+	# being handled
+		
+	context = {'page_name': 'Item', 'page_type':session['page_type'],
+	 'item':session['item']}
+
+	if request.method == 'GET':
+		context['form'] = PhotoForm()
+		return render(request,  'Cookingti/item_main.html', context)
+
+	#date will be added automatically
+	new_entry = PhotoForm(user=request.user)
+	form = PhotoForm(request.POST, instance = new_entry)
+	if not form.is_valid():
+		context['form'] = form
+		return render(request,'Cookingti/item_main.html', context)
+	form.save()
+	return render(request,'Cookingti/item_main.html', context)
 
 
-
-
+def postTime(request):
+	return
 
 
 
