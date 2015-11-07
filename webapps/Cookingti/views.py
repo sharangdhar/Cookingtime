@@ -164,7 +164,25 @@ def postReview(request):
 
 
 def postImage(request):
-	return
+	# We might not need the GET part depending on how the front end is 
+	# being handled
+		
+	context = {'page_name': 'Item', 'type':session['type'],
+	 'item':session['item']}
+
+	if request.method == 'GET':
+		context['form'] = PhotoForm()
+		return render(request,  'Cookingti/item_main.html', context)
+
+	#date will be added automatically
+	new_entry = PhotoForm(user=request.user)
+	form = PhotoForm(request.POST, instance = new_entry)
+	if not form.is_valid():
+		context['form'] = form
+		return render(request,'Cookingti/item_main.html', context)
+	form.save()
+	return render(request,'Cookingti/item_main.html', context)
+
 
 def postTime(request):
 	return
