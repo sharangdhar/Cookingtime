@@ -2,7 +2,7 @@
 {% load staticfiles %} 
 
 <div class="panel panel_3-2">
-   <a href="">
+   <a href="/item/{{type}}/{{item.id}}">
        <img src="{% if item.photos %}{% url 'photo' item.photos.1.id %}{% else %}{% static 'img/placeholder.png' %}{% endif %}" class="panel_img-2">
         
         <div class="panel_preamble_text-2">

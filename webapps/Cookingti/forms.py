@@ -65,10 +65,10 @@ class ResetPasswordForm(forms.Form):
                                 label='Enter Registered Email ID', widget = forms.EmailInput())
 
 
-class ReviewForm(forms.Form):
+class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        exclude = ('user','date')
+        exclude = ('user','date', 'photos', 'item')
 
 class PhotoForm(forms.Form):
     class Meta:

@@ -11,8 +11,10 @@
                 <div class="div_table form_wrap">
                     <form method="POST" action="{% url 'login' %}">
                         <ul class="form_list">
-                            <li class="form_li"><div class="div_cell"><input type="text" name="username" placeholder="username"></div></li>
-                            <li class="form_li"><div class="div_cell"><input type="password" name="password" placeholder="password"></div></li>
+                            {{ form.non_field_errors}}
+                            
+                            <li class="form_li"><div class="div_cell"><input type="text" name="username" placeholder="username"></div>{{ form.username.errors.as_text}}</li>
+                            <li class="form_li"><div class="div_cell"><input type="password" name="password" placeholder="password">{{ form.username.errors.as_text }}</div></li>
                         </ul>
                     
                         <button id="login_submit">Submit</button>

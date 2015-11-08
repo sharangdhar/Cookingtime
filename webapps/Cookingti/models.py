@@ -18,26 +18,27 @@ class Photo(models.Model):
 	picture = models.ImageField(upload_to='photos', blank=True)
 
 
-class Review(models.Model):
-	user = models.ForeignKey(User)
-	title = models.CharField(max_length=TEXT_SIZE, default="")
-	stars = models.IntegerField(default=0, blank=False)
-	review = models.CharField(max_length = TEXT_SIZE)
-	date = models.DateTimeField(auto_now_add=True)
-	photos = models.ForeignKey(Photo)
-	def __unicode_(self):
-		return self.review
-
 class Food(models.Model):
 	amazon_id = models.IntegerField(blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE)
-	reviews = models.ForeignKey(Review, blank=True, null=True)
 	stars = models.IntegerField(blank=True, null=True)
 	date = models.DateTimeField(auto_now_add=True)
 	photos = models.ForeignKey(Photo, null=True)
 
 	def __unicode_(self):
 		return self.name
+
+class Review(models.Model):
+	user = models.ForeignKey(User)
+	title = models.CharField(max_length=TEXT_SIZE, default="")
+	stars = models.IntegerField(default=0, blank=False)
+	review = models.CharField(max_length = TEXT_SIZE)
+	date = models.DateTimeField(auto_now_add=True)
+	photos = models.ForeignKey(Photo, blank=False, null=True)
+	item = models.ForeignKey(Food, related_name='reviews')
+	
+	def __unicode_(self):
+		return self.review
 
 class CookingTime(models.Model):
 	user = models.ForeignKey(User)

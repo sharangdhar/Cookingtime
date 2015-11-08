@@ -33,7 +33,7 @@
         
             <div id="foods_wrapper">
             {% for food_ in foods_ %}
-                {% include "Cookingti/hs_panel.html" with item=food_%}
+                {% include "Cookingti/hs_panel.html" with item=food_ type="food"%}
             {% endfor %}
             </div>
         </div> <!-- Food col -->
@@ -43,7 +43,7 @@
         
             <div id="recpies_wrapper">
             {% for recipe_ in recipes_ %}
-                {% include "hs_panel.html" %}
+                {% include "hs_panel.html" with item=recipe_ type="recipe"%}
             {% endfor %}
             </div>
         </div><!-- Recipies col -->
@@ -53,7 +53,7 @@
             
             <div id="equipment_wrapper">
             {% for equipment_ in equipments_ %}
-                {% include "hs_panel.html"  %}
+                {% include "hs_panel.html"  with item=equipment_ type="equipment"%}
             {% endfor %}
             </div>
     </div><!-- 3 col cont -->
