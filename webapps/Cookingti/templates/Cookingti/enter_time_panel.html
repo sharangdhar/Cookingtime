@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <div id="enter_time_panel" class="panel">
-    <h3>Enter Microwave Cooking Time - PLACEHOLDER</h3>
+    <h3>Enter Microwave Cooking Time</h3>
     
     <div class="input_wrapper">
         <div class="input_row state">
@@ -11,22 +11,22 @@
             </select>
         </div>
         
-        <div class="input_row  mass">
+        <div class="input_row  mass" id="enter_mass_row">
             <input style="number" class="input_number" id="enter_mass">                            
             <select name="unit" id="enter_unit">
                 <option value="lb">lb</option>
                 <option value="oz">Oz</option>
-                <option value="gram">Grams</option>
+                <option value="kg">Kg</option>
             </select>
         </div>
         
-        <div class="input_row">
+        <div class="input_row" id="calc_input_row">
             <input style="number" class="input_number" id="enter_min" placeholder="min">
             :
             <input style="number" class="input_number" id="enter_sec" placeholder="sec">
             
-            <button id="enter_submit">Submit</button>
+            <button id="enter_submit" data-id="{{ item.id }}">Submit</button>
         </div>
-        
+        <script src="{% static 'src/calc_widget/enter_time.js' %}"></script>
     </div>
 </div><!-- enter time panel -->

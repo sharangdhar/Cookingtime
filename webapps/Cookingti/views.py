@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse, Http404
 from mimetypes import guess_type
 from django.core import serializers
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 # Decorator to use built-in authentication system
 from django.contrib.auth.tokens import default_token_generator
@@ -67,7 +68,6 @@ def search(request):
 	else:
 		raise Http404()
 
-	print(items)
 
 	template = ''
 	if request.GET['page'] == 'search':
@@ -78,7 +78,6 @@ def search(request):
 	item_html = []
 	for item in items:
 		item_html.append(render_to_string(template, {'item':item}))
-		print(item_html)
 		
 	ret = ''.join(item_html)
 	
@@ -92,8 +91,8 @@ def profile(request):
 	return render(request, 'Cookingti/profile.html', context)
 
 
-
 #valid item types are 'food','recipe', 'equipment'
+@ensure_csrf_cookie  # Gives CSRF token for later requests.
 def item(request, item_type='', id = -1):
 	
 	if request.method == "POST":
@@ -173,7 +172,6 @@ def item(request, item_type='', id = -1):
 		print ("wrong parameters")
 		raise Http404()
 
-	print item_type
 
 	if item_type == 'food':
 		try:
@@ -301,6 +299,40 @@ def addItem(request):
 
 
 def postTime(request):
-	return
+	if request.method != 'POST':
+		raise Http404
+		
+	if not 'item_id' in request.POST or not request.POST['item_id']:
+		print('no item_id')
+		raise Http404
+	if not 'constant' in request.POST or not request.POST['constant']:
+		print('no constant')
+		raise Http404
+	
+	try:
+		item = Food.objects.get(id=request.POST['item_id'])
+	except:
+		raise Http404
+	
+	try:
+		new_const = float(request.POST['constant']);
+	except:
+		raise Http404
+	
+	total = item.numConst * item.avgConst
+	new_num = item.numConst + 1
+	
+	print("total: ", total)
+	print("new_total", total + new_const)
+	print("new_num: ", new_num)
+	
+	item.avgConst = (total + new_const)/(new_num)
+	
+	print("new_const: ", (total + new_const)/(new_num))
+	
+	item.numConst = new_num
+	item.save();
+	
+	return HttpResponse(str(item.avgConst), content_type="text/plain")
 
 

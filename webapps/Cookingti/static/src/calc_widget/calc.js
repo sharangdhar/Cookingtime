@@ -13,12 +13,12 @@ $(document).ready(function()
 
 function calculate()
 {
-    $("#mass_error").remove();
+    $("#calc_mass_error").remove();
     
     var mass = $('#calc_mass').val();
     if(mass === "" || isNaN(mass))
     {
-        $("#mass_row").append($("<span id='mass_error'>Enter valid value</span>"));
+        $("#calc_mass_row").append($("<span id='calc_mass_error'>Enter valid value</span>"));
         return;
     }
     mass = parseFloat(mass);
@@ -32,42 +32,30 @@ function calculate()
     {
         mass = oz_to_kg(mass);
     }
-    
     // else its already in kg
     
+	
+	// Get user constants
     var btn = $('#calc_btn');
     var constant = parseFloat(btn.attr('data-constant'));
     var wattage = parseFloat(btn.attr('data-wattage'));
     
-    var end_temp = 373.15; // boiling in K
-    var state = $('#calc_state option:selected').val();
-    var start_temp = 0;
-    if(state === 'frozen')
-    {
-        start_temp = 255.15; // recomended freezer temp in K
-    }
-    else if (state === 'refrigerated')
-    {
-        start_temp = 274.75; // recomended refrigerator temp in K
-    }
-    else if (state === 'room')
-    {
-        start_temp = 294.15;
-    }
-    var dt = end_temp - start_temp;
+	// Get dT (change in temperature)
+    var start_state = $('#calc_state option:selected').val();
+    var dT = get_dT(start_state);
     
-    var sec = (constant * (mass * 1000) * dt) / wattage;
-
+	// Calculate time
+    var sec = (constant * (mass * 1000) * dT) / wattage;
 
     // Add time if frozen
-    if(state == 'frozen')
+    if(start_state == 'frozen')
     {
         var enth_fuse = 334; // J/g
         var extra = (enth_fuse * (mass * 1000)) / wattage; 
         sec += extra;
     }
     
-
+	// Seperate out minutes, round off, and set display
     min = sec / 60;
 
     var left_over = min - Math.floor(min);
@@ -84,6 +72,25 @@ function calculate()
     return;
 }
 
+function get_dT(start_state)
+{
+    var end_temp = 373.15; // boiling in K
+    var start_temp = 0;
+    if(start_state === 'frozen')
+    {
+        start_temp = 255.15; // recomended freezer temp in K
+    }
+    else if (start_state === 'refrigerated')
+    {
+        start_temp = 274.75; // recomended refrigerator temp in K
+    }
+    else if (start_state === 'room')
+    {
+        start_temp = 294.15;
+    }
+    return end_temp - start_temp;
+	
+}
 
 function lb_to_kg(lb)
 {
