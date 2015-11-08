@@ -18,18 +18,11 @@
 ## Get
 
 
-### /search?type=...query=...
+### /search?type=...&page=...&query=...
 
 #### Return
     
-    {
-        "status":"error_code"
-        "error":array of error objects
-        "food":["<div>...</div>","<div>...</div>"]
-        "recipe":["<div>...</div>","<div>...</div>"]
-        "equipment":["<div>...</div>","<div>...</div>"]
-    }
-
+- HTML of results
 - Each item should be generated the same way as the homescreen's views, but on the hs_panel.html template directly
 <hr>
 

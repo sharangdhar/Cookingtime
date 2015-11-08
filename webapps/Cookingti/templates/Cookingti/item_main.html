@@ -10,7 +10,7 @@
         
         
         <div id="first_row">
-            <div id="photo_column" class="col-md-8 col-md-push-4">
+            <div id="photo_column" class="col-md-8 col-md-push-2">
                 {% include "Cookingti/carousel_panel.html" %}
             </div><!-- photo column -->
             
@@ -18,19 +18,19 @@
             <div id="info_column" class="col-md-4 col-md-pull-8">
                 {% include "Cookingti/info_panel.html" %}
             </div><!-- info column -->
-            -->
+
         </div><!-- first row -->
         
         
         <div id="second_row">
             
             
-            <div id="bulk_column" class="col-md-8 col-md-push-4">
+            <div id="bulk_column" class="col-md-8 col-md-push-2">
                 
                 {% if page_type == "food" %}
                     <div id="time_row" class="row">
                         <div id="calculator_column" class="col-md-6 col-sm-6">
-                            {% include "Cookingti/calculator_panel.html" %}
+                            {% include "Cookingti/calculator_panel.html" with item=item %}
                         </div> <!-- calculator column -->
                         
                         <div id="enter_time_column" class="col-md-6 col-sm-6">
@@ -40,7 +40,7 @@
                 {% endif %}
                 
             
-            <!-- {% include "Cookingti/reviews_panel.html" %} -->
+                {% include "Cookingti/reviews_panel.html" %}
                 
                 
             </div> <!-- bulk column -->

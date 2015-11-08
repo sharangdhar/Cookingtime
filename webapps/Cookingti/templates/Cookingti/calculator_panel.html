@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "src/calc_widget/calc.css" %}">
     <script src="{% static "src/calc_widget/calc.js" %}"></script>
     
-    <h3>Microwave Time Calculator - PLACEHOLDER</h3>
+    <h3>Microwave Time Calculator</h3>
     
     <div class="input_wrapper">
         <div class="input_row state">
@@ -24,7 +24,7 @@
         </div>
     
         <div class="input_row">
-            <button data-constant="4.186" data-wattage="1000" id="calc_btn">Calculate</button>
+            <button data-constant="{{item.avgConst}}" data-wattage="1000" id="calc_btn">Calculate</button>
             <input type="text" id="calc_ret" readonly>
         </div>
     </div>

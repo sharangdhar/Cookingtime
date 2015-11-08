@@ -95,6 +95,68 @@ def profile(request):
 #valid item types are 'food','recipe', 'equipment'
 def item(request, item_type='', id = -1):
 	
+	if request.method == "POST":
+		context = {'page_name': 'Item'}
+    	
+		if request.method == 'GET':
+			context['form'] = ReviewForm()
+			return render(request,  'Cookingti/item_main.html', context)
+    	
+		#date will be added automatically
+		
+		if not request.POST['page_type'] or not 'page_type' in request.POST:
+			print("no page_type")
+			raise Http404
+			
+		page_type = request.POST['page_type']
+		
+			
+		if not request.POST['item_id'] or not 'item_id' in request.POST:
+			print('no item_id')
+			raise Http404
+		
+		item_id = request.POST['item_id']
+		item = ""	
+		if page_type == 'food':
+			try:
+				item = Food.objects.get(id=item_id)
+			except:
+				print('no item')
+				raise Http404
+		elif page_type == 'recipe':
+			try:
+				item = Recipe.objects.get(id=item_id)
+			except:
+				print('no item')
+				raise Http404
+		elif page_type == 'equipment':
+			try:
+				item = Food.objects.get(id=item_id)
+			except:
+				print('no item')
+				raise Http404
+					
+		
+		context = {'page_name': item.name, 'page_type': item_type, 'item':  item, 'user': request.user}
+		
+		new_entry = Review(user=request.user, item=item)
+		new_form = ReviewForm(request.POST, instance=new_entry)
+		if not new_form.is_valid():
+			print("form errors")
+			context['review_form'] = new_form
+			session = {'page_type': item_type, 'item':  item}
+			return render(request, 'Cookingti/item_main.html', context)
+			
+		new_form.save()
+		
+		context['review_form'] = Review()
+		session = {'page_type': item_type, 'item':  item}
+		return render(request, 'Cookingti/item_main.html', context)
+	
+	
+	
+	
+	
 	if request.method != 'GET':
 		print("not get")
 		raise Http404()
@@ -113,14 +175,27 @@ def item(request, item_type='', id = -1):
 	print item_type
 
 	if item_type == 'food':
-		item_new = Food.objects.all().filter(pk = id)
+		try:
+			item_new = Food.objects.get(pk = id)
+		except:
+			raise Http404
 	elif item_type == 'recipe':
-		item_new = Recipe.objects.all().filter(pk = id)
+		try:
+			item_new = Recipe.objects.all().get(pk = id)
+		except:
+			raise Http404
 	else:
-		item_new = Equipment.objects.all().filter(pk = id)
+		try:
+			item_new = Equipment.objects.get(pk = id)
+		except:
+			raise Http404
+
 
 	
-	context = {'page_name': 'Item', 'page_type': item_type, 'item':  item_new, 'user': request.user}
+	context = {'page_name': item_new.name, 'page_type': item_type, 'item':  item_new, 'user': request.user}
+	
+	context['review_form'] = Review()
+	
 	#created to keep track of information across this method and postReview method
 	session = {'page_type': item_type, 'item':  item_new}
 	return render(request, 'Cookingti/item_main.html', context)
@@ -164,28 +239,6 @@ def register(request):
 	new_person.save()
 
 	return redirect('/Cookingti/')
-
-
-def postReview(request):
-	# We might not need the GET part depending on how the front end is 
-	# being handled
-		
-	context = {'page_name': 'Item', 'page_type':session['page_type'],
-	 'item':session['item']}
-
-	if request.method == 'GET':
-		context['form'] = ReviewForm()
-		return render(request,  'Cookingti/item_main.html', context)
-
-	#date will be added automatically
-	new_entry = Review(user=request.user)
-	form = ReviewForm(request.POST, instance = new_entry)
-	if not form.is_valid():
-		context['form'] = form
-		return render(request,'Cookingti/item_main.html', context)
-	form.save()
-	return render(request,'Cookingti/item_main.html', context)
-
 
 
 def postImage(request):
