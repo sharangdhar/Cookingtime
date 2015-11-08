@@ -20,6 +20,7 @@ class Photo(models.Model):
 
 
 class Food(models.Model):
+	user = models.ForeignKey(User, blank=True, null=True)
 	amazon_id = models.IntegerField(blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE)
 	stars = models.IntegerField(blank=True, null=True)
@@ -34,6 +35,7 @@ class Food(models.Model):
 		return self.name
 
 class Equipment(models.Model):
+	user = models.ForeignKey(User, blank=True, null=True)
 	amazon_id = models.IntegerField(blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
@@ -46,7 +48,7 @@ class Equipment(models.Model):
 
 
 class Recipe(models.Model):
-	user = models.ForeignKey(User, blank=True)
+	user = models.ForeignKey(User, blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE, default="")
 	text = models.CharField(max_length=TEXT_SIZE, default="", blank=True, null=True)
 	foods = models.ManyToManyField(Food, related_name='recipes')

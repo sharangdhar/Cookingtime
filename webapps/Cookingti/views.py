@@ -19,6 +19,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 import json
+import markdown
 
 from Cookingti.models import *
 from Cookingti.forms import *
@@ -358,4 +359,32 @@ def postTime(request):
 	
 	return HttpResponse(str(item.avgConst), content_type="text/plain")
 
-
+def postRecipe(request):
+	
+	if not request.user.is_authenticated():
+		raise Http404
+		
+	if request.method != 'POST':
+		print('not post')
+		raise Http404
+		
+	
+	if not 'item_id' in request.POST or not request.POST['item_id']:
+		print('no id')
+		raise Http404
+	if not 'text' in request.POST or not request.POST['text']:
+		print('no text')
+		raise Http404
+		
+	try:
+		item = Recipe.objects.get(id=request.POST['item_id'])
+	except:
+		print('invalid item')
+		raise Http404
+		
+	item.text = request.POST['text']
+	item.save()
+	
+	rendered = markdown.markdown(request.POST['text'])
+	
+	return HttpResponse(rendered, content_type="text/html")

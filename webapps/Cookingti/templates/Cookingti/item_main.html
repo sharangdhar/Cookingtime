@@ -37,6 +37,10 @@
                             {% include "Cookingti/enter_time_panel.html" %}
                         </div> <!-- enter time column -->
                     </div> <!-- time row -->
+                {% elif page_type == "recipe" %}
+                    <div id="recipe_column col-md-6 col-sm-6">
+                        {% include "Cookingti/recipe_panel.html" %}
+                    </div>
                 {% endif %}
                 
             

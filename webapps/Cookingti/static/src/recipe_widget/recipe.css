@@ -1,0 +1,18 @@
+#recipe_edit_button
+{
+	position: absolute;
+	top:5px;
+	right:23px;
+}
+
+#recipe_form
+{
+	display: none;
+}
+
+#recipe_text
+{
+	width: 100%;
+	min-height: 200px;	
+	margin-top: 20px;
+}

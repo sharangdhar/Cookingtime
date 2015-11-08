@@ -1,0 +1,33 @@
+{% load staticfiles %}
+{% load markup %}
+
+<div class="panel">
+    <link rel="stylesheet" href="{% static 'src/recipe_widget/recipe.css' %}">
+    <script src="{% static 'src/recipe_widget/recipe.js' %}"></script>
+    
+    {% if request.user == item.user %}
+        <button id="recipe_edit_button">
+            <h4>Edit</h4>
+        </button>
+    {% endif %}
+    
+    <div id="recipe_form">
+        <textarea id="recipe_text" name="text" value="">{{ item.text }}</textarea>
+        <button id="recipe_submit_button" data-id={{item.id}} action="submit">Submit</button>
+    </div>
+    
+    <div id="recipe_content">
+        {{ item.text|markdown }}
+        
+        <!--
+        <b>Ingredients</b>
+        <ul>
+            <li>Lorem ipsum dolor sit amet</li> 
+            <li>consectetur adipiscing elit</li> 
+            <li>sed do eiusmod tempor incididunt</li> 
+        </ul>
+    
+        <p>ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        -->
+    </div>
+</div>
