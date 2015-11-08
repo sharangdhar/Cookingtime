@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -40,27 +41,47 @@ def search(request):
 		print("no type")
 		raise Http404();
 		
+	if not request.GET['page'] or request.GET['page'] is None:
+		print("no page")
+		raise Http404();
+		
 	if not request.GET['query'] or request.GET['query'] is None:
-		pritn("no query")
+		print("no query")
 		raise Http404()
 	
 	query = request.GET['query']
 	
 	if request.GET['type'] == 'food':
 		items = Food.objects.filter(name__contains=query)
+		if len(items) == 0:
+			raise Http404()
 	elif request.GET['type'] == 'recipe':
-		items = Food.objects.filter(name__contains=query)
+		items = Recipe.objects.filter(name__iexact=query)
+		if len(items) == 0:
+			raise Http404()
 	elif request.GET['type'] == 'equipment':
-		items = Equipment.objects.filter(name__contains=query)
+		items = Equipment.objects.filter(name__iexact=query)
+		if len(items) == 0:
+			raise Http404()
 	else:
-		print('bad type')
 		raise Http404()
+
+	print(items)
+
+	template = ''
+	if request.GET['page'] == 'search':
+		template = 'Cookingti/hs_panel.html'
+	elif request.GET['page'] == 'item':
+		template = 'Cookingti/link_panel.html'
 
 	item_html = []
 	for item in items:
-		item_html = render(request, 'Cookingti/hs_panel.html', {item:item})
+		item_html.append(render_to_string(template, {'item':item}))
+		print(item_html)
+		
+	ret = ''.join(item_html)
 	
-	return HttpResponse(response_text, content_type="application/json")
+	return HttpResponse(ret, content_type="text/html")
 	
 
 

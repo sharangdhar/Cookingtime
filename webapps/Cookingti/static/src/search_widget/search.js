@@ -1,35 +1,62 @@
 $(document).ready(function()
 {
 	$('#search_button').click(search);
+	$(document).keypress(function(e)
+	{
+		if(e.which == 13)
+		{
+			search();
+		}
+	});
 });
 
 function search()
-{
-	$(document).prop('title', 'Cookingti.me | Search');
-	$('#hs_title').text("Search Results");
-	
-	
+{	
 	var sections = 
 	[
-		{id:'foods_col', type:'food', html:''},
-		{id:'recipies_col', type:'recipe', html:''},
-		{id:'equipment_col', type:'equip', html:''}
+		{id:'foods_col', type:'food'},
+		{id:'recipies_col', type:'recipe'},
+		{id:'equipment_col', type:'equipment'}
 	];
 	
-	for(i = 0; i < sections.length; i++)
-	{
-		var sect = sections[i];
-		var val = $('#search_input').val();
-		
-		$.get('/search', {type: sect.type, query: val}).done(search_ret);
-	}
-}
 
-function search_ret(data)
-{
-	if(data.status == "Success")
+	var val = $('#search_input').val();
+		
+	$.get('/search', {type: "food", query: val, page:'search'}).done(function(data)
 	{
-		console.log("Success");
-		console.log(data);
-	}
+		$(document).prop('title', 'Cookingti.me | Search');
+		$('#hs_title').text("Search Results");
+	
+		$('#foods_wrapper').html(data);
+	}).fail(function(data)
+	{
+		$('#foods_wrapper').html("<h3>No results</h3>");
+		
+	});
+
+
+	$.get('/search', {type: "recipes", query: val, page:'search'}).done(function(data)
+	{
+		$(document).prop('title', 'Cookingti.me | Search');
+		$('#hs_title').text("Search Results");
+	
+		$('#recpies_wrapper').html(data);
+	}).fail(function(data)
+	{
+		$('#recpies_wrapper').html("<h3>No results</h3>");
+		
+	});
+	
+	
+	$.get('/search', {type: "equipment", query: val, page:'search'}).done(function(data)
+	{
+		$(document).prop('title', 'Cookingti.me | Search');
+		$('#hs_title').text("Search Results");
+	
+		$('#equipment_wrapper').html(data);
+	}).fail(function(data)
+	{
+		$('#equipment_wrapper').html("<h3>No results</h3>");
+		
+	});
 }
