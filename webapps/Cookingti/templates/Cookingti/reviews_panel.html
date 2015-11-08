@@ -1,11 +1,12 @@
 {% load staticfiles %}
+{% load stars_to_uni %}
 
 <div id="reviews_panel" class="panel">
     <h3>Reviews</h3>
     
     <div id="review_top_row">
         <div id="review_average" class="col-md-4 col-sm-4">
-            Average: ★★★☆☆
+            Average: {{item.stars|stars_to_uni}}
         </div>
         <div class="col-md-4 col-sm-4">
             <select name="review_sort" id="review_sort">

@@ -132,7 +132,7 @@ def item(request, item_type='', id = -1):
 				raise Http404
 		elif page_type == 'equipment':
 			try:
-				item = Food.objects.get(id=item_id)
+				item = Equipment.objects.get(id=item_id)
 			except:
 				print('no item')
 				raise Http404
@@ -150,10 +150,17 @@ def item(request, item_type='', id = -1):
 			
 		new_form.save()
 		
+		
 		# UPDATE STARS
+		total = item.starsFloat * item.numReviews
+		new_num = item.numReviews + 1
 		
+		new_float = (total + new_form.cleaned_data['stars'])/new_num
 		
-		
+		item.starsFloat = new_float
+		item.stars = int(round(new_float))
+		item.numReviews = new_num
+		item.save()
 		
 		
 		session = {'page_type': item_type, 'item':	item}
@@ -195,7 +202,7 @@ def item(request, item_type='', id = -1):
 		except:
 			raise Http404
 
-	
+		
 	context = {'page_name': item_new.name, 'page_type': item_type, 'item':	item_new, 'user': request.user}
 	
 	context['review_form'] = ReviewForm()
@@ -331,15 +338,9 @@ def postTime(request):
 	
 	total = item.numConst * item.avgConst
 	new_num = item.numConst + 1
-	
-	print("total: ", total)
-	print("new_total", total + new_const)
-	print("new_num: ", new_num)
-	
+
 	item.avgConst = (total + new_const)/(new_num)
-	
-	print("new_const: ", (total + new_const)/(new_num))
-	
+		
 	item.numConst = new_num
 	item.save();
 	

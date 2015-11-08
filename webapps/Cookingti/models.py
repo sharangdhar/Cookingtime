@@ -22,6 +22,8 @@ class Food(models.Model):
 	amazon_id = models.IntegerField(blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE)
 	stars = models.IntegerField(blank=True, null=True)
+	starsFloat = models.FloatField(default=0.0, blank=True)
+	numReviews = models.IntegerField(default=0, blank=True)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
 	photos = models.ForeignKey(Photo, blank=True, null=True)
 	avgConst = models.FloatField(default=4.18)
@@ -29,6 +31,34 @@ class Food(models.Model):
 	
 	def __unicode_(self):
 		return self.name
+
+class Equipment(models.Model):
+	amazon_id = models.IntegerField(blank=True, null=True)
+	name = models.CharField(max_length=TEXT_SIZE)
+	date = models.DateTimeField(auto_now_add=True, blank=True)
+	starsFloat = models.FloatField(default=0.0, blank=True)
+	numReviews = models.IntegerField(default=0, blank=True)
+	numReviews = models.IntegerField(default=0, blank=True)
+	photos = models.ForeignKey(Photo, blank=True, null=True)
+	def __unicode_(self):
+		return self.name
+
+
+class Recipe(models.Model):
+	user = models.ForeignKey(User, blank=True)
+	name = models.CharField(max_length=TEXT_SIZE, default="")
+	text = models.CharField(max_length=TEXT_SIZE, default="", blank=True, null=True)
+	foods = models.ManyToManyField(Food, related_name='recipes')
+	text = models.CharField(max_length = TEXT_SIZE, blank=True, default="")
+	date = models.DateTimeField(auto_now_add=True, blank=True)
+	photos = models.ForeignKey(Photo, blank=True, null=True)
+	stars = models.IntegerField(blank=True, null=True)
+	starsFloat = models.FloatField(default=0.0, blank=True)
+	numReviews = models.IntegerField(default=0, blank=True)
+	def __unicode_(self):
+		return self.text
+        
+
 
 class Review(models.Model):
 	user = models.ForeignKey(User, blank=True)
@@ -51,27 +81,6 @@ class CookingTime(models.Model):
 		return self.user.first_name
 '''
 
-class Equipment(models.Model):
-	amazon_id = models.IntegerField(blank=True, null=True)
-	name = models.CharField(max_length=TEXT_SIZE)
-	date = models.DateTimeField(auto_now_add=True, blank=True)
-	stars = models.IntegerField(blank=True, null=True)
-	photos = models.ForeignKey(Photo, blank=True, null=True)
-	def __unicode_(self):
-		return self.name
-
-
-class Recipe(models.Model):
-	user = models.ForeignKey(User, blank=True)
-	name = models.CharField(max_length=TEXT_SIZE, default="")
-	text = models.CharField(max_length=TEXT_SIZE, default="", blank=True, null=True)
-	foods = models.ManyToManyField(Food, related_name='recipes')
-	text = models.CharField(max_length = TEXT_SIZE, blank=True, default="")
-	date = models.DateTimeField(auto_now_add=True, blank=True)
-	photos = models.ForeignKey(Photo, blank=True, null=True)
-	def __unicode_(self):
-		return self.text
-        
 
 
 
