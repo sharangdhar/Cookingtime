@@ -17,6 +17,11 @@
 	margin-top: 20px;
 }
 
+#recipe_content
+{
+	min-height: 100px;
+}
+
 #recipe_content h1
 {
 	font-size: 22px;

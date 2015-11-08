@@ -24,10 +24,12 @@ function search()
 		
 	$.get('/search', {type: "food", query: val, page:'search'}).done(function(data)
 	{
-		$(document).prop('title', 'Cookingti.me | Search');
-		$('#hs_title').text("Search Results");
-	
 		$('#foods_wrapper').html(data);
+		
+		$(document).prop('title', 'Cookingti.me | Search');
+		$('#hs_title').html("Search Results");
+		location.hash = "#hs_title";
+		
 	}).fail(function(data)
 	{
 		$('#foods_wrapper').html("<h3>No results</h3>");
@@ -35,12 +37,15 @@ function search()
 	});
 
 
+
+
 	$.get('/search', {type: "recipes", query: val, page:'search'}).done(function(data)
-	{
-		$(document).prop('title', 'Cookingti.me | Search');
-		$('#hs_title').text("Search Results");
-	
+	{	
 		$('#recpies_wrapper').html(data);
+		
+		$(document).prop('title', 'Cookingti.me | Search');
+		$('#hs_title').html("Search Results");
+		location.hash = "#hs_title";
 	}).fail(function(data)
 	{
 		$('#recpies_wrapper').html("<h3>No results</h3>");
@@ -48,15 +53,19 @@ function search()
 	});
 	
 	
-	$.get('/search', {type: "equipment", query: val, page:'search'}).done(function(data)
-	{
-		$(document).prop('title', 'Cookingti.me | Search');
-		$('#hs_title').text("Search Results");
 	
+	
+	$.get('/search', {type: "equipment", query: val, page:'search'}).done(function(data)
+	{	
 		$('#equipment_wrapper').html(data);
+		
+		$(document).prop('title', 'Cookingti.me | Search');
+		$('#hs_title').html("Search Results");
+		location.hash = "#hs_title";
 	}).fail(function(data)
 	{
 		$('#equipment_wrapper').html("<h3>No results</h3>");
+		
 		
 	});
 }

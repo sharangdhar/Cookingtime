@@ -321,7 +321,7 @@ def addItem(request):
 
 	new_item.save()
  
-	return redirect('Cookingti/home')
+	return redirect('Cookingti/item/' + form.cleaned_data['item_type'] + '/' + str(new_item.id))
 
 
 def postTime(request):

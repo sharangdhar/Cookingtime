@@ -6,7 +6,9 @@ register = template.Library()
 
 @register.filter
 def stars_to_uni(field, args=None):
-
+    if field == None:
+        return "☆☆☆☆☆"
+        
     try:
         field = int(field)
     except:
