@@ -6,8 +6,18 @@
     <div class="jumbotron">
         <input type="text" class="jumbo_search" id="search_input" value="">
         <button id="search_button">Search</button>
-        <div class="or">or</div>
-        <button class="scan_button">Scan Barcode</button>
+        
+        <br>
+        <br>
+        <form action='/new_item' method="POST">
+            <input type="text" class="jumbo_search" id="new_input" placeholder="name" value="">
+            <select id="new_type">
+                <option value="food">Food</option>
+                <option value="recipe">Recipe</option>
+                <option value="rquipment">Equipment</option>
+            </select>
+            <button id="new_button">New</button>
+        </form>
         <script src="{% static 'src/search_widget/search.js' %}"></script>
     </div>
 
