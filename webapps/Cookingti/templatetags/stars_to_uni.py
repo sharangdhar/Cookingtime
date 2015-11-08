@@ -20,6 +20,4 @@ def stars_to_uni(field, args=None):
     for i in range(5 - field):
         string += "☆"
     
-    print(string)
-    
     return string

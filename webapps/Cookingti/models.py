@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 TEXT_SIZE = 500
 
@@ -36,8 +37,8 @@ class Equipment(models.Model):
 	amazon_id = models.IntegerField(blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
+	stars = models.IntegerField(blank=True, null=True)
 	starsFloat = models.FloatField(default=0.0, blank=True)
-	numReviews = models.IntegerField(default=0, blank=True)
 	numReviews = models.IntegerField(default=0, blank=True)
 	photos = models.ForeignKey(Photo, blank=True, null=True)
 	def __unicode_(self):
@@ -60,7 +61,7 @@ class Recipe(models.Model):
         
 
 
-class Review(models.Model):
+class FoodReview(models.Model):
 	user = models.ForeignKey(User, blank=True)
 	title = models.CharField(max_length=TEXT_SIZE, default="")
 	stars = models.IntegerField(default=0, blank=True, null=True)
@@ -72,16 +73,30 @@ class Review(models.Model):
 	def __unicode_(self):
 		return self.review
 
-'''
-class CookingTime(models.Model):
+
+class RecipeReview(models.Model):
 	user = models.ForeignKey(User, blank=True)
-	heatingConst = models.FloatField(default=4.18) # Approximation of heating curve
+	title = models.CharField(max_length=TEXT_SIZE, default="")
+	stars = models.IntegerField(default=0, blank=True, null=True)
+	review = models.CharField(max_length = TEXT_SIZE)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
+	photos = models.ForeignKey(Photo, blank=True, null=True)
+	item = models.ForeignKey(Recipe, related_name='reviews')
+	
 	def __unicode_(self):
-		return self.user.first_name
-'''
+		return self.review
 
-
+class EquipmentReview(models.Model):
+	user = models.ForeignKey(User, blank=True)
+	title = models.CharField(max_length=TEXT_SIZE, default="")
+	stars = models.IntegerField(default=0, blank=True, null=True)
+	review = models.CharField(max_length = TEXT_SIZE)
+	date = models.DateTimeField(auto_now_add=True, blank=True)
+	photos = models.ForeignKey(Photo, blank=True, null=True)
+	item = models.ForeignKey(Equipment, related_name='reviews')
+	
+	def __unicode_(self):
+		return self.review
 
 
 

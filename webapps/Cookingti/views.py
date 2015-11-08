@@ -124,24 +124,31 @@ def item(request, item_type='', id = -1):
 			except:
 				print('no item')
 				raise Http404
+			new_entry = FoodReview(user=request.user, item=item)
+			new_form = FoodReviewForm(request.POST, instance=new_entry)
+			
 		elif page_type == 'recipe':
 			try:
-				item = Recipe.objects.get(id=item_id)
+				item = Recipe.objects.get(id=item_id)				
 			except:
 				print('no item')
 				raise Http404
+			new_entry = RecipeReview(user=request.user, item=item)
+			new_form = RecipeReviewForm(request.POST, instance=new_entry)
+			
 		elif page_type == 'equipment':
 			try:
 				item = Equipment.objects.get(id=item_id)
 			except:
 				print('no item')
 				raise Http404
-					
+			new_entry = EquipmentReview(user=request.user, item=item)
+			new_form = EquipmentReviewForm(request.POST, instance=new_entry)
 		
+		
+						
 		context = {'page_name': item.name, 'page_type': item_type, 'item':	item, 'user': request.user}
 		
-		new_entry = Review(user=request.user, item=item)
-		new_form = ReviewForm(request.POST, instance=new_entry)
 		if not new_form.is_valid():
 			print("form errors")
 			context['review_form'] = new_form
@@ -205,7 +212,12 @@ def item(request, item_type='', id = -1):
 		
 	context = {'page_name': item_new.name, 'page_type': item_type, 'item':	item_new, 'user': request.user}
 	
-	context['review_form'] = ReviewForm()
+	if context['page_type'] == "food":
+		context['review_form'] = FoodReviewForm()
+	elif context['page_type'] == "recipe":
+		context['review_form'] = RecipeReviewForm()
+	elif context['page_type'] == "equipment":
+		context['review_form'] = EquipmentReviewForm()
 	
 	#created to keep track of information across this method and postReview method
 	session = {'page_type': item_type, 'item':	item_new}
