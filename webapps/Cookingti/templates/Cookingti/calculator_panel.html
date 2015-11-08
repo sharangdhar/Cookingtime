@@ -24,7 +24,7 @@
         </div>
     
         <div class="input_row">
-            <button data-constant="{{item.avgConst}}" data-wattage="1000" id="calc_btn">Calculate</button>
+            <button data-constant="{{item.avgConst}}" data-wattage="{{user.person.all.0.wattage}}" id="calc_btn">Calculate</button>
             <input type="text" id="calc_ret" readonly>
         </div>
     </div>

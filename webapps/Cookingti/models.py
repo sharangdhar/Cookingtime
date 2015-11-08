@@ -7,7 +7,7 @@ TEXT_SIZE = 500
 
 
 class Person(models.Model):
-	user = models.ForeignKey(User)
+	user = models.ForeignKey(User, related_name='person')
 	wattage = models.IntegerField()
 	date = models.DateTimeField(auto_now_add=True)
 	def __unicode_(self):
