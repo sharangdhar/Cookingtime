@@ -24,10 +24,10 @@ from Cookingti.forms import *
 
 def home(request):
 	context = {'page_name':'Home'}
-	
 	context['foods_'] = Food.objects.all();
 	context['recipies_'] = Recipe.objects.all();
 	context['equipments_'] = Equipment.objects.all()
+	context['add_item_form'] = AddItemForm()
 	session = {'page_type': '', 'item':  ''}
 	return render(request, 'Cookingti/hs_main.html', context)
 
@@ -178,7 +178,7 @@ def postReview(request):
 		return render(request,  'Cookingti/item_main.html', context)
 
 	#date will be added automatically
-	new_entry = ReviewForm(user=request.user)
+	new_entry = Review(user=request.user)
 	form = ReviewForm(request.POST, instance = new_entry)
 	if not form.is_valid():
 		context['form'] = form
@@ -191,7 +191,6 @@ def postReview(request):
 def postImage(request):
 	# We might not need the GET part depending on how the front end is 
 	# being handled
-		
 	context = {'page_name': 'Item', 'page_type':session['page_type'],
 	 'item':session['item']}
 
@@ -207,6 +206,34 @@ def postImage(request):
 		return render(request,'Cookingti/item_main.html', context)
 	form.save()
 	return render(request,'Cookingti/item_main.html', context)
+
+
+def addItem(request):
+	if request.method == 'GET':
+		return redirect('Cookingti/home')
+
+
+	form = AddItemForm(request.POST)
+
+	context = {}
+
+	context['form'] = form
+	    # Validates the form.
+	if not form.is_valid():
+		print "error"
+		context['errors'] = form.errors
+		return render(request, 'Cookingti/register.html', context)
+
+	if form.cleaned_data['item_type'] == 'food':
+		new_item = Food(name = form.cleaned_data['item'])
+	elif form.cleaned_data['item_type'] == 'recipe':
+		new_item = Recipe(name = form.cleaned_data['item'])
+	else:
+		new_item = Equipment(name = form.cleaned_data['item'])
+
+	new_item.save()
+ 
+	return redirect('Cookingti/home')
 
 
 def postTime(request):

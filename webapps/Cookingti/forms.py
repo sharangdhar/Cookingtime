@@ -65,14 +65,29 @@ class ResetPasswordForm(forms.Form):
                                 label='Enter Registered Email ID', widget = forms.EmailInput())
 
 
-class ReviewForm(forms.Form):
+class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         exclude = ('user','date')
 
-class PhotoForm(forms.Form):
+class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
         exclude = ('user',)
+
+class AddItemForm(forms.Form):
+    item = forms.CharField(max_length = 20, widget = forms.TextInput())
+    item_type = forms.CharField(max_length = 20, widget = forms.TextInput(attrs={"placeholder":"name"}))
+
+    def clean(self):
+        cleaned_data = super(AddItemForm, self).clean()
+
+        item_type = cleaned_data.get('item_type')
+        print item_type
+
+        if item_type not in ['food', 'recipe', 'equipment']:
+            raise forms.ValidationError("Invalid Item Type.")
+
+        return cleaned_data
 
 

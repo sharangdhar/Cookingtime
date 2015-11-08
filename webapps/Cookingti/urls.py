@@ -26,6 +26,7 @@ urlpatterns = [
 	url(r'^register$', 'Cookingti.views.register', name='register'),
 
 	url(r'^search$', 'Cookingti.views.search', name='search'),
+    url(r'^new_item$', 'Cookingti.views.addItem', name='addItem'),
 
     url(r'^post_review$', 'Cookingti.views.postReview', name='post_review'),
     url(r'^post_img$', 'Cookingti.views.postImage', name='post_img'),
