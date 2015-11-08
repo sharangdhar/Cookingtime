@@ -30,7 +30,7 @@
                 {% if page_type == "food" %}
                     <div id="time_row" class="row">
                         <div id="calculator_column" class="col-md-6 col-sm-6">
-                            {% include "Cookingti/calculator_panel.html" %}
+                            {% include "Cookingti/calculator_panel.html" with item=item %}
                         </div> <!-- calculator column -->
                         
                         <div id="enter_time_column" class="col-md-6 col-sm-6">

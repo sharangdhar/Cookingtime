@@ -35,13 +35,6 @@
         <form method="POST" action="">
             
             {{ review_form.non_field_errors }}
-            
-            {{ form.errors.items }}
-            {% for key, value in form.errors.items %}
-                {{key}}
-                {{ value }}
-            {% endfor %}
-            
             <input type="text" id="new_review_title" name="title" placeholder="Title">{{review_form.title.errors}}
             <div id="stars_widg" class="stars_widget"></div>
             <input type="hidden" id="stars" name="stars" value="0">{{ review_form.stars.errors }}
@@ -64,7 +57,7 @@
     
     
     <div id="reviews_wrapper">
-    
+    {{ item.reviews.all|length}}
     {% for review in item.reviews.all %}
         {% include 'Cookingti/review_panel.html' with review=review %}
     {% endfor %}

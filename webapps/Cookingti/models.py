@@ -24,7 +24,8 @@ class Food(models.Model):
 	stars = models.IntegerField(blank=True, null=True)
 	date = models.DateTimeField(auto_now_add=True)
 	photos = models.ForeignKey(Photo, null=True)
-
+	avgConst = models.FloatField(default=4.18)
+	
 	def __unicode_(self):
 		return self.name
 
@@ -42,7 +43,7 @@ class Review(models.Model):
 
 class CookingTime(models.Model):
 	user = models.ForeignKey(User)
-	heatingConst = models.IntegerField() # Approximation of heating curve
+	heatingConst = models.FloatField(default=4.18) # Approximation of heating curve
 	date = models.DateTimeField(auto_now_add=True)
 	def __unicode_(self):
 		return self.user.first_name
