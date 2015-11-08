@@ -94,6 +94,9 @@ function submit_time(e)
 	{
 		$('#calc_btn').attr("data-constant", data);
 		$("#calc_input_row").append($("<span id='enter_input_error'>Success!</span>"));
+	}).fail(function()
+	{
+		$("#calc_input_row").append($("<span id='enter_input_error'>Error</span>"));	
 	});
 	
 }

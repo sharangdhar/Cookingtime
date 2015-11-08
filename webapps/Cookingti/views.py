@@ -299,6 +299,10 @@ def addItem(request):
 
 
 def postTime(request):
+	
+	if not request.user.is_authenticated():
+		raise Http404
+		
 	if request.method != 'POST':
 		raise Http404
 		
