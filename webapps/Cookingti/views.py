@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
@@ -22,13 +23,13 @@ from Cookingti.models import *
 from Cookingti.forms import *
 
 
-def home(request):
+def home(request):	
 	context = {'page_name':'Home'}
-	context['foods_'] = Food.objects.all();
-	context['recipes_'] = Recipe.objects.all();
-	context['equipments_'] = Equipment.objects.all()
+	context['foods_'] = Food.objects.all().order_by('-date')[:5]
+	context['recipes_'] = Recipe.objects.all().order_by('-date')[:5]
+	context['equipments_'] = Equipment.objects.all().order_by('-date')[:5]
 	context['add_item_form'] = AddItemForm()
-	session = {'page_type': '', 'item':  ''}
+	session = {'page_type': '', 'item':	 ''}
 	return render(request, 'Cookingti/hs_main.html', context)
 
 def search(request):
@@ -87,7 +88,7 @@ def search(request):
 
 def profile(request):
 	context = {'page_name': request.user.username}
-	session = {'page_type': '', 'item':  ''}
+	session = {'page_type': '', 'item':	 ''}
 	return render(request, 'Cookingti/profile.html', context)
 
 
@@ -97,9 +98,11 @@ def item(request, item_type='', id = -1):
 	
 	if request.method == "POST":
 		context = {'page_name': 'Item'}
-    	
-
-    	
+		
+		# Check authentication
+		if not request.user.is_authenticated():
+			return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+			
 		#date will be added automatically
 		
 		if not request.POST['page_type'] or not 'page_type' in request.POST:
@@ -135,20 +138,20 @@ def item(request, item_type='', id = -1):
 				raise Http404
 					
 		
-		context = {'page_name': item.name, 'page_type': item_type, 'item':  item, 'user': request.user}
+		context = {'page_name': item.name, 'page_type': item_type, 'item':	item, 'user': request.user}
 		
 		new_entry = Review(user=request.user, item=item)
 		new_form = ReviewForm(request.POST, instance=new_entry)
 		if not new_form.is_valid():
 			print("form errors")
 			context['review_form'] = new_form
-			session = {'page_type': item_type, 'item':  item}
+			session = {'page_type': item_type, 'item':	item}
 			return render(request, 'Cookingti/item_main.html', context)
 			
 		new_form.save()
 		
 		context['review_form'] = Review()
-		session = {'page_type': item_type, 'item':  item}
+		session = {'page_type': item_type, 'item':	item}
 		return render(request, 'Cookingti/item_main.html', context)
 	
 	
@@ -163,7 +166,7 @@ def item(request, item_type='', id = -1):
 	item_flag = True
 
 	# item flag will be true if user enters wrong url
-	if (item_type=='food' or item_type=='recipe' or item_type=='equip'):
+	if (item_type=='food' or item_type=='recipe' or item_type=='equipment'):
 		item_flag = False
 
 	if (item_flag or (id < 0)):
@@ -189,12 +192,12 @@ def item(request, item_type='', id = -1):
 			raise Http404
 
 	
-	context = {'page_name': item_new.name, 'page_type': item_type, 'item':  item_new, 'user': request.user}
+	context = {'page_name': item_new.name, 'page_type': item_type, 'item':	item_new, 'user': request.user}
 	
 	context['review_form'] = ReviewForm()
 	
 	#created to keep track of information across this method and postReview method
-	session = {'page_type': item_type, 'item':  item_new}
+	session = {'page_type': item_type, 'item':	item_new}
 	return render(request, 'Cookingti/item_main.html', context)
 
 
@@ -211,24 +214,24 @@ def register(request):
 		context['form'] = RegistrationForm()
 		return render(request, 'Cookingti/register.html', context)
 
-    # Creates a bound form from the request POST parameters and makes the 
-    # form available in the request context dictionary.
+	# Creates a bound form from the request POST parameters and makes the 
+	# form available in the request context dictionary.
 	form = RegistrationForm(request.POST)
 
 	context['form'] = form
 
-    # Validates the form.
+	# Validates the form.
 	if not form.is_valid():
 		return render(request, 'Cookingti/register.html', context)
 
 
-    # Logs in the new user and redirects to his/her todo list
+	# Logs in the new user and redirects to his/her todo list
 	new_user = User.objects.create_user(username= request.POST['username'], password = request.POST['password1'],
 		first_name=request.POST["firstname"],last_name= request.POST["lastname"], email=request.POST["email"] )
 	new_user.save()
 
 	new_user = authenticate(username=form.cleaned_data['username'],
-                            password=form.cleaned_data['password1'])
+							password=form.cleaned_data['password1'])
 
 	login(request, new_user)
 
@@ -246,7 +249,11 @@ def postImage(request):
 
 	if request.method == 'GET':
 		context['form'] = PhotoForm()
-		return render(request,  'Cookingti/item_main.html', context)
+		return render(request,	'Cookingti/item_main.html', context)
+
+	# Check authentication
+	if not request.user.is_authenticated():
+		return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 	#date will be added automatically
 	new_entry = PhotoForm(user=request.user)
@@ -262,17 +269,23 @@ def addItem(request):
 	if request.method == 'GET':
 		return redirect('Cookingti/home')
 
+	# Check authentication
+	if not request.user.is_authenticated():
+		return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 	form = AddItemForm(request.POST)
 
 	context = {}
 
-	context['form'] = form
-	    # Validates the form.
+	context['new_form'] = form
+		# Validates the form.
 	if not form.is_valid():
-		print "error"
-		context['errors'] = form.errors
-		return render(request, 'Cookingti/register.html', context)
+		context['foods_'] = Food.objects.all();
+		context['recipes_'] = Recipe.objects.all();
+		context['equipments_'] = Equipment.objects.all()
+		context['add_item_form'] = AddItemForm()
+		session = {'page_type': '', 'item':	 ''}
+		return render(request, 'Cookingti/hs_main.html', context)
 
 	if form.cleaned_data['item_type'] == 'food':
 		new_item = Food(name = form.cleaned_data['item'])

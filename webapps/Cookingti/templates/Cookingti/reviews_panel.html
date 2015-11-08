@@ -57,7 +57,6 @@
     
     
     <div id="reviews_wrapper">
-    {{ item.reviews.all|length}}
     {% for review in item.reviews.all %}
         {% include 'Cookingti/review_panel.html' with review=review %}
     {% endfor %}

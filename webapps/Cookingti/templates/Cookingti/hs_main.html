@@ -12,12 +12,15 @@
         <br>
         <br>Add a new item
         <form action="{% url 'addItem' %}" method="post" name="form">
-            <input type="text" class="jumbo_search" id="new_input" name="item" placeholder="name" value="">
+            {{ new_form.non_field_errors }}
+            <input type="text" class="jumbo_search" id="new_input" name="item" placeholder="name" value="">{{ new_form.item.errors.as_text }}
             <select name="item_type" id="new_type">
                 <option value="food">Food</option>
                 <option  value="recipe">Recipe</option>
                 <option value="equipment">Equipment</option>
-            </select>
+            </select>{{ new_form.item_type.errors }}
+            
+            
             <button id="new_button" type='submit'>New</button>
             {% csrf_token %}
         </form>
