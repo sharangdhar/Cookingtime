@@ -25,7 +25,7 @@ from Cookingti.forms import *
 def home(request):
 	context = {'page_name':'Home'}
 	context['foods_'] = Food.objects.all();
-	context['recipies_'] = Recipe.objects.all();
+	context['recipes_'] = Recipe.objects.all();
 	context['equipments_'] = Equipment.objects.all()
 	context['add_item_form'] = AddItemForm()
 	session = {'page_type': '', 'item':  ''}
@@ -98,9 +98,7 @@ def item(request, item_type='', id = -1):
 	if request.method == "POST":
 		context = {'page_name': 'Item'}
     	
-		if request.method == 'GET':
-			context['form'] = ReviewForm()
-			return render(request,  'Cookingti/item_main.html', context)
+
     	
 		#date will be added automatically
 		
@@ -190,11 +188,10 @@ def item(request, item_type='', id = -1):
 		except:
 			raise Http404
 
-
 	
 	context = {'page_name': item_new.name, 'page_type': item_type, 'item':  item_new, 'user': request.user}
 	
-	context['review_form'] = Review()
+	context['review_form'] = ReviewForm()
 	
 	#created to keep track of information across this method and postReview method
 	session = {'page_type': item_type, 'item':  item_new}
@@ -280,7 +277,8 @@ def addItem(request):
 	if form.cleaned_data['item_type'] == 'food':
 		new_item = Food(name = form.cleaned_data['item'])
 	elif form.cleaned_data['item_type'] == 'recipe':
-		new_item = Recipe(name = form.cleaned_data['item'])
+		# Only recipes are tied to a user
+		new_item = Recipe(user=request.user, name = form.cleaned_data['item'])
 	else:
 		new_item = Equipment(name = form.cleaned_data['item'])
 
@@ -291,6 +289,5 @@ def addItem(request):
 
 def postTime(request):
 	return
-
 
 

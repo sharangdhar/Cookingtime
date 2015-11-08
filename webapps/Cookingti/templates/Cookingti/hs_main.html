@@ -8,7 +8,9 @@
         <button id="search_button">Search</button>
         
         <br>
+        <br>or
         <br>
+        <br>Add a new item
         <form action="{% url 'addItem' %}" method="post" name="form">
             <input type="text" class="jumbo_search" id="new_input" name="item" placeholder="name" value="">
             <select name="item_type" id="new_type">
@@ -44,7 +46,7 @@
         
             <div id="recpies_wrapper">
             {% for recipe_ in recipes_ %}
-                {% include "hs_panel.html" with item=recipe_ type="recipe"%}
+                {% include "Cookingti/hs_panel.html" with item=recipe_ type="recipe"%}
             {% endfor %}
             </div>
         </div><!-- Recipies col -->
@@ -54,7 +56,7 @@
             
             <div id="equipment_wrapper">
             {% for equipment_ in equipments_ %}
-                {% include "hs_panel.html"  with item=equipment_ type="equipment"%}
+                {% include "Cookingti/hs_panel.html"  with item=equipment_ type="equipment"%}
             {% endfor %}
             </div>
     </div><!-- 3 col cont -->
