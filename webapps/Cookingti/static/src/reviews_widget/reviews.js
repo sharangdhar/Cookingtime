@@ -76,7 +76,7 @@ function review_sort_highest(a, b)
 {    
     var a_sort = review_get_stars(a);
     var b_sort = review_get_stars(b);
-    
+    	
     if(a_sort < b_sort)
     {
         return 1;
@@ -91,9 +91,10 @@ function review_sort_highest(a, b)
 
 function review_sort_lowest(a, b)
 {    
+
     var a_sort = review_get_stars(a);
     var b_sort = review_get_stars(b);
-    
+	
     if(a_sort > b_sort)
     {
         return 1;

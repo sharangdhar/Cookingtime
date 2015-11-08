@@ -95,6 +95,7 @@ def profile(request):
 @ensure_csrf_cookie  # Gives CSRF token for later requests.
 def item(request, item_type='', id = -1):
 	
+	# Posting a review
 	if request.method == "POST":
 		context = {'page_name': 'Item'}
 		
@@ -149,9 +150,14 @@ def item(request, item_type='', id = -1):
 			
 		new_form.save()
 		
-		context['review_form'] = Review()
+		# UPDATE STARS
+		
+		
+		
+		
+		
 		session = {'page_type': item_type, 'item':	item}
-		return render(request, 'Cookingti/item_main.html', context)
+		return redirect("/item/" + page_type + "/" + str(item.id))
 	
 	
 	
