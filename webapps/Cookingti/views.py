@@ -78,7 +78,7 @@ def search(request):
 
 	item_html = []
 	for item in items:
-		item_html.append(render_to_string(template, {'item':item}))
+		item_html.append(render_to_string(template, {'item':item, 'type':request.GET['type']}))
 		
 	ret = ''.join(item_html)
 	
