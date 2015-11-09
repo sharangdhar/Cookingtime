@@ -12,7 +12,7 @@
     {% endif %}
     
     <div id="recipe_form">
-        <textarea id="recipe_text" name="text" value="">{{ item.text }}</textarea>
+        <textarea maxlength="500" id="recipe_text" name="text" value="">{{ item.text }}</textarea>
         <button id="recipe_submit_button" data-id={{item.id}} action="submit">Submit</button>
     </div>
     

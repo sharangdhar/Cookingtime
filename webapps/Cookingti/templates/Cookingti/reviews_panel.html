@@ -42,7 +42,7 @@
             <input type="hidden" name="page_type" value="{{ page_type }}">
             <input type="hidden" name="item_id" value="{{item.id}}">
             
-            <textarea id="new_review_area" name="review" rows="15"></textarea>{{ review_form.review.errors}}
+            <textarea maxlength="500" id="new_review_area" name="review" rows="15"></textarea>{{ review_form.review.errors}}
             {% csrf_token %}
             <button>Submit</button>
 
