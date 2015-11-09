@@ -59,11 +59,11 @@ def search(request):
 		if len(items) == 0:
 			raise Http404()
 	elif request.GET['type'] == 'recipe':
-		items = Recipe.objects.filter(name__iexact=query)
+		items = Recipe.objects.filter(name__contains=query)
 		if len(items) == 0:
 			raise Http404()
 	elif request.GET['type'] == 'equipment':
-		items = Equipment.objects.filter(name__iexact=query)
+		items = Equipment.objects.filter(name__contains=query)
 		if len(items) == 0:
 			raise Http404()
 	else:

@@ -520,7 +520,10 @@ input
     font-size: 15px;
 }
 
-
+.form_list input
+{
+	margin-top: 5px;
+}
 textarea
 {
 	border: none;

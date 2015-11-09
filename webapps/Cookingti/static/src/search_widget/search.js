@@ -39,7 +39,7 @@ function search()
 
 
 
-	$.get('/search', {type: "recipes", query: val, page:'search'}).done(function(data)
+	$.get('/search', {type: "recipe", query: val, page:'search'}).done(function(data)
 	{	
 		$('#recpies_wrapper').html(data);
 		
