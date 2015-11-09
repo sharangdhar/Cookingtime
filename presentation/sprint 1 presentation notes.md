@@ -23,6 +23,7 @@
             - post recipes
 - Goal for next sprint - Sharang
     - Adding images
+    - Top charts
     - Linking foods and recipes
     - Barcode scanning
     - Amazon integration
