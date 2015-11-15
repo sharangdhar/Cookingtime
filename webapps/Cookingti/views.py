@@ -74,7 +74,10 @@ def search(request):
 	if request.GET['page'] == 'search':
 		template = 'Cookingti/hs_panel.html'
 	elif request.GET['page'] == 'item':
-		template = 'Cookingti/link_panel.html'
+		template = 'Cookingti/bulk_sidebar_search_dropdown_item.html'
+	else:
+		raise Http404
+		print("invalid page")
 
 	item_html = []
 	for item in items:
@@ -388,3 +391,8 @@ def postRecipe(request):
 	rendered = markdown.markdown(request.POST['text'])
 	
 	return HttpResponse(rendered, content_type="text/html")
+	
+	
+def addLink(request):
+	raise Http404
+	return HttpResponse("")

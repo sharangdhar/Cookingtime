@@ -40,6 +40,8 @@
             <div id="foods_wrapper">
             {% for food_ in foods_ %}
                 {% include "Cookingti/hs_panel.html" with item=food_ type="food"%}
+            {% empty %}
+                <p>No recent foods</p>
             {% endfor %}
             </div>
         </div> <!-- Food col -->
@@ -50,6 +52,8 @@
             <div id="recpies_wrapper">
             {% for recipe_ in recipes_ %}
                 {% include "Cookingti/hs_panel.html" with item=recipe_ type="recipe"%}
+            {% empty %}
+                <p>No recent recipes</p>
             {% endfor %}
             </div>
         </div><!-- Recipies col -->
@@ -60,6 +64,8 @@
             <div id="equipment_wrapper">
             {% for equipment_ in equipments_ %}
                 {% include "Cookingti/hs_panel.html"  with item=equipment_ type="equipment"%}
+            {% empty %}
+                <p>No recent equipment</p>
             {% endfor %}
             </div>
     </div><!-- 3 col cont -->
