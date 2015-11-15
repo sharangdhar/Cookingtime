@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^post_img$', 'Cookingti.views.postImage', name='post_img'),
     url(r'^post_time$', 'Cookingti.views.postTime', name='post_time'),
 	url(r'^post_recipe$', 'Cookingti.views.postRecipe', name='post_review'),
+	url(r'^post_link$', 'Cookingti.views.postLink', name='post_link'),
 	
 	url(r'^item/(?P<item_type>[\w-]+)/(?P<id>\d+)$', 'Cookingti.views.item', name='item'),
 	

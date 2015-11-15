@@ -14,3 +14,4 @@
 - http://stackoverflow.com/questions/16079299/getting-init-got-an-unexpected-keyword-argument-instance-with-createview
 - http://stackoverflow.com/questions/6217638/access-foreignkey-set-directly-in-template-in-django
 - http://stackoverflow.com/questions/9447134/html-select-how-to-set-default-text-which-wont-be-shown-in-drop-down-list
+- http://stackoverflow.com/questions/3682513/django-models-py-circular-foreign-key

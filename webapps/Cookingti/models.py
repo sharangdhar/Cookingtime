@@ -30,6 +30,7 @@ class Food(models.Model):
 	photos = models.ForeignKey(Photo, blank=True, null=True)
 	avgConst = models.FloatField(default=4.18)
 	numConst = models.IntegerField(default=1, blank=True)
+	link = models.ManyToManyField('Recipe', blank=True, related_name='link')
 	
 	def __unicode_(self):
 		return self.name
@@ -58,6 +59,7 @@ class Recipe(models.Model):
 	stars = models.IntegerField(blank=True, null=True)
 	starsFloat = models.FloatField(default=0.0, blank=True)
 	numReviews = models.IntegerField(default=0, blank=True)
+	
 	def __unicode_(self):
 		return self.text
         

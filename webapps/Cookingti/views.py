@@ -153,6 +153,11 @@ def item(request, item_type='', id = -1):
 						
 		context = {'page_name': item.name, 'page_type': item_type, 'item':	item, 'user': request.user}
 		
+		if context['page_type'] == "food":
+			context['link_item_type'] = 'recipe'
+		elif context['page_type'] == "recipe":
+			context['link_item_type'] = 'food'
+		
 		if not new_form.is_valid():
 			print("form errors")
 			context['review_form'] = new_form
@@ -172,6 +177,11 @@ def item(request, item_type='', id = -1):
 		item.stars = int(round(new_float))
 		item.numReviews = new_num
 		item.save()
+		
+		if context['page_type'] == "food":
+			context['link_item_type'] = 'recipe'
+		elif context['page_type'] == "recipe":
+			context['link_item_type'] = 'food'
 		
 		
 		session = {'page_type': item_type, 'item':	item}
@@ -218,8 +228,10 @@ def item(request, item_type='', id = -1):
 	
 	if context['page_type'] == "food":
 		context['review_form'] = FoodReviewForm()
+		context['link_item_type'] = 'recipe'
 	elif context['page_type'] == "recipe":
 		context['review_form'] = RecipeReviewForm()
+		context['link_item_type'] = 'food'
 	elif context['page_type'] == "equipment":
 		context['review_form'] = EquipmentReviewForm()
 	
@@ -393,6 +405,65 @@ def postRecipe(request):
 	return HttpResponse(rendered, content_type="text/html")
 	
 	
-def addLink(request):
-	raise Http404
-	return HttpResponse("")
+def postLink(request):
+	
+	if not request.user.is_authenticated():
+		
+		raise Http404
+		
+	if request.method != 'POST':
+		print('not post')
+		raise Http404
+	
+	
+	
+	
+	if not 'item_id' in request.POST or not request.POST['item_id']:
+		print('no item_id')
+		raise Http404
+	item_id = request.POST['item_id']
+	
+	
+	if not 'link_id' in request.POST or not request.POST['link_id']:
+		print('no link_id')
+		raise Http404
+	link_id = request.POST['link_id']
+	
+	
+	if not 'link_type' in request.POST or not request.POST['link_type']:
+		print("no type")
+		raise Http404();
+	link_type = request.POST['link_type']
+	
+	
+	
+	
+	
+	if link_type == "recipe":
+		try:
+			link_item = Recipe.objects.get(id = link_id)
+			item = Food.objects.get(id= item_id)
+
+			item.link.add(link_item)
+			print(item.link.all())
+		except:
+			print("couldn't get items")
+			raise Http404
+	elif link_type == "food":
+		try:
+			link_item = Food.objects.get(id = link_id)
+			item = Recipe.objects.get(id = item_id)
+
+			link_item.link.add(item)
+			print(link_item.link.all())			
+		except:
+			print("couldn't get items")
+			raise Http404
+	else:
+		print("bad link type")
+	
+		
+
+	ret = render_to_string("Cookingti/bulk_sidebar_item.html", {'item':link_item, 'type':link_type});
+	
+	return HttpResponse(ret, content_type="text/html")

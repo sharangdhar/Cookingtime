@@ -1,12 +1,12 @@
 {% load staticfiles %}
 
-<div id="bulk_sidebar_panel" class="panel">
+<div id="bulk_sidebar_panel" class="panel" data-id="{{ item.id }}">
     <h3>Recipies</h3> 
     
     <div id="bulk_sidebar_inner_wrapper">
         
-        {% for link_item in linked_items %}
-            {% include "bulk_sidebar_item.html" with link_item=item %}
+        {% for link_item in item.link.all %}
+            {% include "Cookingti/bulk_sidebar_item.html" with item=link_item %}
         {% empty %}
             <p id="no_linked_items">No linked items</p>
         {% endfor %}
