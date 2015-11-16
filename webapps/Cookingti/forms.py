@@ -84,10 +84,23 @@ class EquipmentReviewForm(forms.ModelForm):
 
 
 
-class PhotoForm(forms.ModelForm):
+class FoodPhotoForm(forms.ModelForm):
     class Meta:
-        model = Photo
-        exclude = ('user',)
+        model = FoodPhoto
+        exclude = ('user','item')
+		
+		
+class RecipePhotoForm(forms.ModelForm):
+    class Meta:
+        model = FoodPhoto
+        exclude = ('user','item')
+		
+
+class EquipmentPhotoForm(forms.ModelForm):
+    class Meta:
+        model = FoodPhoto
+        exclude = ('user','item')		
+		
 
 class AddItemForm(forms.Form):
     item = forms.CharField(max_length = 20, widget = forms.TextInput())

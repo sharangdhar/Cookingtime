@@ -3,8 +3,13 @@
 <div id="photo_panel" class="panel">
         
     <div id="carousel_upload_box">
-        <input type="file" id="carousel_file">
-        <button id="carousel_submit">Submit</button>
+        <form id="carousel_upload_form" method="POST" action="{% url "post_img" %}" enctype="multipart/form-data">
+            <input type="file" id="carousel_file" name="picture">
+            <input type="hidden" name="page_type" id="carousel_type" value="{{page_type}}">
+            <input type="hidden" name="item_id" id="carousel_id" value="{{item.id}}">
+            {% csrf_token %}
+            <button id="carousel_submit">Submit</button>
+        </form>
     </div>
     <button id="carousel_upload_button">Upload</button>
     

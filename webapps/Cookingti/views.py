@@ -97,6 +97,7 @@ def profile(request):
 
 #valid item types are 'food','recipe', 'equipment'
 @ensure_csrf_cookie  # Gives CSRF token for later requests.
+@transaction.atomic # Should only be if post
 def item(request, item_type='', id = -1):
 	
 	# Posting a review
@@ -240,7 +241,7 @@ def item(request, item_type='', id = -1):
 	return render(request, 'Cookingti/item_main.html', context)
 
 
-
+@transaction.atomic
 def register(request):
 
 	context = {'page_name':'Register'}
@@ -279,31 +280,87 @@ def register(request):
 
 	return redirect('/Cookingti/')
 
-
+@transaction.atomic
 def postImage(request):
 	# We might not need the GET part depending on how the front end is 
 	# being handled
-	context = {'page_name': 'Item', 'page_type':session['page_type'],
-	 'item':session['item']}
-
-	if request.method == 'GET':
-		context['form'] = PhotoForm()
-		return render(request,	'Cookingti/item_main.html', context)
+	
+	if request.method != "POST":
+		raise Http404
+	
+	if not "page_type" in request.POST or not request.POST["page_type"]:
+		print("no page type")
+		raise Http404
+	page_type = request.POST["page_type"]
+	
+	context = {'page_name': 'Item', 'page_type':page_type}
+	# 'page_type':session['page_type'], 'item':session['item']} # Generates error: global name 'sesson' not defined
 
 	# Check authentication
 	if not request.user.is_authenticated():
-		return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+		print("not logged in")
+		raise Http404
+		# return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
+
+
+
+	
+	
+	if not "item_id" in request.POST or not request.POST["item_id"]:
+		print("no item_id")
+		raise Http404
+	item_id = request.POST["item_id"]
+	
+	if page_type == 'food':
+		try:
+			item = Food.objects.get(id=item_id)
+		except:
+			print("cant find food", )
+			raise Http404
+		new_instance = FoodPhoto(user=request.user, item=item)
+		form = FoodPhotoForm(request.POST, request.FILES, instance=new_instance)
+		
+	elif page_type == 'recipe':
+		try:
+			item = Recipe.objects.get(id=item_id)
+		except:
+			print("cant find recipe")
+			raise Http404
+		new_instance = RecipePhoto(user=request.user, item=item)
+		form = RecipePhotoForm(request.POST, request.FILES, instance=new_instance)
+		
+	elif page_type == 'equipment':
+		try:
+			item = Equipment.objects.get(id=item_id)
+		except:
+			print("cant find equipment")
+			raise Http404
+		new_instance = EquipmentPhoto(user=request.user, item=item)
+		form = EquipmentPhotoForm(request.POST, request.FILES, instance=new_instance)
+		
+	else:
+		print ("bad page type")
+		raise Http404()
+	
+	
 	#date will be added automatically
-	new_entry = PhotoForm(user=request.user)
-	form = PhotoForm(request.POST, instance = new_entry)
+	# new_instance = PhotoForm(user=request.user, item=item)
+	# form = PhotoForm(request.POST, instance=new_instance)
 	if not form.is_valid():
-		context['form'] = form
-		return render(request,'Cookingti/item_main.html', context)
+		for error in form.non_field_errors:
+			print(error)
+		for error in form.picture.errors:
+			print(error)
+		raise Http404
+		
 	form.save()
-	return render(request,'Cookingti/item_main.html', context)
+	
+	
+	return redirect('Cookingti/item/' + page_type + '/' + item_id)
+	
 
-
+@transaction.atomic
 def addItem(request):
 	if request.method == 'GET':
 		return redirect('Cookingti/home')
@@ -339,6 +396,7 @@ def addItem(request):
 	return redirect('Cookingti/item/' + form.cleaned_data['item_type'] + '/' + str(new_item.id))
 
 
+@transaction.atomic
 def postTime(request):
 	
 	if not request.user.is_authenticated():
@@ -374,6 +432,8 @@ def postTime(request):
 	
 	return HttpResponse(str(item.avgConst), content_type="text/plain")
 
+
+@transaction.atomic
 def postRecipe(request):
 	
 	if not request.user.is_authenticated():
@@ -404,7 +464,8 @@ def postRecipe(request):
 	
 	return HttpResponse(rendered, content_type="text/html")
 	
-	
+
+@transaction.atomic
 def postLink(request):
 	
 	if not request.user.is_authenticated():

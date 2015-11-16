@@ -49,7 +49,7 @@ $(document).ready(function()
 		check_overhang($("#add_link_no_results"));
     });
     
-    $(window).resize(check_overhang);
+    $(window).resize(function(e){check_overhang($("#add_link_results"));});
     
     
 });
@@ -71,8 +71,6 @@ function link_search(e)
 		var items = $(".bulk_sidebar_inner_panel");
 		items.click(function(e){add_link(e);});
 
-		
-		
 		
 		show_dropdown(results);
 		check_overhang(results);

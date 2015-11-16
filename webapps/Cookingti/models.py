@@ -14,9 +14,6 @@ class Person(models.Model):
 	def __unicode_(self):
 			return self.user.first_name
 
-class Photo(models.Model):
-	user = models.ForeignKey(User)
-	picture = models.ImageField(upload_to='photos', blank=True)
 
 
 class Food(models.Model):
@@ -27,11 +24,10 @@ class Food(models.Model):
 	starsFloat = models.FloatField(default=0.0, blank=True)
 	numReviews = models.IntegerField(default=0, blank=True)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
-	photos = models.ForeignKey(Photo, blank=True, null=True)
 	avgConst = models.FloatField(default=4.18)
 	numConst = models.IntegerField(default=1, blank=True)
 	link = models.ManyToManyField('Recipe', blank=True, related_name='link')
-	
+
 	def __unicode_(self):
 		return self.name
 
@@ -43,7 +39,6 @@ class Equipment(models.Model):
 	stars = models.IntegerField(blank=True, null=True)
 	starsFloat = models.FloatField(default=0.0, blank=True)
 	numReviews = models.IntegerField(default=0, blank=True)
-	photos = models.ForeignKey(Photo, blank=True, null=True)
 	def __unicode_(self):
 		return self.name
 
@@ -55,7 +50,6 @@ class Recipe(models.Model):
 	foods = models.ManyToManyField(Food, related_name='recipes')
 	text = models.CharField(max_length = TEXT_SIZE, blank=True, default="")
 	date = models.DateTimeField(auto_now_add=True, blank=True)
-	photos = models.ForeignKey(Photo, blank=True, null=True)
 	stars = models.IntegerField(blank=True, null=True)
 	starsFloat = models.FloatField(default=0.0, blank=True)
 	numReviews = models.IntegerField(default=0, blank=True)
@@ -71,7 +65,6 @@ class FoodReview(models.Model):
 	stars = models.IntegerField(default=0, blank=True, null=True)
 	review = models.CharField(max_length = TEXT_SIZE)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
-	photos = models.ForeignKey(Photo, blank=True, null=True)
 	item = models.ForeignKey(Food, related_name='reviews')
 	
 	def __unicode_(self):
@@ -84,7 +77,6 @@ class RecipeReview(models.Model):
 	stars = models.IntegerField(default=0, blank=True, null=True)
 	review = models.CharField(max_length = TEXT_SIZE)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
-	photos = models.ForeignKey(Photo, blank=True, null=True)
 	item = models.ForeignKey(Recipe, related_name='reviews')
 	
 	def __unicode_(self):
@@ -96,7 +88,6 @@ class EquipmentReview(models.Model):
 	stars = models.IntegerField(default=0, blank=True, null=True)
 	review = models.CharField(max_length = TEXT_SIZE)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
-	photos = models.ForeignKey(Photo, blank=True, null=True)
 	item = models.ForeignKey(Equipment, related_name='reviews')
 	
 	def __unicode_(self):
@@ -104,3 +95,17 @@ class EquipmentReview(models.Model):
 
 
 
+class FoodPhoto(models.Model):
+	user = models.ForeignKey(User)
+	picture = models.ImageField(upload_to='photos', blank=True)
+	item = models.ForeignKey('Food', related_name="photos")
+	
+class RecipePhoto(models.Model):
+	user = models.ForeignKey(User)
+	picture = models.ImageField(upload_to='photos', blank=True)
+	item = models.ForeignKey('Recipe', related_name="photos")
+	
+class EqipmentPhoto(models.Model):
+	user = models.ForeignKey(User)
+	picture = models.ImageField(upload_to='photos', blank=True)
+	item = models.ForeignKey('Equipment', related_name="photos")
