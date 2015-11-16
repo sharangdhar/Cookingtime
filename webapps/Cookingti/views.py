@@ -229,11 +229,14 @@ def item(request, item_type='', id = -1):
 	
 	if context['page_type'] == "food":
 		context['review_form'] = FoodReviewForm()
+		context['photo_form'] = FoodPhotoForm()
 		context['link_item_type'] = 'recipe'
 	elif context['page_type'] == "recipe":
 		context['review_form'] = RecipeReviewForm()
+		context['photo_form'] = RecipePhotoForm()
 		context['link_item_type'] = 'food'
 	elif context['page_type'] == "equipment":
+		context['photo_form'] = EquipmentPhotoForm()
 		context['review_form'] = EquipmentReviewForm()
 	
 	#created to keep track of information across this method and postReview method
@@ -340,7 +343,7 @@ def postImage(request):
 		form = EquipmentPhotoForm(request.POST, request.FILES, instance=new_instance)
 		
 	else:
-		print ("bad page type")
+		print ("bad page type", page_type)
 		raise Http404()
 	
 	
@@ -354,6 +357,7 @@ def postImage(request):
 			print(error)
 		raise Http404
 		
+	new_instance.save()
 	form.save()
 	
 	

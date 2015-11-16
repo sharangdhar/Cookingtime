@@ -3,7 +3,8 @@
 
 <div class="bulk_sidebar_inner_panel">
     <a href="/item/{{ link_item_type }}/{{ item.id }}">
-        <img src="{% if item.photos %}{% url 'photo' item.photos.1.id %}{% else %}{% static 'img/placeholder.png' %}{% endif %}" class="bulk_sidebar_img">
+        {% comment %}<img src="{% if item.photos %}{% url 'photo' item.photos.1.id %}{% else %}{% static 'img/placeholder.png' %}{% endif %}" class="bulk_sidebar_img">{% endcomment %}
+        <img src="{% static 'img/placeholder.png' %}" class="bulk_sidebar_img">
         <div class="bulk_sidebar_text">
             <div class="bulk_sidebar_name bulk_sidebar_line">{{ item.name }}</div>
             <div class="bulk_sidebar_stars bulk_sidebar_line">{{ item.stars | stars_to_uni }}</div>

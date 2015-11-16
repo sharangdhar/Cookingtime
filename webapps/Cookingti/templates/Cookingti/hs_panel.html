@@ -3,7 +3,8 @@
 
 <div class="panel panel_3-2">
    <a href="/item/{{type}}/{{item.id}}">
-       <img src="{% if item.photos %}{% url 'photo' item.photos.1.id %}{% else %}{% static 'img/placeholder.png' %}{% endif %}" class="panel_img-2">
+       {% comment %}<img src="{% if item.photos.all.0 %}{% url 'photo' item.photos.all.0.id %}{% else %}{% static 'img/placeholder.png' %}{% endif %}" class="panel_img-2">{% endcomment %}
+        <img src="{% static 'img/placeholder.png' %}" class="panel_img-2">
         
         <div class="panel_preamble_text-2">
             <div class="panel_name panel_preamble_line">{{ item.name }}</div>

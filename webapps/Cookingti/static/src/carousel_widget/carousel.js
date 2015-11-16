@@ -30,7 +30,7 @@ $(document).ready(function()
 	
     $("#carousel_left_button").click(function(){slide("left");});
     $("#carousel_right_button").click(function(){slide("right");});
-	//$("#carousel_submit").click(function(e){upload(e); return false;});
+	$("#carousel_submit").click(function(e){upload(e); return false;});
     $("#carousel_upload_button").click(function()
     {
         $("#carousel_upload_box").toggle(200);
@@ -54,12 +54,15 @@ function upload(e)
 {
 	console.log("in upload");
 	
-	var fd = new FormData($("#carousel_upload_form")[0]);
-	/*
-	fd.append('page_type', $("carousel_type").val());
-	fd.append('item_id', $("carousel_id").val());
+	var fd = new FormData();
+	
+	console.log($("#carousel_id").val());
+	console.log($("#carousel_type").val());
+	
+	fd.append('page_type', $("#carousel_type").val());
+	fd.append('item_id', $("#carousel_id").val());
 	fd.append('picture', $("#carousel_file")[0].files[0]);
-	*/
+	
 	
 	$.ajax(
 	{
@@ -80,6 +83,7 @@ function upload(e)
 		}
     });
 	
+	return false;
 }
 
 function slide(direction)
