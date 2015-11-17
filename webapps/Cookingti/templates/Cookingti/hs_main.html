@@ -28,46 +28,20 @@
     </div>
 
     <div class="cols_cont">
-        
+        <link rel="stylesheet" href="{% static 'src/home/home.css' %}">
+        <script src="{% static "src/home/home.js" %}"></script>
 
-        <h1 id="hs_title">Latest</h1>
-
+        <h1><button id="latest_heading" class="hs_title hs_title_selected">Latest</button>/<button id="highest_heading" class="hs_title">Highest</button></h1>
         
-        
-        <div id='foods_col' class="col-md-4 col-sm-4">
-            <h2>Foods</h2>
-        
-            <div id="foods_wrapper">
-            {% for food_ in foods_ %}
-                {% include "Cookingti/hs_panel.html" with item=food_ type="food"%}
-            {% empty %}
-                <p>No recent foods</p>
-            {% endfor %}
-            </div>
-        </div> <!-- Food col -->
-    
-        <div id='recipies_col' class="col-md-4 col-sm-4">
-            <h2>Recipes</h2>
-        
-            <div id="recpies_wrapper">
-            {% for recipe_ in recipes_ %}
-                {% include "Cookingti/hs_panel.html" with item=recipe_ type="recipe"%}
-            {% empty %}
-                <p>No recent recipes</p>
-            {% endfor %}
-            </div>
-        </div><!-- Recipies col -->
-        
-        <div id='equipment_col' class="col-md-4 col-sm-4">
-            <h2>Equipment</h2>
+        <div id="latest" class="cols_cont_2">            
+            {% include "Cookingti/hs_3_col.html" with foods_=latest_foods recipes_=latest_recipes equipments_=latest_equipments %}
+        </div>
             
-            <div id="equipment_wrapper">
-            {% for equipment_ in equipments_ %}
-                {% include "Cookingti/hs_panel.html"  with item=equipment_ type="equipment"%}
-            {% empty %}
-                <p>No recent equipment</p>
-            {% endfor %}
-            </div>
+        <div id="highest" class="cols_cont_2">            
+            {% include "Cookingti/hs_3_col.html" with foods_=highest_foods recipes_=highest_recipes equipments_=highest_equipments %}
+        </div>
+            
+
     </div><!-- 3 col cont -->
     
     

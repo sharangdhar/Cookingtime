@@ -1,0 +1,20 @@
+.cols_cont_2
+{
+	overflow: auto;
+}
+
+h1 .hs_title
+{
+	font-size: 35px;
+	color: #bbb;
+}
+
+h1 .hs_title_selected
+{
+	color: #777;
+}
+
+#highest
+{
+	display: none;
+}

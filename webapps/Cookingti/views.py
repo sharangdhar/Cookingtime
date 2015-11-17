@@ -27,9 +27,15 @@ from Cookingti.forms import *
 
 def home(request):	
 	context = {'page_name':'Home'}
-	context['foods_'] = Food.objects.all().order_by('-date')[:5]
-	context['recipes_'] = Recipe.objects.all().order_by('-date')[:5]
-	context['equipments_'] = Equipment.objects.all().order_by('-date')[:5]
+	context['latest_foods'] = Food.objects.all().order_by('-date')[:5]
+	context['highest_foods'] = Food.objects.all().order_by('-stars')[:5]
+	
+	context['latest_recipes'] = Recipe.objects.all().order_by('-date')[:5]
+	context['highest_recipes'] = Recipe.objects.all().order_by('-stars')[:5]
+	
+	context['latest_equipments'] = Equipment.objects.all().order_by('-date')[:5]
+	context['highest_equipments'] = Equipment.objects.all().order_by('-stars')[:5]
+	
 	context['add_item_form'] = AddItemForm()
 	session = {'page_type': '', 'item':	 ''}
 	return render(request, 'Cookingti/hs_main.html', context)
