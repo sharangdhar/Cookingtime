@@ -105,7 +105,7 @@ class RecipePhoto(models.Model):
 	picture = models.ImageField(upload_to='photos', blank=True)
 	item = models.ForeignKey('Recipe', related_name="photos")
 	
-class EqipmentPhoto(models.Model):
+class EquipmentPhoto(models.Model):
 	user = models.ForeignKey(User)
 	picture = models.ImageField(upload_to='photos', blank=True)
 	item = models.ForeignKey('Equipment', related_name="photos")

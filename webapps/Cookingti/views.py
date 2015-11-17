@@ -298,6 +298,7 @@ def postImage(request):
 	# being handled
 	
 	if request.method != "POST":
+		print("method not post")
 		raise Http404
 	
 	if not "page_type" in request.POST or not request.POST["page_type"]:
@@ -315,14 +316,14 @@ def postImage(request):
 		# return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
-
-
-	
 	
 	if not "item_id" in request.POST or not request.POST["item_id"]:
 		print("no item_id")
 		raise Http404
 	item_id = request.POST["item_id"]
+	
+
+	
 	
 	if page_type == 'food':
 		try:
@@ -360,10 +361,8 @@ def postImage(request):
 	# new_instance = PhotoForm(user=request.user, item=item)
 	# form = PhotoForm(request.POST, instance=new_instance)
 	if not form.is_valid():
-		for error in form.non_field_errors:
-			print(error)
-		for error in form.picture.errors:
-			print(error)
+		print("form error")
+		print(form.errors)
 		raise Http404
 		
 	new_instance.save()

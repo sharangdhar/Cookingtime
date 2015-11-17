@@ -2,6 +2,9 @@
 
 ## Elliot
 
+- Stock photography from
+    - [Wikipedia](https://en.wikipedia.org/wiki/Main_Page)
+    - [Wikimedia Commons](https://commons.wikimedia.org/wiki/Main_Page)
 - http://stackoverflow.com/questions/5780109/removing-rounded-corners-from-a-select-element-in-chrome-webkit
 - http://bavotasan.com/2011/style-select-box-using-only-css/
 - http://davidwalsh.name/css-vertical-center
