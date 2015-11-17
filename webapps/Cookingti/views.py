@@ -90,7 +90,11 @@ def search(request):
 
 	item_html = []
 	for item in items:
-		item_html.append(render_to_string(template, {'link_item':item, 'link_item_type':request.GET['type']}))
+		if request.GET['page'] == 'search':
+			item_html.append(render_to_string(template, {'item':item, 'type':request.GET['type']}))
+		elif request.GET['page'] == 'item':
+			item_html.append(render_to_string(template, {'link_item':item, 'link_item_type':request.GET['type']}))
+
 		
 	ret = ''.join(item_html)
 	

@@ -22,3 +22,4 @@
 - http://stackoverflow.com/questions/3682513/django-models-py-circular-foreign-key
 - http://stackoverflow.com/questions/932653/how-to-prevent-buttons-from-submitting-forms
 - http://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery/8244082#8244082
+- http://stackoverflow.com/questions/986406/returning-pure-django-form-errors-in-json

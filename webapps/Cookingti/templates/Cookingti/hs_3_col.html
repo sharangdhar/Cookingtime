@@ -1,7 +1,7 @@
-<div id='foods_col' class="col-md-4 col-sm-4">
+<div id='{{type}}_foods_col' class="col-md-4 col-sm-4">
     <h2>Foods</h2>
 
-    <div id="foods_wrapper">
+    <div id="{{type}}_foods_wrapper">
     {% for food_ in foods_ %}
         {% include "Cookingti/hs_panel.html" with item=food_ type="food"%}
     {% empty %}
@@ -10,10 +10,10 @@
     </div>
 </div> <!-- Food col -->
 
-<div id='recipies_col' class="col-md-4 col-sm-4">
+<div id='{{type}}_recipies_col' class="col-md-4 col-sm-4">
     <h2>Recipes</h2>
 
-    <div id="recpies_wrapper">
+    <div id="{{type}}_recpies_wrapper">
     {% for recipe_ in recipes_ %}
         {% include "Cookingti/hs_panel.html" with item=recipe_ type="recipe"%}
     {% empty %}
@@ -22,10 +22,10 @@
     </div>
 </div><!-- Recipies col -->
 
-<div id='equipment_col' class="col-md-4 col-sm-4">
+<div id='{{type}}_equipment_col' class="col-md-4 col-sm-4">
     <h2>Equipment</h2>
 
-    <div id="equipment_wrapper">
+    <div id="{{type}}_equipment_wrapper">
     {% for equipment_ in equipments_ %}
         {% include "Cookingti/hs_panel.html"  with item=equipment_ type="equipment"%}
     {% empty %}
