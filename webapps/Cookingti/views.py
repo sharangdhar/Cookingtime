@@ -358,11 +358,31 @@ def postImage(request):
 		raise Http404
 		
 	new_instance.save()
-	form.save()
+	image = form.save()
 	
 	
-	return redirect('Cookingti/item/' + page_type + '/' + item_id)
+	return render(request, 'Cookingti/carousel_image.html', {'page_type':page_type, 'item':item, 'image':image})
 	
+	
+def getImage(request, page_type, item_id, img_id):
+    
+	if page_type == 'food':
+		item = get_object_or_404(Food, id=item_id)
+	elif page_type == 'recipe':
+		item = get_object_or_404(Recipe, id=item_id)
+	elif page_type == 'equipment':
+		item = get_object_or_404(Equipment, id=item_id)
+	else:
+		print ("bad page type", page_type)
+		raise Http404()
+	
+	image = item.photos.get(id=img_id)
+		
+		
+	content_type = guess_type(image.picture.name)
+	return HttpResponse(image.picture, content_type=content_type)
+	
+		
 
 @transaction.atomic
 def addItem(request):

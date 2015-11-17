@@ -20,13 +20,18 @@
         <img src="{% static "img/left_arrow.svg" %}" class="carousel_button_img">
     </div>
     <div id="carousel_slider">
-        <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
-        <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
-        <img src="{% static "img/placeholder_tall.png" %}" class="carousel_img">
-        <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
-        <img src="{% static "img/placeholder_tall.png" %}" class="carousel_img">
-        <img src="{% static "img/placeholder_tall.png" %}" class="carousel_img">
-        <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
+        {% for image in item.photos.all %}
+            {% include "Cookingti/carousel_image.html" with page_type=page_type item=item image=image %}
+        {% empty %}
+            <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
+            <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
+            <img src="{% static "img/placeholder_tall.png" %}" class="carousel_img">
+            <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
+            <img src="{% static "img/placeholder_tall.png" %}" class="carousel_img">
+            <img src="{% static "img/placeholder_tall.png" %}" class="carousel_img">
+            <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
+        {% endfor %}
+        
     </div>
     <div id="carousel_right_button">
         <img src="{% static "img/right_arrow.svg" %}" class="carousel_button_img">

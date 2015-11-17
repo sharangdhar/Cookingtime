@@ -73,13 +73,13 @@ function upload(e)
         type: 'POST',
         success: function (data) 
 		{
-			console.log("success");
-            console.log(data);
+			image = $(data);
+			$("#carousel_slider").append(image);
+			
         },
 		error: function(data)
 		{
-			console.log("error");
-			console.log(data);
+			console.log("upload photo error");
 		}
     });
 	
