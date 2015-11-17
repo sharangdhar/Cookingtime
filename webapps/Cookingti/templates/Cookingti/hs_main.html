@@ -4,13 +4,13 @@
 
 {% block main %}
     <div class="jumbotron">
-        <h3>Search</h3>
+        <h2>Search</h2>
         <input type="text" class="jumbo_search" id="search_input" value="">
         <button id="search_button">Search</button>
         
         <br>
-        <br><h3>or</h3>
-        <br><h3>Add a new item</h3>
+        <br>
+        <br><h2>Add a new item</h2>
         <form action="{% url 'addItem' %}" method="post" name="form">
             {{ new_form.non_field_errors }}
             <input type="text" class="jumbo_search" id="new_input" name="item" placeholder="name" value="">{{ new_form.item.errors.as_text }}
