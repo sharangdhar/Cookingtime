@@ -3,9 +3,9 @@
 
 
 <div class="add_link_result bulk_sidebar_inner_panel" data-id="{{item.id}}">
-    <img src="{% if item.photos %}{% url 'photo' item.photos.1.id %}{% else %}{% static 'img/placeholder.png' %}{% endif %}" class="bulk_sidebar_img">
+    <img src="{% if link_item.photos.all.0 %}{% url "image" link_item_type link_item.id link_item.photos.all.0.id %}{% else %}{% static 'img/placeholder.png' %}{% endif %}" class="bulk_sidebar_img">
     <div class="bulk_sidebar_text">
-        <div class="bulk_sidebar_name bulk_sidebar_line">{{ item.name }}</div>
-        <div class="bulk_sidebar_stars bulk_sidebar_line">{{ item.stars | stars_to_uni }}</div>
+        <div class="bulk_sidebar_name bulk_sidebar_line">{{ link_item.name }}</div>
+        <div class="bulk_sidebar_stars bulk_sidebar_line">{{ link_item.stars | stars_to_uni }}</div>
     </div><!-- bulk_sidebar_text -->
 </div> <!-- bulk_sidebar_inner_panel -->

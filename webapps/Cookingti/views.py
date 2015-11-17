@@ -63,14 +63,17 @@ def search(request):
 	if request.GET['type'] == 'food':
 		items = Food.objects.filter(name__contains=query)
 		if len(items) == 0:
+			print("len = 0")
 			raise Http404()
 	elif request.GET['type'] == 'recipe':
 		items = Recipe.objects.filter(name__contains=query)
 		if len(items) == 0:
+			print("len = 0")
 			raise Http404()
 	elif request.GET['type'] == 'equipment':
 		items = Equipment.objects.filter(name__contains=query)
 		if len(items) == 0:
+			print("len = 0")
 			raise Http404()
 	else:
 		raise Http404()
@@ -82,12 +85,12 @@ def search(request):
 	elif request.GET['page'] == 'item':
 		template = 'Cookingti/bulk_sidebar_search_dropdown_item.html'
 	else:
-		raise Http404
 		print("invalid page")
+		raise Http404
 
 	item_html = []
 	for item in items:
-		item_html.append(render_to_string(template, {'item':item, 'type':request.GET['type']}))
+		item_html.append(render_to_string(template, {'link_item':item, 'link_item_type':request.GET['type']}))
 		
 	ret = ''.join(item_html)
 	
