@@ -305,76 +305,53 @@ def postImage(request):
 		print("method not post")
 		raise Http404
 	
+	# Check authentication
+	if not request.user.is_authenticated():
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Login required'}]})
+		return HttpResponse(resp, content_type='application/json')
+		
+	
 	if not "page_type" in request.POST or not request.POST["page_type"]:
-		print("no page type")
-		raise Http404
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'page_type required'}]})
+		return HttpResponse(resp, content_type='application/json')
 	page_type = request.POST["page_type"]
 	
 	context = {'page_name': 'Item', 'page_type':page_type}
-	# 'page_type':session['page_type'], 'item':session['item']} # Generates error: global name 'sesson' not defined
-
-	# Check authentication
-	if not request.user.is_authenticated():
-		print("not logged in")
-		raise Http404
-		# return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
-	
-	if not "item_id" in request.POST or not request.POST["item_id"]:
-		print("no item_id")
-		raise Http404
-	item_id = request.POST["item_id"]
-	
-
-	
-	
 	if page_type == 'food':
-		try:
-			item = Food.objects.get(id=item_id)
-		except:
-			print("cant find food", )
-			raise Http404
-		new_instance = FoodPhoto(user=request.user, item=item)
-		form = FoodPhotoForm(request.POST, request.FILES, instance=new_instance)
-		
+		form = FoodPhotoForm(request.POST, request.FILES)
 	elif page_type == 'recipe':
-		try:
-			item = Recipe.objects.get(id=item_id)
-		except:
-			print("cant find recipe")
-			raise Http404
-		new_instance = RecipePhoto(user=request.user, item=item)
-		form = RecipePhotoForm(request.POST, request.FILES, instance=new_instance)
-		
+		form = RecipePhotoForm(request.POST, request.FILES)
 	elif page_type == 'equipment':
-		try:
-			item = Equipment.objects.get(id=item_id)
-		except:
-			print("cant find equipment")
-			raise Http404
-		new_instance = EquipmentPhoto(user=request.user, item=item)
-		form = EquipmentPhotoForm(request.POST, request.FILES, instance=new_instance)
-		
+		form = EquipmentPhotoForm(request.POST, request.FILES)
 	else:
-		print ("bad page type", page_type)
-		raise Http404()
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'invalid page_type'}]})
+		return HttpResponse(resp, content_type='application/json')
 	
-	
-	#date will be added automatically
-	# new_instance = PhotoForm(user=request.user, item=item)
-	# form = PhotoForm(request.POST, instance=new_instance)
+
 	if not form.is_valid():
-		print("form error")
-		print(form.errors)
-		raise Http404
+		resp = json.dumps(
+		{
+			'status':'error',
+			'errors': dict(form.errors.items())
+		})
+		return HttpResponse(resp, content_type='application/json')
 		
-	new_instance.save()
-	image = form.save()
+	# new_instance.save()
+	instance = form.save(commit=False)
+	instance.user = request.user
+	instance = form.save()
 	
+
+	resp = json.dumps(
+	{
+		'status':'success',
+		'html': render_to_string('Cookingti/carousel_image.html', {'page_type':page_type, 'item':instance.item, 'image':instance})
+	})
+	return HttpResponse(resp, content_type='application/json')
 	
-	return render(request, 'Cookingti/carousel_image.html', {'page_type':page_type, 'item':item, 'image':image})
-	
+
 	
 def getImage(request, page_type, item_id, img_id):
     
@@ -388,7 +365,10 @@ def getImage(request, page_type, item_id, img_id):
 		print ("bad page type", page_type)
 		raise Http404()
 	
-	image = item.photos.get(id=img_id)
+	try:
+		image = item.photos.get(id=img_id)
+	except:
+		raise Http404
 		
 		
 	content_type = guess_type(image.picture.name)
@@ -444,14 +424,7 @@ def postTime(request):
 		
 		
 	if not request.user.is_authenticated():
-		resp = json.dumps(
-		{
-			'status':'error',
-			'custom_errors':
-			[
-				{'message': 'Login required'}
-			]
-		})
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Login required'}]})
 		return HttpResponse(resp, content_type='application/json')
 		
 	

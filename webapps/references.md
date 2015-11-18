@@ -25,3 +25,5 @@
 - http://stackoverflow.com/questions/986406/returning-pure-django-form-errors-in-json
 - http://stackoverflow.com/questions/963448/html-tags-within-json-in-python
 - http://stackoverflow.com/questions/986406/returning-pure-django-form-errors-in-json
+- http://stackoverflow.com/questions/3927305/django-how-to-override-form-save
+- http://stackoverflow.com/questions/8466768/using-request-user-with-django-modelform

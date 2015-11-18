@@ -52,12 +52,8 @@ $(document).ready(function()
 
 function upload(e)
 {
-	console.log("in upload");
 	
 	var fd = new FormData();
-	
-	console.log($("#carousel_id").val());
-	console.log($("#carousel_type").val());
 	
 	fd.append('page_type', $("#carousel_type").val());
 	fd.append('item_id', $("#carousel_id").val());
@@ -73,9 +69,16 @@ function upload(e)
         type: 'POST',
         success: function (data) 
 		{
-			image = $(data);
-			$("#carousel_slider").append(image);
-			
+			if(data.status == 'success')
+			{
+				console.log(data);
+				image = $(data.html);
+				$("#carousel_slider").prepend(image);
+			}
+			else
+			{
+				console.log("json error");
+			}			
         },
 		error: function(data)
 		{
