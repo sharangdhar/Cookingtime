@@ -90,10 +90,10 @@ def search(request):
 
 	item_html = []
 	for item in items:
-		if request.GET['page'] == 'search':
+		# if request.GET['page'] == 'search':
 			item_html.append(render_to_string(template, {'item':item, 'type':request.GET['type']}))
-		elif request.GET['page'] == 'item':
-			item_html.append(render_to_string(template, {'link_item':item, 'link_item_type':request.GET['type']}))
+		# elif request.GET['page'] == 'item':
+			# item_html.append(render_to_string(template, {'link_item':item, 'link_item_type':request.GET['type']}))
 
 		
 	ret = ''.join(item_html)
@@ -412,10 +412,14 @@ def addItem(request):
 	context['new_form'] = form
 		# Validates the form.
 	if not form.is_valid():
-		context['foods_'] = Food.objects.all();
-		context['recipes_'] = Recipe.objects.all();
-		context['equipments_'] = Equipment.objects.all()
-		context['add_item_form'] = AddItemForm()
+		context['latest_foods'] = Food.objects.all().order_by('-date')[:5]
+		context['highest_foods'] = Food.objects.all().order_by('-stars')[:5]
+	
+		context['latest_recipes'] = Recipe.objects.all().order_by('-date')[:5]
+		context['highest_recipes'] = Recipe.objects.all().order_by('-stars')[:5]
+	
+		context['latest_equipments'] = Equipment.objects.all().order_by('-date')[:5]
+		context['highest_equipments'] = Equipment.objects.all().order_by('-stars')[:5]
 		session = {'page_type': '', 'item':	 ''}
 		return render(request, 'Cookingti/hs_main.html', context)
 

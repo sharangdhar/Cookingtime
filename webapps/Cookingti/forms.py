@@ -118,3 +118,9 @@ class AddItemForm(forms.Form):
         return cleaned_data
 
 
+class RecipeForm(forms.ModelForm):
+	item_id = forms.IntegerField()
+	
+	class Meta:
+		model = Recipe
+		fields = ('text',)
