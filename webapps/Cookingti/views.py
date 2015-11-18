@@ -435,32 +435,74 @@ def addItem(request):
  
 	return redirect('Cookingti/item/' + form.cleaned_data['item_type'] + '/' + str(new_item.id))
 
-
+'''
 @transaction.atomic
 def postTime(request):
 	
-	if not request.user.is_authenticated():
-		raise Http404
-		
 	if request.method != 'POST':
 		raise Http404
 		
+		
+	if not request.user.is_authenticated():
+		resp = json.dumps(
+		{
+			'status':'error',
+			'non_field_errors':
+			[
+				{'error': 'Login required'}
+			]
+		})
+		return HttpResponse(resp, content_type='application/json')
+		
+	
+		
 	if not 'item_id' in request.POST or not request.POST['item_id']:
-		print('no item_id')
-		raise Http404
+		resp = json.dumps(
+		{
+			'status':'error',
+			'non_field_errors':
+			[
+				{'error': 'item id required'}
+			]
+		})
+		return HttpResponse(resp, content_type='application/json')
 	if not 'constant' in request.POST or not request.POST['constant']:
-		print('no constant')
-		raise Http404
+		resp = json.dumps(
+		{
+			'status':'error',
+			'non_field_errors':
+			[
+				{'constant': 'constant required'}
+			]
+		})
+		return HttpResponse(resp, content_type='application/json')
+
 	
 	try:
 		item = Food.objects.get(id=request.POST['item_id'])
 	except:
-		raise Http404
+		resp = json.dumps(
+		{
+			'status':'error',
+			'non_field_errors':
+			[
+				{'error': 'invalid item id'}
+			]
+		})
 	
 	try:
 		new_const = float(request.POST['constant']);
 	except:
-		raise Http404
+		resp = json.dumps(
+		{
+			'status':'error',
+			'non_field_errors':
+			[
+				{'constant': 'constant must be number'}
+			]
+		})
+		return HttpResponse(resp, content_type='application/json')
+		
 	
 	total = item.numConst * item.avgConst
 	new_num = item.numConst + 1
@@ -470,7 +512,62 @@ def postTime(request):
 	item.numConst = new_num
 	item.save();
 	
-	return HttpResponse(str(item.avgConst), content_type="text/plain")
+	
+	resp = json.dumps(
+	{
+		'status':'success',
+		'result':item.avgConst
+	})
+	return HttpResponse(resp, content_type='application/json')
+'''
+
+@transaction.atomic
+def postTime(request):
+	
+	if request.method != 'POST':
+		raise Http404
+		
+		
+	if not request.user.is_authenticated():
+		resp = json.dumps(
+		{
+			'status':'error',
+			'custom_errors':
+			[
+				{'message': 'Login required'}
+			]
+		})
+		return HttpResponse(resp, content_type='application/json')
+		
+	
+		
+	form = TimeForm(request.POST)
+	if not form.is_valid():
+		resp = json.dumps(
+		{
+			'status':'error',
+			'errors': dict(form.errors.items())
+		})
+		return HttpResponse(resp, content_type='application/json')
+
+
+
+	total = item.numConst * item.avgConst
+	new_num = item.numConst + 1
+
+	item.avgConst = (total + new_const)/(new_num)
+		
+	item.numConst = new_num
+	item.save();
+	
+	
+	resp = json.dumps(
+	{
+		'status':'success',
+		'result':item.avgConst
+	})
+	return HttpResponse(resp, content_type='application/json')
+
 
 
 @transaction.atomic

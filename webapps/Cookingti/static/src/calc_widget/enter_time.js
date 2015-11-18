@@ -32,7 +32,9 @@ function submit_time(e)
 	
 	
     $("#enter_mass_error").remove();
-    
+    $(".enter_error").remove();
+	
+	
     var mass = $('#enter_mass').val();
     if(mass === "" || isNaN(mass))
     {
@@ -92,8 +94,33 @@ function submit_time(e)
 
 	$.post('/post_time', {item_id:item_id, constant:cp}).done(function(data)
 	{
-		$('#calc_btn').attr("data-constant", data);
-		$("#calc_input_row").append($("<span id='enter_input_error'>Success!</span>"));
+		if(data.status == 'success')
+		{
+			$('#calc_btn').attr("data-constant", data);
+			$("#calc_input_row").append($("<span id='enter_input_error'>Success!</span>"));
+		}
+		else
+		{
+			var error;
+			if(data.custom_errors)
+			{
+				error = data.custom_errors[0].message;			
+			}
+			else if(data.errors)
+			{
+				if(data.errors.hasOwnProperty('item_id'))
+				{
+					error = data.errors.item_id[0];
+				}
+				else if(data.errors.hasOwnProperty('constant'))
+				{
+					error = "Error";
+				}
+			}
+			
+			$("#calc_input_row").append($("<span class='enter_input_error'>" + error + "</span>"));	
+		}
+		
 	}).fail(function()
 	{
 		$("#calc_input_row").append($("<span id='enter_input_error'>Error</span>"));	

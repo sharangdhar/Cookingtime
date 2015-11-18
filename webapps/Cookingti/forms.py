@@ -118,9 +118,19 @@ class AddItemForm(forms.Form):
         return cleaned_data
 
 
-class RecipeForm(forms.ModelForm):
+class TimeForm(forms.Form):
 	item_id = forms.IntegerField()
+	item = ''
+	constant = forms.FloatField()
 	
-	class Meta:
-		model = Recipe
-		fields = ('text',)
+	def clean_item_id(self):
+		item_id = self.cleaned_data.get('item_id')
+		
+		try:
+			self.item = Food.objects.get(id=item_id)
+		except:
+			raise forms.ValidationError("Invalid item_id")
+		
+		return item_id
+			
+		
