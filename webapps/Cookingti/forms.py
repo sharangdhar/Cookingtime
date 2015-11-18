@@ -171,3 +171,20 @@ class TimeForm(forms.Form):
 		
 		return item_id
 		
+
+class RecipeTextForm(forms.ModelForm):
+	item_id = forms.IntegerField()
+	
+	class Meta:
+		model = Recipe
+		fields = ('text',)
+	
+	def clean_item_id(self):
+		item_id = self.cleaned_data.get('item_id')
+		
+		try:
+			self.instance = Recipe.objects.get(id=item_id)
+		except:
+			raise forms.ValidationError("Invalid item_id")
+		
+		return item_id

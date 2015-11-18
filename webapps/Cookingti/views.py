@@ -362,7 +362,6 @@ def getImage(request, page_type, item_id, img_id):
 	elif page_type == 'equipment':
 		item = get_object_or_404(Equipment, id=item_id)
 	else:
-		print ("bad page type", page_type)
 		raise Http404()
 	
 	try:
@@ -431,11 +430,7 @@ def postTime(request):
 		
 	form = TimeForm(request.POST)
 	if not form.is_valid():
-		resp = json.dumps(
-		{
-			'status':'error',
-			'errors': dict(form.errors.items())
-		})
+		resp = json.dumps({'status':'error','errors': dict(form.errors.items())})
 		return HttpResponse(resp, content_type='application/json')
 
 
@@ -464,13 +459,13 @@ def postTime(request):
 def postRecipe(request):
 	
 	if not request.user.is_authenticated():
-		raise Http404
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Login required'}]})
+		return HttpResponse(resp, content_type='application/json')
 		
 	if request.method != 'POST':
-		print('not post')
 		raise Http404
-		
 	
+	'''
 	if not 'item_id' in request.POST or not request.POST['item_id']:
 		print('no id')
 		raise Http404
@@ -486,10 +481,29 @@ def postRecipe(request):
 		
 	item.text = request.POST['text']
 	item.save()
+	'''
 	
-	rendered = markdown.markdown(request.POST['text'])
+	form = RecipeTextForm(request.POST)
+	if not form.is_valid():
+		resp = json.dumps({'status':'error','errors': dict(form.errors.items())})
+		return HttpResponse(resp, content_type='application/json')
+		
+	instance = form.save(commit=False)
+	if instance.user != request.user:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Wrong user'}]})
+		return HttpResponse(resp, content_type='application/json')
+		
+	instance = form.save()
+		
+	rendered = markdown.markdown(instance.text)
 	
-	return HttpResponse(rendered, content_type="text/html")
+	
+	resp = json.dumps(
+	{
+		'status':'success',
+		'html':rendered
+	})
+	return HttpResponse(resp, content_type="text/json")
 	
 
 @transaction.atomic

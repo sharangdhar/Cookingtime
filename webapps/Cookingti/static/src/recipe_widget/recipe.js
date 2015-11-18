@@ -40,11 +40,56 @@ function recipe_submit(e)
 	
 	$.post('/post_recipe', {item_id:item_id, text:text}).done(function(data)
 	{
-		$('#recipe_content').html(data);
-		recipe_edit();
+		if(data.status == 'success')
+		{
+			$('#recipe_content').html(data.html);
+			recipe_edit();
+		}
+		else
+		{
+			gen_errors = '';
+			if(data.custom_errors)
+			{
+				for(i = 0; i < data.custom_errors.length; i++)
+				{
+					sep = ', ';
+					if(i === 0){sep = '';}
+					gen_errors = gen_errors + sep + data.custom_errors[i].message;
+				}
+			}
+			
+			if(data.errors)
+			{
+				text_errors = '';
+				if(data.errors.text)
+				{
+					for(i = 0; i < data.errors.text.length; i++)
+					{
+						sep = ', ';
+						if(i === 0){sep = '';}
+						text_errors = text_errors + sep + data.errors.text[i];
+					}
+				}
+				
+				if(data.errors.item_id)
+				{
+					for(i = 0; i < data.errors.item_id.length; i++)
+					{
+						sep = ', ';
+						if(gen_errors === ''){sep = '';}
+						gen_errors = gen_errors + sep + data.errors.item_id[i];
+					}
+				}
+				
+				$("#recipe_text_error").text(text_errors);
+			}
+			
+			$("#recipe_error").text(gen_errors);
+		}
+		
 		
 	}).fail(function(data)
 	{
-		console.log('recipe submit fail');
+		$("#recipe_error").text("Error");
 	});
 }

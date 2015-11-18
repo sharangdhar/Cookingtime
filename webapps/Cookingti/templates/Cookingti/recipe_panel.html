@@ -13,7 +13,10 @@
     
     <div id="recipe_form">
         <textarea maxlength="500" id="recipe_text" name="text" value="">{{ item.text }}</textarea>
+        <span id="recipe_text_error"></span>
+        <br>
         <button id="recipe_submit_button" data-id={{item.id}} action="submit">Submit</button>
+        <span id="recipe_error"></span>
     </div>
     
     <div id="recipe_content">
