@@ -96,7 +96,7 @@ function submit_time(e)
 	{
 		if(data.status == 'success')
 		{
-			$('#calc_btn').attr("data-constant", data);
+			$('#calc_btn').attr("data-constant", data.result);
 			$("#calc_input_row").append($("<span id='enter_input_error'>Success!</span>"));
 		}
 		else

@@ -435,91 +435,6 @@ def addItem(request):
  
 	return redirect('Cookingti/item/' + form.cleaned_data['item_type'] + '/' + str(new_item.id))
 
-'''
-@transaction.atomic
-def postTime(request):
-	
-	if request.method != 'POST':
-		raise Http404
-		
-		
-	if not request.user.is_authenticated():
-		resp = json.dumps(
-		{
-			'status':'error',
-			'non_field_errors':
-			[
-				{'error': 'Login required'}
-			]
-		})
-		return HttpResponse(resp, content_type='application/json')
-		
-	
-		
-	if not 'item_id' in request.POST or not request.POST['item_id']:
-		resp = json.dumps(
-		{
-			'status':'error',
-			'non_field_errors':
-			[
-				{'error': 'item id required'}
-			]
-		})
-		return HttpResponse(resp, content_type='application/json')
-	if not 'constant' in request.POST or not request.POST['constant']:
-		resp = json.dumps(
-		{
-			'status':'error',
-			'non_field_errors':
-			[
-				{'constant': 'constant required'}
-			]
-		})
-		return HttpResponse(resp, content_type='application/json')
-
-	
-	try:
-		item = Food.objects.get(id=request.POST['item_id'])
-	except:
-		resp = json.dumps(
-		{
-			'status':'error',
-			'non_field_errors':
-			[
-				{'error': 'invalid item id'}
-			]
-		})
-	
-	try:
-		new_const = float(request.POST['constant']);
-	except:
-		resp = json.dumps(
-		{
-			'status':'error',
-			'non_field_errors':
-			[
-				{'constant': 'constant must be number'}
-			]
-		})
-		return HttpResponse(resp, content_type='application/json')
-		
-	
-	total = item.numConst * item.avgConst
-	new_num = item.numConst + 1
-
-	item.avgConst = (total + new_const)/(new_num)
-		
-	item.numConst = new_num
-	item.save();
-	
-	
-	resp = json.dumps(
-	{
-		'status':'success',
-		'result':item.avgConst
-	})
-	return HttpResponse(resp, content_type='application/json')
-'''
 
 @transaction.atomic
 def postTime(request):
@@ -551,7 +466,9 @@ def postTime(request):
 		return HttpResponse(resp, content_type='application/json')
 
 
-
+	item = form.item
+	new_const = form.cleaned_data['constant']
+	
 	total = item.numConst * item.avgConst
 	new_num = item.numConst + 1
 
