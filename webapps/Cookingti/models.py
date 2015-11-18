@@ -97,15 +97,15 @@ class EquipmentReview(models.Model):
 
 class FoodPhoto(models.Model):
 	user = models.ForeignKey(User)
-	picture = models.ImageField(upload_to='photos', blank=True)
+	picture = models.ImageField(upload_to='photos')
 	item = models.ForeignKey('Food', related_name="photos")
 	
 class RecipePhoto(models.Model):
 	user = models.ForeignKey(User)
-	picture = models.ImageField(upload_to='photos', blank=True)
+	picture = models.ImageField(upload_to='photos')
 	item = models.ForeignKey('Recipe', related_name="photos")
 	
 class EquipmentPhoto(models.Model):
 	user = models.ForeignKey(User)
-	picture = models.ImageField(upload_to='photos', blank=True)
+	picture = models.ImageField(upload_to='photos')
 	item = models.ForeignKey('Equipment', related_name="photos")

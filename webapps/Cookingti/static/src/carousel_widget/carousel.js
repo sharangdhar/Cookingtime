@@ -77,12 +77,25 @@ function upload(e)
 			}
 			else
 			{
-				console.log("json error");
+				if(data.custom_errors)
+				{
+					$("#carousel_error").text(data.custom_errors[0].message);
+				}
+				else if(data.errors.item_id)
+				{
+					$("#carousel_error").text("invalid item_id");
+				}
+				else if(data.errors.picture)
+				{
+					$("#carousel_error").text(data.errors.picture[0]);
+				}
+				
+				
 			}			
         },
 		error: function(data)
 		{
-			console.log("upload photo error");
+			$("#carousel_error").text("Error");
 		}
     });
 	

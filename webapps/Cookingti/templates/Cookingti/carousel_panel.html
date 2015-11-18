@@ -10,6 +10,7 @@
             <input type="hidden" name="item_id" id="carousel_id" value="{{item.id}}">
             {% csrf_token %}
             <button id="carousel_submit" onclick="return false;">Submit</button>
+            <span id="carousel_error"></span>
         </form>
     </div>
     <button id="carousel_upload_button">Upload</button>
