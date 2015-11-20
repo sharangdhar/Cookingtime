@@ -109,10 +109,10 @@ def profile(request):
 
 
 #valid item types are 'food','recipe', 'equipment'
-@ensure_csrf_cookie  # Gives CSRF token for later requests.
+@ensure_csrf_cookie	 # Gives CSRF token for later requests.
 @transaction.atomic # Should only be if post
 def item(request, item_type='', id = -1):
-	
+	'''
 	# Posting a review
 	if request.method == "POST":
 		context = {'page_name': 'Item'}
@@ -200,7 +200,7 @@ def item(request, item_type='', id = -1):
 		
 		session = {'page_type': item_type, 'item':	item}
 		return redirect("/item/" + page_type + "/" + str(item.id))
-	
+	'''
 	
 	
 	
@@ -255,6 +255,73 @@ def item(request, item_type='', id = -1):
 	#created to keep track of information across this method and postReview method
 	session = {'page_type': item_type, 'item':	item_new}
 	return render(request, 'Cookingti/item_main.html', context)
+
+
+@transaction.atomic
+def postReview(request):
+	if request.method != "POST":
+		raise Http404
+	
+	if not request.user.is_authenticated():
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Login required'}]})
+		return HttpResponse(resp, content_type='application/json')
+		
+		
+	if not "page_type" in request.POST or not request.POST["page_type"]:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'page_type required'}]})
+		return HttpResponse(resp, content_type='application/json')
+	page_type = request.POST["page_type"]
+	
+	context = {'page_name': 'Item', 'page_type':page_type}
+
+
+	if page_type == 'food':
+		form = FoodReviewForm(request.POST)
+	elif page_type == 'recipe':
+		form = RecipeReviewForm(request.POST)
+	elif page_type == 'equipment':
+		form = EquipmentReviewForm(request.POST)
+	else:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'invalid page_type'}]})
+		return HttpResponse(resp, content_type='application/json')
+	
+
+	if not form.is_valid():
+		resp = json.dumps(
+		{
+			'status':'error',
+			'errors': dict(form.errors.items())
+		})
+		return HttpResponse(resp, content_type='application/json')
+	
+	
+	instance = form.save(commit=False)
+	instance.user = request.user
+	instance = form.save()
+	
+	
+	# UPADATE STARS
+	item = instance.item
+	total = item.starsFloat * item.numReviews
+	new_num = item.numReviews + 1
+	
+	new_float = (total + instance.stars)/new_num
+	
+	item.starsFloat = new_float
+	item.stars = int(round(new_float))
+	item.numReviews = new_num
+	item.save()
+	
+	
+
+	resp = json.dumps(
+	{
+		'status':'success',
+		'html': render_to_string('Cookingti/review_panel.html', {'page_type':page_type, 'review':instance})
+	})
+	return HttpResponse(resp, content_type='application/json') 
+
+
 
 
 @transaction.atomic
@@ -338,7 +405,7 @@ def postImage(request):
 		})
 		return HttpResponse(resp, content_type='application/json')
 		
-	# new_instance.save()
+
 	instance = form.save(commit=False)
 	instance.user = request.user
 	instance = form.save()
@@ -354,7 +421,7 @@ def postImage(request):
 
 	
 def getImage(request, page_type, item_id, img_id):
-    
+	
 	if page_type == 'food':
 		item = get_object_or_404(Food, id=item_id)
 	elif page_type == 'recipe':
@@ -405,7 +472,6 @@ def addItem(request):
 	if form.cleaned_data['item_type'] == 'food':
 		new_item = Food(name = form.cleaned_data['item'])
 	elif form.cleaned_data['item_type'] == 'recipe':
-		# Only recipes are tied to a user
 		new_item = Recipe(user=request.user, name = form.cleaned_data['item'])
 	else:
 		new_item = Equipment(name = form.cleaned_data['item'])
@@ -458,30 +524,13 @@ def postTime(request):
 @transaction.atomic
 def postRecipe(request):
 	
+	if request.method != 'POST':
+		raise Http404
+		
 	if not request.user.is_authenticated():
 		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Login required'}]})
 		return HttpResponse(resp, content_type='application/json')
 		
-	if request.method != 'POST':
-		raise Http404
-	
-	'''
-	if not 'item_id' in request.POST or not request.POST['item_id']:
-		print('no id')
-		raise Http404
-	if not 'text' in request.POST or not request.POST['text']:
-		print('no text')
-		raise Http404
-		
-	try:
-		item = Recipe.objects.get(id=request.POST['item_id'])
-	except:
-		print('invalid item')
-		raise Http404
-		
-	item.text = request.POST['text']
-	item.save()
-	'''
 	
 	form = RecipeTextForm(request.POST)
 	if not form.is_valid():

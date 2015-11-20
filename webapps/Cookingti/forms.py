@@ -172,6 +172,8 @@ class TimeForm(forms.Form):
 		return item_id
 		
 
+
+
 class RecipeTextForm(forms.ModelForm):
 	item_id = forms.IntegerField()
 	
@@ -188,3 +190,83 @@ class RecipeTextForm(forms.ModelForm):
 			raise forms.ValidationError("Invalid item_id")
 		
 		return item_id
+		
+		
+		
+		
+class FoodReviewForm(forms.ModelForm):
+	item_id = forms.IntegerField()
+	
+	class Meta:
+		model = FoodReview
+		exclude = ('user','date', 'item')
+		
+	def clean_item_id(self):
+		item_id = self.cleaned_data.get('item_id')
+		
+		try:
+			self.instance.item = Food.objects.get(id=item_id)
+		except:
+			raise forms.ValidationError("Invalid item_id")
+		
+		return item_id
+	
+	def clean_stars(self):
+		stars = self.cleaned_data.get('stars')
+		
+		if stars < 1 or stars > 5:
+			raise forms.ValidationError("Rating must be between 1 and 5 (inclusive)")
+		
+		return stars
+		
+		
+class RecipeReviewForm(forms.ModelForm):
+	item_id = forms.IntegerField()
+	
+	class Meta:
+		model = RecipeReview
+		exclude = ('user','date', 'item')
+		
+	def clean_item_id(self):
+		item_id = self.cleaned_data.get('item_id')
+		
+		try:
+			self.instance.item = Recipe.objects.get(id=item_id)
+		except:
+			raise forms.ValidationError("Invalid item_id")
+		
+		return item_id
+	
+	def clean_stars(self):
+		stars = self.cleaned_data.get('stars')
+		
+		if stars < 1 or stars > 5:
+			raise forms.ValidationError("Rating must be between 1 and 5 (inclusive)")
+		
+		return stars
+		
+		
+class EquipmentReviewForm(forms.ModelForm):
+	item_id = forms.IntegerField()
+	
+	class Meta:
+		model = EquipmentReview
+		exclude = ('user','date', 'item')
+		
+	def clean_item_id(self):
+		item_id = self.cleaned_data.get('item_id')
+		
+		try:
+			self.instance.item = Equipment.objects.get(id=item_id)
+		except:
+			raise forms.ValidationError("Invalid item_id")
+		
+		return item_id
+	
+	def clean_stars(self):
+		stars = self.cleaned_data.get('stars')
+		
+		if stars < 1 or stars > 5:
+			raise forms.ValidationError("Rating must be between 1 and 5 (inclusive)")
+		
+		return stars

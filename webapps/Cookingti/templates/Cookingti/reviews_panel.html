@@ -32,21 +32,17 @@
     
     
     
-    <div id="new_review">
-        <form method="POST" action="">
-            
-            {{ review_form.non_field_errors }}
-            <input type="text" id="new_review_title" name="title" placeholder="Title">{{review_form.title.errors}}
-            <div id="stars_widg" class="stars_widget"></div>
-            <input type="hidden" id="stars" name="stars" value="0">{{ review_form.stars.errors }}
-            <input type="hidden" name="page_type" value="{{ page_type }}">
-            <input type="hidden" name="item_id" value="{{item.id}}">
-            
-            <textarea maxlength="500" id="new_review_area" name="review" rows="15"></textarea>{{ review_form.review.errors}}
-            {% csrf_token %}
-            <button>Submit</button>
+    <div id="new_review" class="review_form">
 
-        </form>
+        <input class="edit_review_title" type="text" name="title" placeholder="Title"><span class="review_title_error"></span>
+        <br><span class="stars_widget"></span><span class="stars_error"></span>
+        <input class="stars" type="hidden" name="stars" value="0">
+        <input class="page_type" type="hidden" name="page_type" value="{{ page_type }}">
+        <input class="item_id" type="hidden" name="item_id" value="{{item.id}}">
+        
+        <textarea maxlength="500" class="edit_review_text" id="new_review_area" name="review" rows="15"></textarea>
+        <div class="text_error"></div>
+        <button class="review_submit" onclick="return false;">Submit</button><span class="general_error"></span>
 
         <link rel="stylesheet" href="{% static "src/stars_widget/stars.css" %}">
         <link rel="stylesheet" href="{% static "src/reviews_widget/new_review.css" %}">
@@ -58,10 +54,9 @@
     
     
     <div id="reviews_wrapper">
-    {% for review in item.reviews.all %}
-        {% include 'Cookingti/review_panel.html' with review=review %}
-    {% endfor %}
-            
-            
+        {% for review in item.reviews.all %}
+            {% include 'Cookingti/review_panel.html' with review=review %}
+        {% endfor %}     
     </div><!-- review wrapper -->
+    
 </div><!--  reviews panel -->

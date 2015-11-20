@@ -18,15 +18,18 @@ function build_stars(widget)
     {
         widget.append($('<span data-num="' + i + '">&#9733;</span>'));
     }
-    
-    set_stars(widget, parseInt($("#stars").val()));
+	
+    var hidden = widget.parent().children(".stars");
+    set_stars(widget, parseInt(hidden.val()));
 }
 
 function stars_mouseover(e)
 {
-    var max = parseInt($(e.target).attr('data-num'));
+	var target = $(e.target);
+    var widget = target.parent();
 
-    var widget = $(e.target).parent();
+    var max = parseInt(target.attr("data-num"));
+		
     set_stars(widget, max);
     
 }
@@ -34,14 +37,21 @@ function stars_mouseover(e)
 function stars_mouseleave(e)
 {
     var widget = $(e.target).parent();
-    set_stars(widget, parseInt($("#stars").val()));
+	var hidden = widget.parent().children(".stars");
+	
+    set_stars(widget, parseInt(hidden.val()));
 }
 
 function stars_up(e)
 {
-    var val = parseInt($(e.target).attr('data-num'));
-    var widget = $(e.target).parent();
-	$("#stars").val(val);
+	var target = $(e.target);
+    var widget = target.parent();
+	var hidden = widget.parent().children(".stars");
+	
+    var val = parseInt(target.attr("data-num"));
+	hidden.val(val);
+	
+	set_stars(widget, val);
 }
 
 function set_stars(widget, num)
