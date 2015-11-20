@@ -28,9 +28,7 @@ $(document).ready(function()
 });
 
 function submit_time(e)
-{
-	
-	
+{	
     $("#enter_mass_error").remove();
     $(".enter_error").remove();
 	
@@ -79,7 +77,8 @@ function submit_time(e)
 	}
 	if(joules < 0)
 	{
-		return; // Shouldn't have been enough time to melt everything
+		$("#calc_input_row").append($("<span id='enter_input_error'>Enter valid value</span>"));// Shouldn't have been enough time to melt everything	
+		return; 
 	}
 	
 	// get dT (change in temperature)

@@ -55,7 +55,7 @@
     
     <div id="reviews_wrapper">
         {% for review in item.reviews.all %}
-            {% include 'Cookingti/review_panel.html' with review=review %}
+            {% include 'item/reviews/review_panel.html' with review=review %}
         {% endfor %}     
     </div><!-- review wrapper -->
     

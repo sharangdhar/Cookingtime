@@ -6,7 +6,7 @@
     <div id="bulk_sidebar_inner_wrapper">
         
         {% for link_item in item.link.all %}
-            {% include "Cookingti/bulk_sidebar_item.html" with link_item=link_item %}
+            {% include "item/bulk_sidebar/bulk_sidebar_item.html" with link_item=link_item %}
         {% empty %}
             <p id="no_linked_items">No linked items</p>
         {% endfor %}

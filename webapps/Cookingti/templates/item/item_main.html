@@ -11,12 +11,12 @@
         
         <div id="first_row">
             <div id="photo_column" class="col-md-8 col-md-push-4">
-                {% include "Cookingti/carousel_panel.html" %}
+                {% include "item/carousel/carousel_panel.html" %}
             </div><!-- photo column -->
             
 
             <div id="info_column" class="col-md-4 col-md-pull-8">
-                {% include "Cookingti/info_panel.html" %}
+                {% include "item/info_panel.html" %}
             </div>
 
         </div><!-- first row -->
@@ -30,27 +30,27 @@
                 {% if page_type == "food" %}
                     <div id="time_row" class="row">
                         <div id="calculator_column" class="col-md-6 col-sm-6">
-                            {% include "Cookingti/calculator_panel.html" with item=item %}
+                            {% include "item/calc-time/calculator_panel.html" with item=item %}
                         </div> <!-- calculator column -->
                         
                         <div id="enter_time_column" class="col-md-6 col-sm-6">
-                            {% include "Cookingti/enter_time_panel.html" %}
+                            {% include "item/calc-time/enter_time_panel.html" %}
                         </div> <!-- enter time column -->
                     </div> <!-- time row -->
                 {% elif page_type == "recipe" %}
                     <div id="recipe_column col-md-6 col-sm-6">
-                        {% include "Cookingti/recipe_panel.html" %}
+                        {% include "item/recipe_panel.html" %}
                     </div>
                 {% endif %}
                 
             
-                {% include "Cookingti/reviews_panel.html" %}
+                {% include "item/reviews/reviews_panel.html" %}
                 
                 
             </div> <!-- bulk column -->
             
             <div id="bulk_sidebar_column" class="col-md-4 col-md-pull-8">
-                {% include "Cookingti/bulk_sidebar_panel.html" %}
+                {% include "item/bulk_sidebar/bulk_sidebar_panel.html" %}
             </div> <!-- bulk sidebar column -->
             
         </div><!-- second row -->

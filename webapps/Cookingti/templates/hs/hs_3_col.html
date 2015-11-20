@@ -3,7 +3,7 @@
 
     <div id="{{type}}_foods_wrapper">
     {% for food_ in foods_ %}
-        {% include "Cookingti/hs_panel.html" with item=food_ type="food"%}
+        {% include "hs/hs_panel.html" with item=food_ type="food"%}
     {% empty %}
         <p>No foods</p>
     {% endfor %}
@@ -15,7 +15,7 @@
 
     <div id="{{type}}_recpies_wrapper">
     {% for recipe_ in recipes_ %}
-        {% include "Cookingti/hs_panel.html" with item=recipe_ type="recipe"%}
+        {% include "hs/hs_panel.html" with item=recipe_ type="recipe"%}
     {% empty %}
         <p>No recipes</p>
     {% endfor %}
@@ -27,7 +27,7 @@
 
     <div id="{{type}}_equipment_wrapper">
     {% for equipment_ in equipments_ %}
-        {% include "Cookingti/hs_panel.html"  with item=equipment_ type="equipment"%}
+        {% include "hs/hs_panel.html"  with item=equipment_ type="equipment"%}
     {% empty %}
         <p>No equipment</p>
     {% endfor %}

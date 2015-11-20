@@ -22,7 +22,7 @@
     </div>
     <div id="carousel_slider">
         {% for image in item.photos.all %}
-            {% include "Cookingti/carousel_image.html" with page_type=page_type item=item image=image %}
+            {% include "item/carousel/carousel_image.html" with page_type=page_type item=item image=image %}
         {% empty %}
             <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
             <img src="{% static "img/placeholder_wide.png" %}" class="carousel_img">
