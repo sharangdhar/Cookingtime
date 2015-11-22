@@ -3,7 +3,9 @@
 {% load staticfiles %}
 
 {% block main %}
+
     <div class="jumbotron">
+        <div class="fb-like" data-href="https://vast-hamlet-7057.herokuapp.com/grumblr/login" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
         <h2>Search</h2>
         <input type="text" class="jumbo_search" id="search_input" value="">
         <button id="search_button">Search</button>
@@ -24,8 +26,6 @@
             <button id="new_button" type='submit'>New</button>
             {% csrf_token %}
         </form>
-        <br>
-        <div class="fb-like" data-href="http://localhost:8000/Cookingti/home" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
         <script src="{% static 'src/search_widget/search.js' %}"></script>
     </div>
 
@@ -71,5 +71,12 @@
             
         </div>
     </div>
-    
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1505717499722848";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
