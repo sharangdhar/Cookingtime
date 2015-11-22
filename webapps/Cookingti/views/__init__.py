@@ -20,7 +20,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 import json
 import markdown
-
 from Cookingti.models import *
 from Cookingti.forms import *
 
@@ -105,7 +104,7 @@ def register(request):
 	context = {'page_name':'Register'}
 
 	if request.user.is_authenticated():
-		return redirect('/home')
+		return redirect('Cookingti/home')
 
 	# Just display the registration form if this is a GET request.
 	if request.method == 'GET':
@@ -136,7 +135,7 @@ def register(request):
 	new_person = Person(user= new_user, wattage=request.POST["wattage"])
 	new_person.save()
 
-	return redirect('/home/')
+	return redirect('Cookingti/home')
 
 
 
