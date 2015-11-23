@@ -467,6 +467,7 @@ select:hover
 #info_panel
 {
     height: 250px;
+    overflow: visible;
 }
 
 #photo_column
