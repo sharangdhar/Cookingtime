@@ -42,7 +42,7 @@ function search()
 	$.get('/search', {type: "recipe", query: val, page:'search'}).done(function(data)
 	{	
 		$('#search_recipe_wrapper').html(data);
-		$('#home.pre').hide(200);
+		$('#home_pre').hide(200);
 		$('#search_results').show(200);
 		$(document).prop('title', 'Cookingti.me | Search');
 
@@ -58,7 +58,7 @@ function search()
 	$.get('/search', {type: "equipment", query: val, page:'search'}).done(function(data)
 	{	
 		$('#search_equipment_wrapper').html(data);
-		$('#home.pre').hide(200);
+		$('#home_pre').hide(200);
 		$('#search_results').show(200);
 		$(document).prop('title', 'Cookingti.me | Search');
 
