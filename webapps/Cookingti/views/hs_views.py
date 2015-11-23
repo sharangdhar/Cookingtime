@@ -68,7 +68,7 @@ def addItem(request):
 		context['latest_equipments'] = Equipment.objects.all().order_by('-date')[:5]
 		context['highest_equipments'] = Equipment.objects.all().order_by('-stars')[:5]
 		session = {'page_type': '', 'item':	 ''}
-		return render(request, 'Cookingti/hs_main.html', context)
+		return render(request, 'hs/hs_main.html', context)
 
 	if form.cleaned_data['item_type'] == 'food':
 		new_item = Food(name = form.cleaned_data['item'])

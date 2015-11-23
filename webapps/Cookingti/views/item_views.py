@@ -344,6 +344,6 @@ def postLink(request):
 	
 		
 
-	ret = render_to_string("Cookingti/bulk_sidebar_item.html", {'item':link_item, 'type':link_type});
+	ret = render_to_string("item/bulk_sidebar/bulk_sidebar_item.html", {'link_item':link_item, 'link_item_type':link_type});
 	
 	return HttpResponse(ret, content_type="text/html")
