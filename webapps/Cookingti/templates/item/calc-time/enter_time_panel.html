@@ -2,6 +2,10 @@
 <div id="enter_time_panel" class="panel">
     <h3>Enter Microwave Cooking Time</h3>
     
+    {% if not request.user.is_authenticated %}
+        <div id="calc_mask">Log in to post cooking times</div>
+    {% endif %}
+    
     <div class="input_wrapper">
         <div class="input_row state">
             <select name="state" id="enter_state">

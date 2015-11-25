@@ -30,3 +30,22 @@
     -ms-user-select: none;
     user-select: none;  
 }
+
+#enter_time_panel
+{
+	position: relative;
+}
+
+#calc_mask
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: hsla(0, 0%, 0%, 0.4);
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
+    padding-top: 45px;
+    font-size: 20px;
+}
