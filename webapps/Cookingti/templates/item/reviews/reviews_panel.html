@@ -20,16 +20,21 @@
             </select>
         </div>
     
-        <div class="col-md-4 col-sm-4 overflow_auto">
-            <div id="review_add_panel" class="add_panel">
-                Add a review
-    
-                <div class="add_square">
-                    <div class="add_plus_ver"></div>
-                    <div class="add_plus_hor"></div>
-                </div><!-- add_square -->
-            </div><!-- bulk_sidebar_add_panel -->
-        </div>
+        
+        {% if request.user.is_authenticated %}
+            <div class="col-md-4 col-sm-4 overflow_auto" style="position:relative;">
+            
+                <div id="review_add_panel" class="add_panel">
+                    Add a review
+                    <div class="add_square">
+                        <div class="add_plus_ver"></div>
+                        <div class="add_plus_hor"></div>
+                    </div><!-- add_square -->
+                </div><!-- bulk_sidebar_add_panel -->
+            </div>
+        {% endif %}
+        
+        
     </div><!-- review_top_row -->
     
     

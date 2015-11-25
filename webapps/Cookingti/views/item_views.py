@@ -99,7 +99,7 @@ def postReview(request):
 	page_type = request.POST["page_type"]
 	
 	if not "review_id" in request.POST or not request.POST["review_id"]:
-		review_id = "new"
+		review_id = 'new'
 	else:
 		review_id = request.POST["review_id"]
 	
@@ -115,7 +115,7 @@ def postReview(request):
 			except:
 				resp = json.dumps({'status':'error','custom_errors':[{'message': 'review not found'}]})
 				return HttpResponse(resp, content_type='application/json')
-			
+				
 			form = FoodReviewForm(request.POST, instance=obj)
 		
 	elif page_type == 'recipe':
@@ -146,7 +146,12 @@ def postReview(request):
 		resp = json.dumps({'status':'error','custom_errors':[{'message': 'invalid page_type'}]})
 		return HttpResponse(resp, content_type='application/json')
 	
-
+	
+	if review_id != 'new' and request.user != obj.user:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'this is not your review'}]})
+		return HttpResponse(resp, content_type='application/json')
+		
+	
 	if not form.is_valid():
 		resp = json.dumps(
 		{
@@ -178,7 +183,7 @@ def postReview(request):
 	resp = json.dumps(
 	{
 		'status':'success',
-		'html': render_to_string('item/reviews/review_panel.html', {'page_type':page_type, 'item':item, 'review':instance})
+		'html': render_to_string('item/reviews/review_panel.html', {'request': request, 'page_type':page_type, 'item':item, 'review':instance})
 	})
 	return HttpResponse(resp, content_type='application/json') 
 

@@ -3,12 +3,16 @@
 {% load markup %}
 
 <div class="review">
-    <button class="review_edit">Edit</button>
     
+    {% if request.user.is_authenticated and request.user = review.user %}
     
-    <div class="review_form">
-        {% include 'item/reviews/review_form.html' %}
-    </div>
+        <button class="review_edit">Edit</button>
+    
+        <div class="review_form">
+            {% include 'item/reviews/review_form.html' %}
+        </div>
+    {% endif %}
+    
     
     <div class="review_display">
         <div class="review_top_matter">
