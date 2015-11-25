@@ -14,6 +14,7 @@
             <div class="bulk_sidebar_stars bulk_sidebar_line">{{ link_item.stars | stars_to_uni }}</div>
         </div><!-- bulk_sidebar_text -->
     </a>
+
     
     {% if request.user.is_authenticated and request.user == item.user %}
         <button data-item_id="{{item.id}}" data-link_item_id="{{link_item.id}}" data-link_item_type="{{link_item_type}}" class="bulk_sidebar_delete">x</button>

@@ -52,10 +52,21 @@ $(document).ready(function()
     
 });
 
-function bulk_sidebar_delete(e)
+function link_delete(e)
 {"use strict";
 
+	var target = $(e.target);
+
+	var item_id = target.attr("data-item_id");
+	var link_id = target.attr("data-link_item_id");
+	var link_type = target.attr("data-link_item_type");
 	
+	$.post("/del_link", {item_id: item_id, link_id: link_id, link_type: link_type}).done(function(data)
+	{
+		target.closest('.bulk_sidebar_inner_panel').remove();
+	}).fail(function(data)
+	{
+	});
 	
 }
 
@@ -100,7 +111,9 @@ function add_link(e)
 	
 	$.post("/post_link", {item_id:item_id, link_id:link_id, link_type:link_type}).done(function(data)
 	{
-		$("#bulk_sidebar_inner_wrapper").append(data);
+		var new_html = $(data);
+		new_html.find('button').click(function(e){link_delete(e);});
+		$("#bulk_sidebar_inner_wrapper").append(new_html);
 		var linked = $("#no_linked_items");
 		if(linked.length > 0)
 		{
