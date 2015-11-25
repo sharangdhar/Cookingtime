@@ -333,12 +333,10 @@ def postLink(request):
 	
 	if not request.user.is_authenticated():
 		raise Http404
-		
+	
 	if request.method != 'POST':
 		print('not post')
 		raise Http404
-	
-	
 	
 	
 	if not 'item_id' in request.POST or not request.POST['item_id']:
@@ -382,7 +380,9 @@ def postLink(request):
 	else:
 		print("bad link type")
 	
-		
+	
+	if request.user != link_item.user:
+		raise Http404 
 
 	ret = render_to_string("item/bulk_sidebar/bulk_sidebar_item.html", {'link_item':link_item, 'link_item_type':link_type});
 	

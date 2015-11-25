@@ -13,31 +13,35 @@
         
     </div><!-- bulk_sidebar_inner_wrapper -->
     
-    <div id="add_link">
-        <input type="text" id="add_link_text" placeholder="search" data-type="{{page_type}}">
-    </div>
     
     
-    <div id="add_link_results">
+    {% if request.user.is_authenticated and request.user == item.user %}
+    
+        <div id="add_link">
+            <input type="text" id="add_link_text" placeholder="search" data-type="{{page_type}}">
+        </div>
+    
+    
+        <div id="add_link_results">
 
-    </div>
+        </div>
     
     
-    <div id="add_link_no_results">
-        <p>No results</p>
-    </div>
+        <div id="add_link_no_results">
+            <p>No results</p>
+        </div>
     
-    
-    <div id="bulk_sidebar_add_panel" class="add_panel">
-        Add a recipe
+        <div id="bulk_sidebar_add_panel" class="add_panel">
+            Add a recipe
         
-        <div class="add_square">
-            <div class="add_plus_ver"></div>
-            <div class="add_plus_hor"></div>
-        </div><!-- add_square -->
+            <div class="add_square">
+                <div class="add_plus_ver"></div>
+                <div class="add_plus_hor"></div>
+            </div><!-- add_square -->
         
-        <script src="{% static "src/link_widget/link.js" %}"></script>
-        <link rel="stylesheet" type="text/css" href="{% static "src/link_widget/link.css" %}">
-    </div><!-- bulk_sidebar_add_panel -->
+            <script src="{% static "src/link_widget/link.js" %}"></script>
+            <link rel="stylesheet" type="text/css" href="{% static "src/link_widget/link.css" %}">
+        </div><!-- bulk_sidebar_add_panel -->
+    {% endif %}
     
 </div><!-- bulk sidebar panel -->

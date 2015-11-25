@@ -87,6 +87,11 @@
     float: right;
 }
 
+.review_user
+{
+	display: block;
+	margin-bottom: 7px;
+}
 .review_text
 {
     margin-top: 20px;

@@ -76,6 +76,8 @@ def addItem(request):
 		new_item = Recipe(user=request.user, name = form.cleaned_data['item'])
 	else:
 		new_item = Equipment(name = form.cleaned_data['item'])
+		
+	new_item.user = request.user
 
 	new_item.save()
  
