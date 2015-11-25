@@ -87,6 +87,36 @@
     margin-top: 8px;
 }
 
+.carousel_image_wrapper
+{
+	display: inline;
+	overflow: auto;
+	position: relative;
+}
+
+.carousel_image_delete
+{
+	text-decoration: none;
+	
+	color: black;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: white;
+	
+	
+	position: absolute;
+	right: 5px;
+	font-size: 25px;
+	
+	z-index: 5;
+}
+
+.carousel_image_delete:hover
+{
+	color: white;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: black;
+}
+
 @media (max-width: 550px)
 {
     #carousel_file

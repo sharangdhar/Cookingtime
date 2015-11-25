@@ -35,7 +35,8 @@ urlpatterns = [
 	url(r'^post_link$', 'Cookingti.views.item_views.postLink', name='post_link'),
 	url(r'^post_review$', 'Cookingti.views.item_views.postReview', name='post_review'),
 	
-	url(r'^del_link$', 'Cookingti.views.item_views.delLink', name='el_link'),
+	url(r'^del_link$', 'Cookingti.views.item_views.delLink', name='del_link'),
+	url(r'^del_image$', 'Cookingti.views.item_views.delImage', name='del_image'),
 	
 	url(r'^item/(?P<item_type>[\w-]+)/(?P<id>\d+)$', 'Cookingti.views.item_views.item', name='item'),
 	url(r'^image/(?P<page_type>.+)/(?P<item_id>.+)/(?P<img_id>.+)$', 'Cookingti.views.getImage', name='image'),

@@ -102,7 +102,48 @@ class FoodPhotoForm(forms.ModelForm):
 		
 		return item_id
 
+class PhotoDeleteForm(forms.Form):
+	item_id = forms.IntegerField()
+	
+	photo_id = forms.IntegerField()
+	photo = ''
+	
+	page_type = forms.CharField(max_length = 20)
 
+		
+	def clean(self):
+		cleaned_data = super(PhotoDeleteForm, self).clean()
+		
+		page_type = cleaned_data.get('page_type')
+		photo_id = cleaned_data.get('photo_id')
+		item_id = cleaned_data.get('item_id')
+		
+		if page_type == 'food':
+			try:
+				item = Food.objects.get(id=item_id)
+			except:
+				raise forms.ValidationError("No such item")
+		elif page_type == 'recipe':
+			try:
+				item = Recipe.objects.get(id=item_id)
+			except:
+				raise forms.ValidationError("No such item")
+		elif page_type == 'equipment':
+			try:
+				item = Equipment.objects.get(id=item_id)
+			except:
+				raise forms.ValidationError("No such item")
+		else:
+			raise forms.ValidationError("Invalid Page type")
+			
+		try:
+
+			self.photo = item.photos.get(id=photo_id)
+		except:
+			raise forms.ValidationError("No such image")
+		
+		return cleaned_data
+		
 
 class RecipePhotoForm(forms.ModelForm):
 	item_id = forms.IntegerField()

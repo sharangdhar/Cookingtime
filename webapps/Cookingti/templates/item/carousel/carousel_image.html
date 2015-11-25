@@ -1,1 +1,6 @@
-<img src="{% url "image" page_type item.id image.id %}" class="carousel_img">
+<div class="carousel_image_wrapper">
+    {% if request.user.is_authenticated and request.user == image.user %}
+        <button class="carousel_image_delete" data-page_type="{{page_type}}" data-item_id="{{item.id}}" data-photo_id="{{image.id}}">x</button>
+    {% endif %}
+    <img src="{% url "image" page_type item.id image.id %}" class="carousel_img">
+</div>

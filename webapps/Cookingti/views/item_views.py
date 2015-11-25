@@ -191,9 +191,7 @@ def postReview(request):
 
 @transaction.atomic
 def postImage(request):
-	# We might not need the GET part depending on how the front end is 
-	# being handled
-	
+
 	if request.method != "POST":
 		print("method not post")
 		raise Http404
@@ -244,9 +242,37 @@ def postImage(request):
 	})
 	return HttpResponse(resp, content_type='application/json')
 
+@transaction.atomic
+def delImage(request):
+	if request.method != "POST":
+		print("method not post")
+		raise Http404
+	
+	# Check authentication
+	if not request.user.is_authenticated():
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Login required'}]})
+		return HttpResponse(resp, content_type='application/json')
 
+	form = PhotoDeleteForm(request.POST, request.FILES)
+	
+	if not form.is_valid():
+		resp = json.dumps(
+		{
+			'status':'error',
+			'errors': dict(form.errors.items())
+		})
+		return HttpResponse(resp, content_type='application/json')
+		
+	if not request.user == form.photo.user:	
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'not your photo'}]})
+		return HttpResponse(resp, content_type='application/json')
+		
 
-
+	form.photo.delete()
+	
+	resp = json.dumps({'status':'success'});
+	
+	return HttpResponse(resp, content_type='application/json')
 
 @transaction.atomic
 def postTime(request):
@@ -369,12 +395,12 @@ def delLink(request):
 		raise Http404
 	
 	if request.method != 'POST':
-		print('not post')
 		raise Http404
 	
 	
 	form = LinkForm(request.POST)
 	if not form.is_valid():
+		print('form error')
 		print(form.errors.items())
 		raise Http404
 	

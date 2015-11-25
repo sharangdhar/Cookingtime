@@ -28,9 +28,10 @@ $(document).ready(function()
 	
 	
 	
-    $("#carousel_left_button").click(function(){slide("left");});
-    $("#carousel_right_button").click(function(){slide("right");});
-	$("#carousel_submit").click(function(e){upload(e); return false;});
+    $("#carousel_left_button").click(function(){carousel_slide("left");});
+    $("#carousel_right_button").click(function(){carousel_slide("right");});
+	$("#carousel_submit").click(function(e){carousel_upload(e); return false;});
+	$(".carousel_image_delete").click(function(e){carousel_delete(e);});
     $("#carousel_upload_button").click(function()
     {
         $("#carousel_upload_box").toggle(200);
@@ -50,7 +51,24 @@ $(document).ready(function()
 	
 });
 
-function upload(e)
+function carousel_delete(e)
+{
+	var target = $(e.target);
+	var page_type = target.attr("data-page_type");
+	var item_id = target.attr("data-item_id");
+	var photo_id = target.attr("data-photo_id");
+	
+	$.post('/del_image', {page_type:page_type, item_id:item_id, photo_id:photo_id}).done(function(data)
+	{
+		if(data.status == "success")
+		{
+			target.closest(".carousel_image_wrapper").remove();
+		}
+			
+	});
+}
+
+function carousel_upload(e)
 {
 	
 	var fd = new FormData();
@@ -73,6 +91,7 @@ function upload(e)
 			{
 				console.log(data);
 				image = $(data.html);
+				image.find(".carousel_image_wrapper").click(function(e){carousel_delete(e);});
 				$("#carousel_slider").prepend(image);
 			}
 			else
@@ -102,7 +121,7 @@ function upload(e)
 	return false;
 }
 
-function slide(direction)
+function carousel_slide(direction)
 {
     var slider = $("#carousel_slider");
     var left = parseInt(slider.css("left"));
