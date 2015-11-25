@@ -270,3 +270,52 @@ class EquipmentReviewForm(forms.ModelForm):
 			raise forms.ValidationError("Rating must be between 1 and 5 (inclusive)")
 		
 		return stars
+		
+
+class LinkForm(forms.Form):
+	item_id = forms.IntegerField()
+	item = ""
+	
+	link_id = forms.IntegerField()
+	link_item = ""
+	
+	link_type = forms.CharField(max_length = 20)
+	
+	def clean_link_type(self):
+		link_type = self.cleaned_data.get('link_type')
+		
+		if link_type not in ['food', 'recipe']:
+			raise forms.ValidationError("Invalid Link Type.")
+		
+		return link_type
+		
+	
+	def clean(self):
+		cleaned_data = super(LinkForm, self).clean()
+		
+		link_type = cleaned_data.get('link_type')
+		link_id = cleaned_data.get('link_id')
+		item_id = cleaned_data.get('item_id')
+		
+		if link_type == 'food':
+			try:
+				self.link_item = Food.objects.get(id=link_id)
+			except:
+				raise forms.ValidationError("Invalid Link ID.")
+				
+			try:
+				self.item = Recipe.objects.get(id=item_id)
+			except:
+				raise forms.ValidationError("Invalid Item ID.")
+		else:
+			try:
+				self.link_item = Recipe.objects.get(id=link_id)
+			except:
+				raise forms.ValidationError("Invalid Link ID.")
+				
+			try:
+				self.item = Food.objects.get(id=item_id)
+			except:
+				raise forms.ValidationError("Invalid Item ID.")
+		
+		return cleaned_data

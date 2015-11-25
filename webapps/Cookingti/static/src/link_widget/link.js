@@ -27,7 +27,7 @@ $(document).ready(function()
 	});
 
 
-
+	
 
 
     $("#bulk_sidebar_add_panel").click(function()
@@ -35,10 +35,8 @@ $(document).ready(function()
         $("#add_link").toggle(200);
     });
     
-    $("#add_link_text").keypress(function(e)
-    {
-		link_search(e);
-    });
+    $("#add_link_text").keypress(function(e){link_search(e);});
+	$(".bulk_sidebar_delete").click(function(e){link_delete(e);});
     
     $("body").click(function()
     {
@@ -53,6 +51,13 @@ $(document).ready(function()
     
     
 });
+
+function bulk_sidebar_delete(e)
+{"use strict";
+
+	
+	
+}
 
 function link_search(e)
 {"use strict";

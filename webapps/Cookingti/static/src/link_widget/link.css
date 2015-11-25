@@ -41,3 +41,11 @@
     background-color: hsla(0, 0%, 90%, 1);
 }
 
+.bulk_sidebar_delete
+{
+	float: right;
+    margin-top: 17px;
+    margin-right: 20px;
+    text-decoration: none;
+    font-size: 26px;
+}

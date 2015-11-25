@@ -339,51 +339,56 @@ def postLink(request):
 		raise Http404
 	
 	
-	if not 'item_id' in request.POST or not request.POST['item_id']:
-		print('no item_id')
+	form = LinkForm(request.POST)
+	if not form.is_valid():
+		print(form.errors.items())
 		raise Http404
-	item_id = request.POST['item_id']
 	
 	
-	if not 'link_id' in request.POST or not request.POST['link_id']:
-		print('no link_id')
+	item = form.item
+	link_item = form.link_item
+	link_type = form.cleaned_data.get('link_type')
+	
+	if request.user != item.user:
+		print("wrong user")
 		raise Http404
-	link_id = request.POST['link_id']
 	
 	
-	if not 'link_type' in request.POST or not request.POST['link_type']:
-		print("no type")
-		raise Http404();
-	link_type = request.POST['link_type']
-	
-	
-	if link_type == "recipe":
-		try:
-			link_item = Recipe.objects.get(id = link_id)
-			item = Food.objects.get(id= item_id)
+	link_item.link.add(item)
 
-			item.link.add(link_item)
-			print(item.link.all())
-		except:
-			print("couldn't get items")
-			raise Http404
-	elif link_type == "food":
-		try:
-			link_item = Food.objects.get(id = link_id)
-			item = Recipe.objects.get(id = item_id)
-
-			link_item.link.add(item)
-			print(link_item.link.all())			
-		except:
-			print("couldn't get items")
-			raise Http404
-	else:
-		print("bad link type")
-	
-	
-	if request.user != link_item.user:
-		raise Http404 
-
-	ret = render_to_string("item/bulk_sidebar/bulk_sidebar_item.html", {'link_item':link_item, 'link_item_type':link_type});
+	ret = render_to_string("item/bulk_sidebar/bulk_sidebar_item.html", {'request': request, 'link_item':link_item, 'link_item_type':link_type});
 	
 	return HttpResponse(ret, content_type="text/html")
+
+
+
+@transaction.atomic
+def delLink(request):
+	
+	if not request.user.is_authenticated():
+		raise Http404
+	
+	if request.method != 'POST':
+		print('not post')
+		raise Http404
+	
+	
+	form = LinkForm(request.POST)
+	if not form.is_valid():
+		print(form.errors.items())
+		raise Http404
+	
+	
+	item = form.item
+	link_item = form.link_item
+	link_type = form.cleaned_data.get('link_type')
+	
+	if request.user != item.user:
+		print("wrong user")
+		raise Http404
+	
+	
+	link_item.link.remove(item)
+	
+	return HttpResponse("", content_type="text/html")
+	
