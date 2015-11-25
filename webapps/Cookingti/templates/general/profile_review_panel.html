@@ -2,19 +2,11 @@
 {% load stars_to_uni %}
 {% load markup %}
 
-<div class="review">
-    
-    {% if request.user.is_authenticated and request.user = review.user %}
-    
-        <button class="review_edit">Edit</button>
-    
-        <div class="review_form">
-            {% include 'item/reviews/review_form.html' %}
-        </div>
-    {% endif %}
-    
-    
+<div class="review panel">
     <div class="review_display">
+        
+        <h3><a href="{% url 'item' item_type review.item.id %}">{{ review.item.name }}</a></h3>
+        
         <div class="review_top_matter">
             <div class="review_title">
                 {{ review.title}}
@@ -23,9 +15,7 @@
             <span class="review_date">
                 {{ review.date|date:"r" }}
             </span>
-            
-            <span class="review_user">by <a href="{% url 'profile' review.user.id %}">{{ review.user.username}}</a></span>
-            
+                        
             <span class="review_rating" data-stars="{{ review.stars }}">
                 {{ review.stars | stars_to_uni}}
             </span>

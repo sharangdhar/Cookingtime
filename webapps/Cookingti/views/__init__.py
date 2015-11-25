@@ -87,14 +87,6 @@ def search(request):
 	
 
 
-def profile(request):
-	context = {'page_name': request.user.username}
-	session = {'page_type': '', 'item':	 ''}
-	return render(request, 'general/profile.html', context)
-
-
-
-
 
 
 
@@ -162,3 +154,13 @@ def getImage(request, page_type, item_id, img_id):
 	
 		
 
+def profile(request, id):
+	context = {'page_name': request.user.username}
+	
+	try:
+		user = User.objects.get(id=id);
+	except:
+		raise Http404
+	
+	context['user'] = user
+	return render(request, 'general/profile_main.html', context)

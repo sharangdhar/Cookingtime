@@ -20,7 +20,6 @@ urlpatterns = [
   
 	url(r'^$', 'Cookingti.views.hs_views.home', name='blank'),
 	url(r'^home$', 'Cookingti.views.hs_views.home', name='home'),
-	url(r'^profile$', 'Cookingti.views.profile',  name='profile'),
 	url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
 	url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'general/login.html', 'extra_context':{'page_name':'Log in'}}, name='login', ),
 	url(r'^register$', 'Cookingti.views.register', name='register'),
@@ -40,4 +39,7 @@ urlpatterns = [
 	
 	url(r'^item/(?P<item_type>[\w-]+)/(?P<id>\d+)$', 'Cookingti.views.item_views.item', name='item'),
 	url(r'^image/(?P<page_type>.+)/(?P<item_id>.+)/(?P<img_id>.+)$', 'Cookingti.views.getImage', name='image'),
+	
+	url(r'^profile/(?P<id>.+)$', 'Cookingti.views.profile',  name='profile'),
+	
 ]

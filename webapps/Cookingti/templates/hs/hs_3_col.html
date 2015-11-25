@@ -5,7 +5,7 @@
     {% for food_ in foods_ %}
         {% include "hs/hs_panel.html" with item=food_ type="food"%}
     {% empty %}
-        <p>No foods</p>
+        <p style="text-align:center;">No foods</p>
     {% endfor %}
     </div>
 </div> <!-- Food col -->
@@ -17,7 +17,7 @@
     {% for recipe_ in recipes_ %}
         {% include "hs/hs_panel.html" with item=recipe_ type="recipe"%}
     {% empty %}
-        <p>No recipes</p>
+        <p style="text-align:center;">No recipes</p>
     {% endfor %}
     </div>
 </div><!-- Recipies col -->
@@ -29,7 +29,7 @@
     {% for equipment_ in equipments_ %}
         {% include "hs/hs_panel.html"  with item=equipment_ type="equipment"%}
     {% empty %}
-        <p>No equipment</p>
+        <p style="text-align:center;">No equipment</p>
     {% endfor %}
     </div>
 </div>
