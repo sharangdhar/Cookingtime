@@ -63,6 +63,8 @@
     
     padding-left: 40px;
     padding-right: 40px;
+	
+	position: relative;
 }
 
 .review_top_matter
@@ -92,6 +94,33 @@
     line-height: 150%;
 }
 
+
+
+.review_text h1
+{
+	font-size: 22px;
+}
+
+.review_text h2 
+{
+	font-weight: 700;
+	font-size: 19px;
+	text-align: left;
+}
+
+.review_text h3
+{
+	text-align: left;
+}
+.review_text h4
+{
+	color: #777;
+	font-weight: 400;
+	font-size: 15px;
+}
+
+
+
 .simple_cont
 {
     overflow: auto;
@@ -101,12 +130,6 @@
     padding-bottom: 50px;
 }
 
-#new_review
-{
-    display: none;
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
 
 #new_review_title
 {
@@ -129,3 +152,6 @@
     position: absolute;
     background-color: white;
 }
+
+
+

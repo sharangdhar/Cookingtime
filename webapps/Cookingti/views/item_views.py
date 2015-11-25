@@ -98,15 +98,50 @@ def postReview(request):
 		return HttpResponse(resp, content_type='application/json')
 	page_type = request.POST["page_type"]
 	
+	if not "review_id" in request.POST or not request.POST["review_id"]:
+		review_id = "new"
+	else:
+		review_id = request.POST["review_id"]
+	
 	context = {'page_name': 'Item', 'page_type':page_type}
 
 
 	if page_type == 'food':
-		form = FoodReviewForm(request.POST)
+		if review_id == 'new':
+			form = FoodReviewForm(request.POST)
+		else:
+			try: 
+				obj = FoodReview.objects.get(id=review_id)
+			except:
+				resp = json.dumps({'status':'error','custom_errors':[{'message': 'review not found'}]})
+				return HttpResponse(resp, content_type='application/json')
+			
+			form = FoodReviewForm(request.POST, instance=obj)
+		
 	elif page_type == 'recipe':
-		form = RecipeReviewForm(request.POST)
+		if review_id == 'new':
+			form = RecipeReviewForm(request.POST)
+		else:
+			try: 
+				obj = RecipeReview.objects.get(id=review_id)
+			except:
+				resp = json.dumps({'status':'error','custom_errors':[{'message': 'review not found'}]})
+				return HttpResponse(resp, content_type='application/json')
+			
+			form = RecipeReviewForm(request.POST, instance=obj)
+		
 	elif page_type == 'equipment':
-		form = EquipmentReviewForm(request.POST)
+		if review_id == 'new':
+			form = EquipmentReviewForm(request.POST)
+		else:
+			try: 
+				obj = EquipmentReview.objects.get(id=review_id)
+			except:
+				resp = json.dumps({'status':'error','custom_errors':[{'message': 'review not found'}]})
+				return HttpResponse(resp, content_type='application/json')
+			
+			form = EquipmentReviewForm(request.POST, instance=obj)
+		
 	else:
 		resp = json.dumps({'status':'error','custom_errors':[{'message': 'invalid page_type'}]})
 		return HttpResponse(resp, content_type='application/json')
@@ -143,7 +178,7 @@ def postReview(request):
 	resp = json.dumps(
 	{
 		'status':'success',
-		'html': render_to_string('item/reviews/review_panel.html', {'page_type':page_type, 'review':instance})
+		'html': render_to_string('item/reviews/review_panel.html', {'page_type':page_type, 'item':item, 'review':instance})
 	})
 	return HttpResponse(resp, content_type='application/json') 
 

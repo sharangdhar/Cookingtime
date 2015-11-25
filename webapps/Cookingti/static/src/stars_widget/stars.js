@@ -6,9 +6,11 @@ $(document).ready(function()
         build_stars(stars.eq(i));
     }
     
+	/*
     stars.children().mouseover(function(e){stars_mouseover(e);});
     stars.children().mouseleave(function(e){stars_mouseleave(e);});
     stars.children().mouseup(function(e){stars_up(e);});
+	*/
 });
 
 
@@ -18,6 +20,11 @@ function build_stars(widget)
     {
         widget.append($('<span data-num="' + i + '">&#9733;</span>'));
     }
+	
+    widget.children().mouseover(function(e){stars_mouseover(e);});
+    widget.children().mouseleave(function(e){stars_mouseleave(e);});
+    widget.children().mouseup(function(e){stars_up(e);});
+	
 	
     var hidden = widget.parent().children(".stars");
     set_stars(widget, parseInt(hidden.val()));

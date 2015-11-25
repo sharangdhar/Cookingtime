@@ -1,6 +1,7 @@
 $(document).ready(function()
 {
 	$(".review_submit").click(function(e){submit_review(e);});
+	$(".review_edit").click(function(e){review_edit(e);});
 	
 	
     $("#review_sort").change(function(e){review_sort(e);}); 
@@ -9,10 +10,19 @@ $(document).ready(function()
     {
         $('#new_review').toggle(200);
     });
+	
 });
+
+function review_edit(e)
+{
+	var review = $(e.target).closest(".review");
+	review.children(".review_display").toggle(200);
+	review.children(".review_form").toggle(200);
+}
 
 function submit_review(e)
 {"use strict";
+
 	var par = $(e.target).closest(".review_form");
 		
 	var title = par.children(".edit_review_title").eq(0).val();
@@ -29,12 +39,13 @@ function submit_review(e)
 	
 	var page_type = par.children(".page_type").eq(0).val();
 	var item_id = par.children(".item_id").eq(0).val();
+	var review_id = par.children(".review_id").eq(0).val();
+	var new_review = (review_id == "new");
 	
 	var general_error = par.children(".general_error").eq(0);
 	
-	$.post("/post_review", {title: title, stars:stars, review: text, page_type: page_type, item_id: item_id}).done(function(data)
+	$.post("/post_review", {title: title, stars:stars, review: text, page_type: page_type, item_id: item_id, review_id: review_id}).done(function(data)
 	{
-		console.log(data);
 		
 		if(data.status == "success")
 		{
@@ -43,8 +54,23 @@ function submit_review(e)
 			text_error.text("");
 			
 			general_error.text("Success!");
-			$(e.target).closest("#reviews_panel").children("#reviews_wrapper").eq(0).prepend($(data.html));
-			$('#new_review').hide(200);
+			var new_html = $(data.html);
+			
+			if(new_review)
+			{
+				$(e.target).closest("#reviews_panel").find("#reviews_wrapper").eq(0).prepend(new_html);
+				$('#new_review').hide(200);
+			}
+			else
+			{
+				par.hide(200);
+				par.closest(".review").replaceWith(new_html);
+			}
+			
+			build_stars(new_html.find(".stars_widget"));
+			
+			$(".review_submit").unbind('click').click(function(e){submit_review(e);});
+			$(".review_edit").unbind('click').click(function(e){review_edit(e);});
 		}
 		else
 		{

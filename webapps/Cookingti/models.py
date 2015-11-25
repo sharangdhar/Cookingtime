@@ -60,35 +60,35 @@ class Recipe(models.Model):
 
 
 class FoodReview(models.Model):
-	user = models.ForeignKey(User, blank=True)
-	title = models.CharField(max_length=TEXT_SIZE, default="")
+	user = models.ForeignKey(User, blank=True, null=True)
+	title = models.CharField(max_length=TEXT_SIZE, default="", null=True)
 	stars = models.IntegerField(default=0, blank=True, null=True)
-	review = models.CharField(max_length = TEXT_SIZE)
+	review = models.CharField(max_length = TEXT_SIZE, null=True)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
-	item = models.ForeignKey(Food, related_name='reviews')
+	item = models.ForeignKey(Food, related_name='reviews', null=True)
 	
 	def __unicode_(self):
 		return self.review
 
 
 class RecipeReview(models.Model):
-	user = models.ForeignKey(User, blank=True)
-	title = models.CharField(max_length=TEXT_SIZE, default="")
+	user = models.ForeignKey(User, blank=True, null=True)
+	title = models.CharField(max_length=TEXT_SIZE, default="", null=True)
 	stars = models.IntegerField(default=0, blank=True, null=True)
-	review = models.CharField(max_length = TEXT_SIZE)
+	review = models.CharField(max_length = TEXT_SIZE, null=True)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
-	item = models.ForeignKey(Recipe, related_name='reviews')
+	item = models.ForeignKey(Recipe, related_name='reviews', null=True)
 	
 	def __unicode_(self):
 		return self.review
 
 class EquipmentReview(models.Model):
-	user = models.ForeignKey(User, blank=True)
-	title = models.CharField(max_length=TEXT_SIZE, default="")
+	user = models.ForeignKey(User, blank=True, null=True)
+	title = models.CharField(max_length=TEXT_SIZE, default="", null=True)
 	stars = models.IntegerField(default=0, blank=True, null=True)
-	review = models.CharField(max_length = TEXT_SIZE)
+	review = models.CharField(max_length = TEXT_SIZE, null=True)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
-	item = models.ForeignKey(Equipment, related_name='reviews')
+	item = models.ForeignKey(Equipment, related_name='reviews', null=True)
 	
 	def __unicode_(self):
 		return self.review

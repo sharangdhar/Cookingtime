@@ -4,7 +4,9 @@
 <div id="reviews_panel" class="panel">
     <h3>Reviews</h3>
     
+
     <div id="review_top_row">
+
         <div id="review_average" class="col-md-4 col-sm-4">
             Average: {{item.stars|stars_to_uni}}
         </div>
@@ -34,21 +36,7 @@
     
     <div id="new_review" class="review_form">
 
-        <input class="edit_review_title" type="text" name="title" placeholder="Title"><span class="review_title_error"></span>
-        <br><span class="stars_widget"></span><span class="stars_error"></span>
-        <input class="stars" type="hidden" name="stars" value="0">
-        <input class="page_type" type="hidden" name="page_type" value="{{ page_type }}">
-        <input class="item_id" type="hidden" name="item_id" value="{{item.id}}">
-        
-        <textarea maxlength="500" class="edit_review_text" id="new_review_area" name="review" rows="15"></textarea>
-        <div class="text_error"></div>
-        <button class="review_submit" onclick="return false;">Submit</button><span class="general_error"></span>
-
-        <link rel="stylesheet" href="{% static "src/stars_widget/stars.css" %}">
-        <link rel="stylesheet" href="{% static "src/reviews_widget/new_review.css" %}">
-        <link rel="stylesheet" href="{% static "src/reviews_widget/reviews.css" %}">
-        <script src="{% static "src/reviews_widget/reviews.js" %}"></script>
-        <script src="{% static "src/stars_widget/stars.js" %}"></script>
+        {% include 'item/reviews/review_form.html' %}
 
     </div><!-- new review -->
     
@@ -59,4 +47,10 @@
         {% endfor %}     
     </div><!-- review wrapper -->
     
+    
+    <link rel="stylesheet" href="{% static "src/stars_widget/stars.css" %}">
+    <link rel="stylesheet" href="{% static "src/reviews_widget/new_review.css" %}">
+    <link rel="stylesheet" href="{% static "src/reviews_widget/reviews.css" %}">
+    <script src="{% static "src/reviews_widget/reviews.js" %}"></script>
+    <script src="{% static "src/stars_widget/stars.js" %}"></script>
 </div><!--  reviews panel -->

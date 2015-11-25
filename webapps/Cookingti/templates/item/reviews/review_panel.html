@@ -3,18 +3,28 @@
 {% load markup %}
 
 <div class="review">
-    <div class="review_top_matter">
-        <div class="review_title">
-            {{ review.title}}
+    <button class="review_edit">Edit</button>
+    
+    
+    <div class="review_form">
+        {% include 'item/reviews/review_form.html' %}
+    </div>
+    
+    <div class="review_display">
+        <div class="review_top_matter">
+        
+            <div class="review_title">
+                {{ review.title}}
+            </div>
+            <span class="review_date">
+                {{ review.date|date:"r" }}
+            </span>
+            <span class="review_rating" data-stars="{{ review.stars }}">
+                {{ review.stars | stars_to_uni}}
+            </span>
         </div>
-        <span class="review_date">
-            {{ review.date|date:"r" }}
-        </span>
-        <span class="review_rating" data-stars="{{ review.stars }}">
-            {{ review.stars | stars_to_uni}}
-        </span>
-    </div>
-    <div class="review_text">
-        {{ review.review|markdown}}
-    </div>
+        <div class="review_text">
+            {{ review.review|markdown}}
+        </div>
+    </div> <!-- review display -->
 </div><!-- review -->

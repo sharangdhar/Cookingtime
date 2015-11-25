@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+<input class="edit_review_title" type="text" name="title" placeholder="Title" value="{{ review.title }}"><span class="review_title_error"></span>
+<br><span class="stars_widget"></span><span class="stars_error"></span>
+<input class="stars" type="hidden" name="stars" value="{{ review.stars|default:"0"}}">
+<input class="page_type" type="hidden" name="page_type" value="{{ page_type }}">
+<input class="item_id" type="hidden" name="item_id" value="{{item.id}}">
+<input class="review_id" type="hidden" name="review_id" value="{{review.id|default:"new"}}">
+
+<textarea maxlength="500" class="edit_review_text" id="new_review_area" name="review" rows="15" placeholder="Format with Markdown!">{{ review.review }}</textarea>
+<div class="text_error"></div>
+<button class="review_submit" onclick="return false;">Submit</button><span class="general_error"></span>
+

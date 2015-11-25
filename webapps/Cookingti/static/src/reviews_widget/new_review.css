@@ -9,7 +9,6 @@
 
 #new_review
 {
-    display: none;
     margin-top: 40px;
     margin-bottom: 40px;
 }
@@ -34,4 +33,29 @@
     margin: 0px;
     position: absolute;
     background-color: white;
+}
+.review_form
+{
+    display: none;
+}
+
+.review_edit
+{
+	float:right;
+	
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.review textarea, .review input
+{
+    background-color: #fafafa;
+	
+}
+
+.edit_review_title
+{
+	width: 75%;
+	margin-bottom: 10px;
 }
