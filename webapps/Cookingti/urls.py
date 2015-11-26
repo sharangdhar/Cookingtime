@@ -41,5 +41,7 @@ urlpatterns = [
 	url(r'^image/(?P<page_type>.+)/(?P<item_id>.+)/(?P<img_id>.+)$', 'Cookingti.views.getImage', name='image'),
 	
 	url(r'^profile/(?P<id>.+)$', 'Cookingti.views.profile',  name='profile'),
+	url(r'^edit_profile/?$', 'Cookingti.views.editProfile',  name='edit_profile'),
+	
 	
 ]

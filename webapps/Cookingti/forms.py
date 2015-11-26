@@ -38,6 +38,53 @@ class RegistrationForm(forms.Form):
 
 		return username
 
+
+class ProfileForm(forms.Form):
+	user_id = forms.IntegerField()
+	user = ""
+	person = ""
+	
+	firstname = forms.CharField(max_length = 200, label='Firstname')
+	lastname = forms.CharField(max_length = 200, label='Lastname')
+	email = forms.EmailField(max_length = 50, label='Email')
+	wattage = forms.IntegerField(label='Wattage')
+
+
+	def clean_user_id(self):
+		user_id = self.cleaned_data.get('user_id')
+		
+		try:
+			self.user = User.objects.get(id=user_id)
+		except: 
+			raise forms.ValidationError("Invalid user_id")
+		
+		try:
+			self.person = Person.objects.get(user=self.user)
+		except:
+			raise forms.ValidationError("Could not find person for user")
+		
+		return user_id
+		
+
+class PasswordForm(forms.Form):
+	password1 = forms.CharField(max_length = 200, 
+								label='Password', widget = forms.PasswordInput(attrs={"placeholder":"password"}))						  
+	password2 = forms.CharField(max_length = 200, 
+								label='Confirm password',widget = forms.PasswordInput(attrs={"placeholder":"confirm"}))
+	def clean(self):
+		cleaned_data = super(RegistrationForm, self).clean()
+
+		# Confirms that the two password fields match
+		password1 = cleaned_data.get('password1')
+		password2 = cleaned_data.get('password2')
+		if password1 and password2 and password1 != password2:
+			raise forms.ValidationError("Passwords did not match.")
+
+		return cleaned_data
+		
+		
+		
+
 #Form for changing the password
 class ChangePasswordForm(forms.Form):
 	password1 = forms.CharField(max_length = 200, 

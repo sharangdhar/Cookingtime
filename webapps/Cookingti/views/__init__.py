@@ -153,7 +153,7 @@ def getImage(request, page_type, item_id, img_id):
 	return HttpResponse(image.picture, content_type=content_type)
 	
 		
-
+@ensure_csrf_cookie	
 def profile(request, id):
 	context = {'page_name': request.user.username}
 	
@@ -164,3 +164,52 @@ def profile(request, id):
 	
 	context['user'] = user
 	return render(request, 'general/profile_main.html', context)
+
+
+@transaction.atomic
+def editProfile(request):
+	if request.method != "POST":
+		print("method not post")
+		raise Http404
+	
+	# Check authentication
+	if not request.user.is_authenticated():
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Login required'}]})
+		return HttpResponse(resp, content_type='application/json')
+	
+	form = ProfileForm(request.POST)
+	
+	if not form.is_valid():
+		resp = json.dumps(
+		{
+			'status':'error',
+			'errors': dict(form.errors.items())
+		})
+		return HttpResponse(resp, content_type='application/json')
+	
+	
+	if request.user != form.user:	
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'not your profile'}]})
+		return HttpResponse(resp, content_type='application/json')
+		
+	form.user.first_name = form.cleaned_data.get("firstname")
+	form.user.last_name = form.cleaned_data.get("lastname")
+	form.user.email = form.cleaned_data.get("email")
+	form.user.save()
+	
+	form.person.wattage = form.cleaned_data.get("wattage")
+	form.person.save()
+	
+	resp = json.dumps(
+	{
+		'status':'success', 
+		'data':
+		{
+			'firstname': form.cleaned_data.get("firstname"),
+			'lastname': form.cleaned_data.get("lastname"),
+			'email': form.cleaned_data.get("email"),
+			'wattage': form.cleaned_data.get("wattage")
+		}
+	})
+	return HttpResponse(resp, content_type='application/json')
+	

@@ -1,0 +1,44 @@
+
+#profile_edit_button
+{
+	position: absolute;
+	top: 15px;
+	right: 35px;
+}
+
+.profile_password_button
+{
+	font-size: 17px; display: block; margin-left:auto; margin-right: auto;
+}
+
+#profile_form
+{
+	display: none;
+}
+
+#profile_form li
+{
+	margin-top: 3px;
+	list-style-type: none;
+}
+
+#profile_form_submit
+{
+	margin-left: 40px;
+}
+
+#profile_table
+{
+	margin-left: 30px;
+	white-space: nowrap;
+}
+
+#profile_table td
+{
+	padding:2px;
+}
+#profile_table td:first-child
+{
+	text-align: right;
+	padding-right: 3px;
+}

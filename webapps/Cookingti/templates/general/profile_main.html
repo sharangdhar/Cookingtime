@@ -15,19 +15,34 @@
         
         
                 {% if request.user.is_authenticated and request.user == user %}
-                    <button class="profile_edit_button">Edit</button>
+                    <button id="profile_edit_button">Edit</button>
+                    
+                    <div id="profile_form">
+                        <ul>
+                            <li><input name="firstname" placeholder="First name" id="profile_form_firstname" max-length="30" value="{{ user.first_name }}"><span id="profile_first_name_error"></span></li>
+                            <li><input name="lastname" placeholder="Last name" id="profile_form_lastname" max-length="30" value="{{ user.last_name }}"><span id="profile_last_name_error"></span></li>
+                            <li><input name="email" placeholder="email" id="profile_form_email" max-length="30" value="{{ user.email }}"><span id="profile_email_error"></span></li>
+                            <li><input name="wattage" placeholder="wattage" id="profile_form_wattage" max-length="30" value="{{ user.person.all.0.wattage }}"><span id="profile_wattage_error"></span></li>
+                        </ul>
+                        
+                        <button data-user_id="{{user.id}}" id="profile_form_submit">Submit</button><span id="profile_form_general_error"></span>
+                    </div>  
                 {% endif %}
         
-        
-                <ul>
-                    <li>First name: {{ user.first_name }}</li>
-                    <li>Last name: {{ user.last_name }}</li>
-                    <li>Email: {{ user.email }}</li>
-                    <li>Wattage: {{ user.person.all.0.wattage }}</li>
-                </ul>
+                
+               <table id="profile_table">
+                   <tr><td>First name: </td><td id="table_first">{{ user.first_name }}</td></tr>
+
+                   <tr><td>Last name: </td><td id="table_last">{{ user.last_name }}</td></tr>
+                   <tr><td>Email: </td><td id="table_email">{{ user.email }}</td></tr>
+                   <tr><td>Wattage: </td><td id="table_wattage">{{ user.person.all.0.wattage }}</td></tr>
+               </table>
         
                 <button class="profile_password_button">Change Password</button>
             </div>
+            
+            <link rel="stylesheet" href="{% static "src/profile_widget/profile.css" %}">
+            <script src="{% static "src/profile_widget/profile.js"%}"></script>
         </div>
     </div>
 
