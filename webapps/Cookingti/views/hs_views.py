@@ -48,16 +48,9 @@ def home(request):
 def amazon_res(topic,words):
 	api = API(locale='us')
 
-	results = api.item_search(topic , Keywords=words, paginate = False)
+	results = api.item_search(topic , Keywords=words, ResponseGroup="ItemAttributes, OfferSummary, Images", paginate = False)
 
-	arr_results = [];
-
-	for item in results.Items.Item:
-		arr_results.append(item.ItemAttributes.Title)
-
-	# possible bug if number of items returned less than 10
-	return arr_results
-
+	return results.Items.Item
 	
 
 @transaction.atomic
