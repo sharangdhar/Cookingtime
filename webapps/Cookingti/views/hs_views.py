@@ -98,8 +98,6 @@ def addItem(request):
 	else:
 		new_item = Equipment(name = form.cleaned_data['item'])
 
-
-	print items
 	new_item.user = request.user
 	context['items'] = items
 	return render(request, 'general/items.html', context)
