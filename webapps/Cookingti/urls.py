@@ -42,6 +42,6 @@ urlpatterns = [
 	
 	url(r'^profile/(?P<id>.+)$', 'Cookingti.views.profile',  name='profile'),
 	url(r'^edit_profile/?$', 'Cookingti.views.editProfile',  name='edit_profile'),
-	
-	
+
+
 ]

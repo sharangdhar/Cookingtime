@@ -24,6 +24,9 @@ import markdown
 from Cookingti.models import *
 from Cookingti.forms import *
 
+#amaozn product api
+from amazonproduct import API
+
 
 
 def home(request):	
@@ -41,6 +44,18 @@ def home(request):
 	session = {'page_type': '', 'item':	 ''}
 	return render(request, 'hs/hs_main.html', context)
 	
+
+def amazon_res(topic,words):
+	api = API(locale='us')
+
+	results = api.item_search(topic , Keywords=words, paginate = False)
+
+	#for item in items:
+	#	print item.ItemAttributes.Title
+
+	# possible bug if number of items returned less than 10
+	return results.Items.Item
+
 	
 
 @transaction.atomic
@@ -70,9 +85,13 @@ def addItem(request):
 		session = {'page_type': '', 'item':	 ''}
 		return render(request, 'hs/hs_main.html', context)
 
+	items = []
+
 	if form.cleaned_data['item_type'] == 'food':
+		items = amazon_res('Grocery',form.cleaned_data['item'])
 		new_item = Food(name = form.cleaned_data['item'])
 	elif form.cleaned_data['item_type'] == 'recipe':
+		items = amazon_res('HomeGarden', form.cleaned_data['item'])
 		new_item = Recipe(user=request.user, name = form.cleaned_data['item'])
 	else:
 		new_item = Equipment(name = form.cleaned_data['item'])
@@ -80,5 +99,6 @@ def addItem(request):
 	new_item.user = request.user
 
 	new_item.save()
- 
-	return redirect('/item/' + form.cleaned_data['item_type'] + '/' + str(new_item.id))
+
+
+	#return redirect('/item/' + form.cleaned_data['item_type'] + '/' + str(new_item.id))
