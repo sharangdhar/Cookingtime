@@ -263,7 +263,8 @@ def delImage(request):
 		})
 		return HttpResponse(resp, content_type='application/json')
 		
-	if not request.user != form.photo.user:	
+
+	if request.user != form.photo.user:	
 		resp = json.dumps({'status':'error','custom_errors':[{'message': 'not your photo'}]})
 		return HttpResponse(resp, content_type='application/json')
 		
