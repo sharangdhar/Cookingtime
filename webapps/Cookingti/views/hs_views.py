@@ -50,11 +50,13 @@ def amazon_res(topic,words):
 
 	results = api.item_search(topic , Keywords=words, paginate = False)
 
-	#for item in items:
-	#	print item.ItemAttributes.Title
+	arr_results = [];
+
+	for item in results.Items.Item:
+		arr_results.append(item.ItemAttributes.Title)
 
 	# possible bug if number of items returned less than 10
-	return results.Items.Item
+	return arr_results
 
 	
 
@@ -95,10 +97,13 @@ def addItem(request):
 		new_item = Recipe(user=request.user, name = form.cleaned_data['item'])
 	else:
 		new_item = Equipment(name = form.cleaned_data['item'])
-		
+
+
+	print items
 	new_item.user = request.user
+	context['items'] = items
+	return render(request, 'general/items.html', context)
 
-	new_item.save()
-
+	#new_item.save()
 
 	#return redirect('/item/' + form.cleaned_data['item_type'] + '/' + str(new_item.id))
