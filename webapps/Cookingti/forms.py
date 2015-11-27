@@ -242,6 +242,8 @@ class AddItemForm(forms.Form):
 			raise forms.ValidationError("Invalid Item Type.")
 
 		return cleaned_data
+		
+
 
 
 class TimeForm(forms.Form):

@@ -24,6 +24,9 @@ import markdown
 from Cookingti.models import *
 from Cookingti.forms import *
 
+#amaozn product api
+from amazonproduct import API
+
 
 
 def home(request):	
@@ -41,10 +44,37 @@ def home(request):
 	session = {'page_type': '', 'item':	 ''}
 	return render(request, 'hs/hs_main.html', context)
 	
-	
+
+def amazon_res(topic,words):
+	api = API(locale='us')
+
+	results = api.item_search(topic , Keywords=words, ResponseGroup="ItemAttributes, OfferSummary, Images", paginate = False)
+
+
+ 	items = []
+	for it in results.Items.Item:
+		asin = it.ASIN
+		title = it.ItemAttributes.Title
+		link = it.DetailPageURL
+		
+		try:
+			price = it.OfferSummary.LowestNewPrice.FormattedPrice
+		except:
+			price = "no price available"
+			
+		try: 
+			image = it.SmallImage.URL
+		except:
+			image = ""
+		
+		items.append({'asin':asin, 'title':title, 'link':link, 'price':price, 'image':image})
+		
+	return items
+
+
 
 @transaction.atomic
-def addItem(request):
+def newItemSearch(request):
 	if request.method == 'GET':
 		return redirect('Cookingti/home')
 
@@ -56,8 +86,8 @@ def addItem(request):
 
 	context = {}
 
-	context['new_form'] = form
-		# Validates the form.
+
+
 	if not form.is_valid():
 		context['latest_foods'] = Food.objects.all().order_by('-date')[:5]
 		context['highest_foods'] = Food.objects.all().order_by('-stars')[:5]
@@ -70,15 +100,55 @@ def addItem(request):
 		session = {'page_type': '', 'item':	 ''}
 		return render(request, 'hs/hs_main.html', context)
 
+	items = []
 	if form.cleaned_data['item_type'] == 'food':
-		new_item = Food(name = form.cleaned_data['item'])
-	elif form.cleaned_data['item_type'] == 'recipe':
-		new_item = Recipe(user=request.user, name = form.cleaned_data['item'])
-	else:
-		new_item = Equipment(name = form.cleaned_data['item'])
+		items = amazon_res('Grocery', form.cleaned_data['item'])
+		context['page_type'] = 'food'
 		
-	new_item.user = request.user
+	elif form.cleaned_data['item_type'] == 'equipment':
+		items = amazon_res('HomeGarden', form.cleaned_data['item'])
+		context['page_type'] = 'equipment'
+	
+	else:
 
-	new_item.save()
- 
-	return redirect('/item/' + form.cleaned_data['item_type'] + '/' + str(new_item.id))
+		item = Recipe(user=request.user, name=form.cleaned_data['item'])
+		item.save()
+		return redirect('item', 'recipe', item.id)
+	
+	context['items'] = items
+	context['form'] = form
+	context['query'] = form.cleaned_data['item']
+	
+	return render(request, 'general/add_item_search_main.html', context)
+
+
+
+@transaction.atomic
+def newItemCreate(request):
+	
+	if not 'type' in request.POST or not request.POST['type']:
+		print('no type')
+		raise Http404
+		
+	if not 'title' in request.POST or not request.POST['title']:
+		print('no title')
+		raise Http404
+
+
+	if request.POST['type'] == 'food':
+		item = Food(user=request.user, name=request.POST['title'])
+	elif request.POST['type'] == 'equipment':
+		item = Equipment(user=request.user, name=request.POST['title'])
+	else:
+		print('bad type')
+		raise Http404
+			
+			
+	if not 'asin' in request.POST or not request.POST['asin']:
+		pass
+	else:
+		item.asin = request.POST['asin']
+		
+	item.save()
+
+	return redirect('item', request.POST['type'], item.id)

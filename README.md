@@ -30,3 +30,4 @@
 - http://stackoverflow.com/questions/8766222/django-create-if-doesnt-exist
 - http://stackoverflow.com/questions/12254033/django-get-or-create-return-error-tuple-object-has-no-attribute
 - https://css-tricks.com/adding-stroke-to-web-text/
+- https://pypi.python.org/pypi/python-amazon-product-api/
