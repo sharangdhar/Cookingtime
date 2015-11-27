@@ -18,7 +18,7 @@ class Person(models.Model):
 
 class Food(models.Model):
 	user = models.ForeignKey(User, blank=True, null=True)
-	amazon_id = models.IntegerField(blank=True, null=True)
+	asin = models.CharField(max_length=20, blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE)
 	stars = models.IntegerField(blank=True, null=True)
 	starsFloat = models.FloatField(default=0.0, blank=True)
