@@ -179,7 +179,7 @@ function review_sort_highest(a, b)
 {    
     var a_sort = review_get_stars(a);
     var b_sort = review_get_stars(b);
-    	
+		
     if(a_sort < b_sort)
     {
         return 1;
@@ -212,10 +212,11 @@ function review_sort_lowest(a, b)
 
 function review_get_stars(review)
 {
-    return parseInt($(review).children(".review_top_matter").children(".review_rating").attr("data-stars"));
+	console.log($(review));
+    return parseInt($(review).find(".review_rating").attr("data-stars"));
 }
 
 function review_get_date(review)
 {
-    return Date.parse($(review).children(".review_top_matter").children(".review_date").text());
+    return Date.parse($(review).find(".review_date").text());
 }
