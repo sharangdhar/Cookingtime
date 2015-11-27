@@ -5,7 +5,7 @@
     
     <h1>Results</h1>
     
-    <form>
+    <form method="post" action="{% url 'newItemCreate' %}">
         {% csrf_token %}
         <input type="hidden" name="type" value="{{page_type}}">
         <input type="hidden" name="title" value="{{query}}">
