@@ -24,7 +24,7 @@
                 {{ review.date|date:"r" }}
             </span>
             
-            <span class="review_user">by <a href="{% url 'profile' review.user.id %}">{{ review.user.username}}</a></span>
+            <span class="review_user">by <a href="{% url 'profile' id=review.user.id %}">{{ review.user.username}}</a></span>
             
             <span class="review_rating" data-stars="{{ review.stars }}">
                 {{ review.stars | stars_to_uni}}
