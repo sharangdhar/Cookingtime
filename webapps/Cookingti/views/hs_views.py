@@ -50,6 +50,7 @@ def amazon_res(topic,words):
 
 	results = api.item_search(topic , Keywords=words, ResponseGroup="ItemAttributes, OfferSummary, Images", paginate = False)
 
+
  	items = []
 	for it in results.Items.Item:
 		asin = it.ASIN
@@ -70,7 +71,7 @@ def amazon_res(topic,words):
 		
 	return items
 
-	
+
 
 @transaction.atomic
 def newItemSearch(request):
@@ -109,6 +110,7 @@ def newItemSearch(request):
 		context['page_type'] = 'equipment'
 	
 	else:
+
 		item = Recipe(user=request.user, name=form.cleaned_data['item'])
 		item.save()
 		return redirect('item', 'recipe', item.id)
