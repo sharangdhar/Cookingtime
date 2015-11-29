@@ -112,9 +112,9 @@ function carousel_upload(e)
 				
 			}			
         },
-		error: function(data)
+		error: function(data, textStatus, errorThrown)
 		{
-			$("#carousel_error").text("Error");
+			$("#carousel_error").text("Error:" + errorThrown);
 		}
     });
 	

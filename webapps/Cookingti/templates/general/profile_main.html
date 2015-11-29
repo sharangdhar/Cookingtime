@@ -60,6 +60,8 @@
             <h2>Food Reviews</h2>
             {% for review in user.foodreview_set.all %}
                 {% include 'general/profile_review_panel.html' with review=review item_type="food"%}
+            {% empty %}
+                <p style="text-align:center;">No reviews</p>
             {% endfor %}
         </div>
         
@@ -67,6 +69,8 @@
             <h2>Recipe Reviews</h2>
             {% for review in user.recipereview_set.all %}
                 {% include 'general/profile_review_panel.html' with review=review item_type="food"%}
+            {% empty %}
+                <p style="text-align:center;">No reviews</p>
             {% endfor %}
         </div>
         
@@ -74,6 +78,8 @@
             <h2>Equipment Reviews</h2>
             {% for review in user.equipmentreview_set.all %}
                 {% include 'general/profile_review_panel.html' with review=review item_type="food"%}
+            {% empty %}
+                <p style="text-align:center;">No reviews</p>
             {% endfor %}
         </div>
         

@@ -5,7 +5,8 @@
 {% block main %}
 
     <div class="jumbotron">
-
+        <div style="float:left;" class="fb-like" data-href="http://cookingti.me/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+        
         <h2>Search</h2>
         <input type="text" class="jumbo_search" id="search_input" value="">
         <button id="search_button">Search</button>
@@ -25,9 +26,19 @@
             
             <button id="new_button" type='submit'>New</button>
             {% csrf_token %}
+            
         </form>
+            
+        <br>
+        <div style="text-align;center;">Or</div>
+        <button id="new_button_barcode_button">Upload barcode</button>
+        <div id="new_item_barcode_wrapper" >
+            <input style="display:inline-block;" type="file"><button>Submit</button>
+        </div>
+        
         <script src="{% static 'src/search_widget/search.js' %}"></script>
-        <div style="float:left;" class="fb-like" data-href="http://cookingti.me/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+        <script src="{% static 'src/new_item_barcode_widget/new_item_barcode.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'src/new_item_barcode_widget/new_item_barcode.css' %}">
     </div>
 
 

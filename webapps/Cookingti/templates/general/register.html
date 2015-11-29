@@ -7,8 +7,11 @@
         
         <div class="col-md-6 col-md-offset-3">
             <div id="register_panel" class="panel">
+                <div id="register_mask"></div>
+                
                 <h2>Register</h2>
                 <div class="div_table form_wrap">
+                    
                     <form method="POST" action="{% url 'register' %}">
                         {{ form.non_field_errors }}
                         <ul class="form_list">
@@ -19,7 +22,7 @@
                             
                             <!--<li><input type="text" name="wattage" placeholder="wattage"></li> -->
                             <li>{{ form.wattage }}{{ form.wattage.errors.as_text }}</li>
-                            <li>or <button class="inline_button">Scan Barcode</button></li>
+                            <li>or <button id="register_barcode_show" class="inline_button">Upload Barcode</button></li>
                             
                             <li>{{ form.password1 }}{{ form.password1.errors.as_text }}</li>
                             <li>{{ form.password2 }}{{ form.password2.errors.as_text }}</li>
@@ -39,8 +42,17 @@
                     </form>
                 </div>
             </div>
+            
+            <div id="register_barcode_panel" class="panel">
+                <input type="file">
+                <button id="register_upload_barcode_submit">Submit</button>
+                <button id="register_upload_barcode_cancel">Cancel</button>
+                
+            </div>
         </div>
       
+          <link rel="stylesheet" href="{% static 'src/register_widget/register.css' %}">
+          <script src="{% static 'src/register_widget/register.js' %}"></script>
     </div><!-- cols cont -->
     <div style="height: 450px;"></div><!-- spacer -->
 {% endblock %}

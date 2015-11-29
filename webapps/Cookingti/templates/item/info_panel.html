@@ -6,14 +6,13 @@
        <meta property="og:image" content="cookingti.me{% url "image" page_type item.id item.photos.all.0.id %}"/>
     {% endif %}
     
-    <!--
-    <ul>
-        <li><a href="">Amazon</a></li>
-        <li>Average Cooking Time: X minutes</li>
-        <li>Field: Data</li>
-        <li>Field: Data</li>
-        <li>Field: Data</li>
-        <li>Field: Data</li>
-    </ul>
-    -->
+    {% if amazon %}
+        <div style="margin-top:20px;">
+            <a href="{{amazon.link}}">Amazon link</a>
+            <ul>
+                <li>Lowest price: {{amazon.price}}</li>
+            </ul>
+        </div>
+    {% endif %}
+    
 </div><!-- info panel -->

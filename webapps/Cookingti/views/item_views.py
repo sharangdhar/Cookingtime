@@ -24,6 +24,8 @@ import markdown
 from Cookingti.models import *
 from Cookingti.forms import *
 
+from amazonproduct import API
+import lxml
 
 @ensure_csrf_cookie	 # Gives CSRF token for later requests.
 def item(request, item_type='', id = -1):
@@ -74,6 +76,9 @@ def item(request, item_type='', id = -1):
 	elif context['page_type'] == "equipment":
 		context['photo_form'] = EquipmentPhotoForm()
 		context['review_form'] = EquipmentReviewForm()
+		
+	if item_new.asin:
+		context['amazon'] = amazon_lookup(item_new.asin)
 	
 	#created to keep track of information across this method and postReview method
 	session = {'page_type': item_type, 'item':	item_new}
@@ -81,6 +86,26 @@ def item(request, item_type='', id = -1):
 
 
 
+def amazon_lookup(asin):
+	api = API(locale='us')
+
+	
+	result = api.item_lookup(asin, ResponseGroup="ItemAttributes, OfferSummary", paginate = False)
+
+
+	it = result.Items.Item
+	asin = it.ASIN
+	title = it.ItemAttributes.Title
+	link = it.DetailPageURL
+	
+	try:
+		price = it.OfferSummary.LowestNewPrice.FormattedPrice
+	except:
+		price = "no price available"
+				
+	item = {'asin':asin, 'title':title, 'link':link, 'price':price}
+		
+	return item
 
 
 @transaction.atomic

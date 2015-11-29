@@ -15,7 +15,11 @@ class Person(models.Model):
 			return self.user.first_name
 
 
-
+class Microwave(models.Model):
+	barcode = models.CharField(max_length=50)
+	wattage = models.IntegerField()
+	
+	
 class Food(models.Model):
 	user = models.ForeignKey(User, blank=True, null=True)
 	asin = models.CharField(max_length=20, blank=True, null=True)
