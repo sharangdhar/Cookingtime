@@ -45,9 +45,14 @@ def home(request):
 	return render(request, 'hs/hs_main.html', context)
 	
 
-def amazon_res(topic,words):
+def amazon_res(page_type, words):
 	api = API(locale='us')
 
+	if page_type == 'food':
+		topic = 'Grocery'
+	else:
+		topic = 'HomeGarden'
+	
 	results = api.item_search(topic , Keywords=words, ResponseGroup="ItemAttributes, OfferSummary, Images", paginate = False)
 
 
@@ -67,7 +72,20 @@ def amazon_res(topic,words):
 		except:
 			image = ""
 		
-		items.append({'asin':asin, 'title':title, 'link':link, 'price':price, 'image':image})
+		if page_type == 'food':
+			try:
+				item = Food.objects.get(asin=asin)
+				print(item.name)
+			except:
+				item = False
+				print('doesnt exist')
+		else:
+			try:
+				item = Equipment.objects.get(asin=asin)
+			except:
+				item = False
+		
+		items.append({'asin':asin, 'title':title, 'link':link, 'price':price, 'image':image, 'db':item})
 		
 	return items
 
@@ -100,26 +118,23 @@ def newItemSearch(request):
 		session = {'page_type': '', 'item':	 ''}
 		return render(request, 'hs/hs_main.html', context)
 
-	items = []
-	if form.cleaned_data['item_type'] == 'food':
-		items = amazon_res('Grocery', form.cleaned_data['item'])
-		context['page_type'] = 'food'
-		
-	elif form.cleaned_data['item_type'] == 'equipment':
-		items = amazon_res('HomeGarden', form.cleaned_data['item'])
-		context['page_type'] = 'equipment'
-	
-	else:
+
+	if form.cleaned_data['item_type'] == 'recipe':
 
 		item = Recipe(user=request.user, name=form.cleaned_data['item'])
 		item.save()
 		return redirect('item', 'recipe', item.id)
-	
+
+
+	items = []
+	items = amazon_res(form.cleaned_data['item_type'], form.cleaned_data['item'])
+
+	context['page_type'] = form.cleaned_data['item_type'];
 	context['items'] = items
 	context['form'] = form
 	context['query'] = form.cleaned_data['item']
 	
-	return render(request, 'general/add_item_search_main.html', context)
+	return render(request, 'hs/add_item_search_main.html', context)
 
 
 
@@ -145,10 +160,13 @@ def newItemCreate(request):
 			
 			
 	if not 'asin' in request.POST or not request.POST['asin']:
+		print('no asin')
 		pass
 	else:
 		item.asin = request.POST['asin']
 		
 	item.save()
-
+	
+	print("asin: ", item.asin)
+	
 	return redirect('item', request.POST['type'], item.id)
