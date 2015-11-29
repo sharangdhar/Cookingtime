@@ -26,6 +26,9 @@ from Cookingti.forms import *
 
 #amaozn product api
 from amazonproduct import API
+from sys import argv
+import zbar
+from PIL import Image
 
 
 
@@ -152,3 +155,7 @@ def newItemCreate(request):
 	item.save()
 
 	return redirect('item', request.POST['type'], item.id)
+
+
+def image_decode(img):
+	return 0
