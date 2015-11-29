@@ -231,6 +231,7 @@ class EquipmentPhotoForm(forms.ModelForm):
 class BarcodePhotoForm(forms.ModelForm):
 	class Meta:
 		model = BarcodePhoto
+		exclude = ()
 
 
 class AddItemForm(forms.Form):
