@@ -19,8 +19,7 @@ from django.contrib import admin
 urlpatterns = [
   
 	url(r'^$', 'Cookingti.views.hs_views.home', name='blank'),
-	url(r'^test$', 'Cookingti.views.hs_views.home', name='blank'),
-	url(r'^homes$', 'Cookingti.views.hs_views.home', name='home'),
+	url(r'^home$', 'Cookingti.views.hs_views.home', name='home'),
 	url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
 	url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'general/login.html', 'extra_context':{'page_name':'Log in'}}, name='login', ),
 	url(r'^register$', 'Cookingti.views.register', name='register'),

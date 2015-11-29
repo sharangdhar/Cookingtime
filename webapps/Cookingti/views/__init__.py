@@ -127,7 +127,7 @@ def register(request):
 	new_person = Person(user= new_user, wattage=request.POST["wattage"])
 	new_person.save()
 
-	return redirect('Cookingti/home')
+	return redirect(reverse('home'))
 
 
 
