@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block main %}
+    <div class="cols_cont">
+        
+        
+        <div class="col-md-6 col-md-offset-3">
+            <div id="register_panel" class="panel">
+                <h2>Barcode Scan</h2>
+                <div class="div_table form_wrap">
+                    <form method="POST" action="{% url 'barcode' %}">
+                        {{ form.non_field_errors }}
+                        <ul class="form_list">
+                            <li>{{ form.picture }}{{ form.picture.errors.as_text }}</li>
+                        </ul>
+                        <button id="register_submit">Submit</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+      
+    </div><!-- cols cont -->
+    <div style="height: 450px;"></div><!-- spacer -->
+{% endblock %}
