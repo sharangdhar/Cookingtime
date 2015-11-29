@@ -252,7 +252,9 @@ def image_decode(img):
 
 def barcode(request):
 	context = {}
-	return render(request, 'general/register.html', context)
+	if request.method == 'GET':
+		context['form'] = BarcodePhotoForm()
+		return render(request, 'general/barcode_scan.html', context)
 
 
 
