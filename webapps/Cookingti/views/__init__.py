@@ -263,7 +263,8 @@ def barcode(request):
 		context['error'] = form.errors
 		return render(request, 'general/barcode_scan.html', context)
 
-	
+	# form.save()
+	# barcode_data = img_decode(bc_image)
 
 	return redirect(reverse('register'))
 
