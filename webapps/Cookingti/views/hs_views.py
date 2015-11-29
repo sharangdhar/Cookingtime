@@ -26,7 +26,8 @@ from Cookingti.forms import *
 
 #amaozn product api
 from amazonproduct import API
-from sys import argv
+
+# added for barcode decoding
 import zbar
 from PIL import Image
 
@@ -171,7 +172,12 @@ def image_decode(img):
 
 	raw = pil.toString()
 
-	
+	image = zbar.Image(width, height, 'Y800', raw)
+
+	scanner.scan(image)
+
+	for info in image:
+		print info.type + '=' + info.data 
 
 
 
