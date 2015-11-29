@@ -158,4 +158,28 @@ def newItemCreate(request):
 
 
 def image_decode(img):
-	return 0
+	scanner = zbar.ImageScanner()
+
+	scanner.parse_config('enable')
+
+	pil = Image.open(img).convert('L')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
