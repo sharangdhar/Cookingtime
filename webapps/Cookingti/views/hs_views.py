@@ -159,12 +159,15 @@ def newItemCreate(request):
 
 
 def image_decode(img):
+
+	#creating a reader
 	scanner = zbar.ImageScanner()
 
+	#configuring the reader
 	scanner.parse_config('enable')
 
+	#getting image data
 	pil = Image.open(img).convert('L')
-
 
 	width = pil.size[0]
 
@@ -180,21 +183,5 @@ def image_decode(img):
 		print 'found' + info.type + '=' + info.data
 
 	del(image)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
