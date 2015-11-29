@@ -19,7 +19,7 @@
                             
                             <!--<li><input type="text" name="wattage" placeholder="wattage"></li> -->
                             <li>{{ form.wattage }}{{ form.wattage.errors.as_text }}</li>
-                            <li>or <button class="inline_button">Scan Barcode</button></li>
+                            <li>or <a href= "{% url 'barcode' %}" class="inline_button">Scan Barcode</a></li>
                             
                             <li>{{ form.password1 }}{{ form.password1.errors.as_text }}</li>
                             <li>{{ form.password2 }}{{ form.password2.errors.as_text }}</li>
