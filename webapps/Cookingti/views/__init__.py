@@ -213,7 +213,9 @@ def editProfile(request):
 	})
 	return HttpResponse(resp, content_type='application/json')
 	
-
+def barcode(request):
+	context = {}
+	return render(request, 'general/register.html', context)
 
 
 
