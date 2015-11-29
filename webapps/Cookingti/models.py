@@ -109,3 +109,7 @@ class EquipmentPhoto(models.Model):
 	user = models.ForeignKey(User)
 	picture = models.ImageField(upload_to='photos')
 	item = models.ForeignKey('Equipment', related_name="photos")
+
+
+class BarcodePhoto(models.Model):
+	picture = models.ImageField(upload_to= 'photos')

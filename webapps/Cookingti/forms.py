@@ -228,6 +228,11 @@ class EquipmentPhotoForm(forms.ModelForm):
 		return item_id
 
 
+class BarcodePhotoForm(forms.ModelForm):
+	class Meta:
+		model = BarcodePhoto
+
+
 class AddItemForm(forms.Form):
 	item = forms.CharField(max_length = 20, widget = forms.TextInput())
 	item_type = forms.CharField(max_length = 20, widget = forms.TextInput(attrs={"placeholder":"name"}))
