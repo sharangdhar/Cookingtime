@@ -256,5 +256,25 @@ def barcode(request):
 		context['form'] = BarcodePhotoForm()
 		return render(request, 'general/barcode_scan.html', context)
 
+	form = BarcodePhotoForm(request.POST,request.FILES)
+
+	if not form.is_valid():
+		context['form'] = form
+		context['error'] = form.errors
+		return render(request, 'general/barcode_scan.html', context)
+
+	
+
+	return redirect(reverse('register'))
+
+
+
+
+
+
+
+
+
+
 
 
