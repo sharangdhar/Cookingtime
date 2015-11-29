@@ -42,6 +42,8 @@ urlpatterns = [
 	
 	url(r'^item/(?P<item_type>[\w-]+)/(?P<id>\d+)$', 'Cookingti.views.item_views.item', name='item'),
 	url(r'^image/(?P<page_type>.+)/(?P<item_id>.+)/(?P<img_id>.+)$', 'Cookingti.views.getImage', name='image'),
+
+	url(r'^barcode_image$', 'Cookingti.views.barcode', name='barcode'),
 	
 
 ]
