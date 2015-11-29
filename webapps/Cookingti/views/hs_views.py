@@ -165,6 +165,13 @@ def image_decode(img):
 	pil = Image.open(img).convert('L')
 
 
+	width = pil.size[0]
+
+	height= pil.size[1]
+
+	raw = pil.toString()
+
+	
 
 
 
