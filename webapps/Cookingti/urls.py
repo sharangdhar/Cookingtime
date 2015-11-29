@@ -19,15 +19,18 @@ from django.contrib import admin
 urlpatterns = [
   
 	url(r'^$', 'Cookingti.views.hs_views.home', name='blank'),
-	url(r'^home$', 'Cookingti.views.hs_views.home', name='home'),
+	url(r'^test$', 'Cookingti.views.hs_views.home', name='blank'),
+	url(r'^homes$', 'Cookingti.views.hs_views.home', name='home'),
 	url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
 	url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'general/login.html', 'extra_context':{'page_name':'Log in'}}, name='login', ),
 	url(r'^register$', 'Cookingti.views.register', name='register'),
 
+	url(r'^profile/(?P<id>.+)$', 'Cookingti.views.profile',  name='profile'),
+	url(r'^edit_profile/?$', 'Cookingti.views.editProfile',  name='edit_profile'),
+
 	url(r'^search$', 'Cookingti.views.search', name='search'),
     url(r'^new_item_search$', 'Cookingti.views.hs_views.newItemSearch', name='addItem'),
-    url(r'^new_item_create$', 'Cookingti.views.hs_views.newItemCreate', name='newItemCreate'),
-	
+    url(r'^new_item_create$', 'Cookingti.views.hs_views.newItemCreate', name='newItemCreate'),	
 
     url(r'^post_img$', 'Cookingti.views.item_views.postImage', name='post_img'),
     url(r'^post_time$', 'Cookingti.views.item_views.postTime', name='post_time'),
@@ -41,8 +44,5 @@ urlpatterns = [
 	url(r'^item/(?P<item_type>[\w-]+)/(?P<id>\d+)$', 'Cookingti.views.item_views.item', name='item'),
 	url(r'^image/(?P<page_type>.+)/(?P<item_id>.+)/(?P<img_id>.+)$', 'Cookingti.views.getImage', name='image'),
 	
-	url(r'^profile/(?d+)', 'Cookingti.views.profile',  name='profile'),
-	url(r'^edit_profile/?$', 'Cookingti.views.editProfile',  name='edit_profile'),
-
 
 ]
