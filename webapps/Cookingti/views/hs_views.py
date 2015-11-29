@@ -169,14 +169,18 @@ def image_decode(img):
 	#getting image data
 	pil = Image.open(img).convert('L')
 
+	# width data for image
 	width = pil.size[0]
 
+	#height data for image
 	height= pil.size[1]
 
 	raw_data = pil.tobytes()
 
+	# all image data added together
 	image = zbar.Image(width, height, 'Y800', raw_data)
 
+	#scan for image barcode
 	scanner.scan(image)
 
 	for info in image:
