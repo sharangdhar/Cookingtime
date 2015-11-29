@@ -170,14 +170,16 @@ def image_decode(img):
 
 	height= pil.size[1]
 
-	raw = pil.toString()
+	raw_data = pil.tobytes()
 
-	image = zbar.Image(width, height, 'Y800', raw)
+	image = zbar.Image(width, height, 'Y800', raw_data)
 
 	scanner.scan(image)
 
 	for info in image:
-		print info.type + '=' + info.data 
+		print 'found' + info.type + '=' + info.data
+
+	del(image)
 
 
 
