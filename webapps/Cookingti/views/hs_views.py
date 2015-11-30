@@ -215,7 +215,9 @@ def newByBarcode(request):
 		catagory = 'Grocery'
 	elif item_type == 'equipment':
 		catagory = 'HomeGarden'
-	
+	else:
+		resp = json.dumps({'status':'error','errors':{'item_type': ['Barcode scanning only works for Food and Equipment']}})
+		return HttpResponse(resp, content_type='application/json')
 	api = API(locale='us')
 	
 	
@@ -236,16 +238,19 @@ def newByBarcode(request):
 		try:
 			item = Food.objects.get(asin=asin)
 			
-			resp = json.dumps({'status':'error','custom_errors':[{'message': 'Item already exists', 'id':item.id}]})
+			resp = json.dumps({'status':'error','exists':item.id})
 			return HttpResponse(resp, content_type='application/json')
+			
 		except:
 			item = Food(user=request.user, name=name, asin=asin)
+			
 	elif item_type == 'equipment':
 		try:
 			item = Equipment.objects.get(asin=asin)
 			
-			resp = json.dumps({'status':'error','custom_errors':[{'message': 'Item already exists', 'id':item.id}]})
+			resp = json.dumps({'status':'error','exists':item.id})
 			return HttpResponse(resp, content_type='application/json')
+			
 		except:
 			item = Equipment(user=request.user, name=name, asin=asin)
 			

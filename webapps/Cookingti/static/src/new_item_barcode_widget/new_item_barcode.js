@@ -61,7 +61,43 @@ function new_item_barcode_submit(e)
 				var item_type = $('#barcode_new_type').val();
 				$.post("/new_by_barcode", {barcode:barcode, barcode_type:barcode_type, item_type:item_type}).done(function(data)
 				{
-	
+					if(data.status == "success")
+					{
+						$("#barcode_new_response").text("Success!");
+						addr = "/item/" + item_type + "/" + data.id;
+						window.location = addr;
+					}
+					else
+					{
+						var error = $("#barcode_new_response");
+						
+						if(data.exists)
+						{
+							$("#barcode_new_response").text("Item exists. Redirecting...");
+							addr = "/item/" + item_type  + "/" +  data.exists;
+							setTimeout(function(){window.location = addr;}, 5000);
+							return;
+						}
+						if(data.custom_errors)
+						{
+							error.text(error.text() + " " + data.custom_errors[0].message);
+						}
+						
+						if(data.errors.barcode)
+						{
+							error.text(error.text()  + " " +  data.errors.barcode.join(', '));
+						}
+						
+						if(data.errors.barcode_type)
+						{
+							error.text(error.text()  + " " +  data.errors.barcode_type.join(', '));
+						}
+						
+						if(data.errors.item_type)
+						{
+							error.text(error.text()  + " " +  data.errors.item_type.join(', '));
+						}
+					}
 				}).fail(function(data, textStatus, errorThrown)
 				{
 					$("#barcode_new_response").text(errorThrown);
