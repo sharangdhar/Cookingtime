@@ -38,7 +38,7 @@
                    <tr><td>Wattage: </td><td id="table_wattage">{{ user.person.all.0.wattage }}</td></tr>
                </table>
         
-                <button class="profile_password_button">Change Password</button>
+                <a href="{% url 'change_password' %}" class="profile_password_button">Change Password</a>
             </div>
             
             <link rel="stylesheet" href="{% static "src/profile_widget/profile.css" %}">

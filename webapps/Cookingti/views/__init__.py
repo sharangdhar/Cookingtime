@@ -274,6 +274,7 @@ def barcode(request):
 	data = image_decode(item.picture.name)
 	os.remove(settings.MEDIA_ROOT + item.picture.name)
 	item.delete()
+<<<<<<< HEAD
 	
 	if data == None:
 		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode found in image'}]})
@@ -291,7 +292,42 @@ def barcode(request):
 	})
 	
 	return HttpResponse(resp, content_type='application/json')
+=======
+	return redirect(reverse('register'))
 
+
+@transaction.atomic
+@login_required
+def change_password(request):
+	context = {}
+	if request.method == 'GET':
+		context['form'] = ChangePasswordForm()
+		return render(request, 'general/change_password.html', context)
+
+	form = ChangePasswordForm(request.POST)
+
+	context['form'] = form
+
+	if not form.is_valid():
+		return render(request, 'general/change_password.html', context)
+
+	new_password = form.cleaned_data['password1']
+>>>>>>> 97c5ab539f09d5685c847d29bfec6abb82bd7a02
+
+	currentUser =  User.objects.get(id= request.user.id)
+	currentUser.set_password(new_password)
+	currentUser.save()
+
+	currentUser = authenticate(username=currentUser.username, password=new_password)
+
+	login(request,currentUser)
+
+	return redirect('/profile/' + str(request.user.id))
+
+
+def resetPassword(request):
+	context = {}
+	return 
 
 def lookupWattage(request):
 	if request.method == 'GET':

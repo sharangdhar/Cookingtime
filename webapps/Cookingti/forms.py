@@ -66,25 +66,6 @@ class ProfileForm(forms.Form):
 		return user_id
 		
 
-class PasswordForm(forms.Form):
-	password1 = forms.CharField(max_length = 200, 
-								label='Password', widget = forms.PasswordInput(attrs={"placeholder":"password"}))						  
-	password2 = forms.CharField(max_length = 200, 
-								label='Confirm password',widget = forms.PasswordInput(attrs={"placeholder":"confirm"}))
-	def clean(self):
-		cleaned_data = super(RegistrationForm, self).clean()
-
-		# Confirms that the two password fields match
-		password1 = cleaned_data.get('password1')
-		password2 = cleaned_data.get('password2')
-		if password1 and password2 and password1 != password2:
-			raise forms.ValidationError("Passwords did not match.")
-
-		return cleaned_data
-		
-		
-		
-
 #Form for changing the password
 class ChangePasswordForm(forms.Form):
 	password1 = forms.CharField(max_length = 200, 
@@ -93,8 +74,6 @@ class ChangePasswordForm(forms.Form):
 								label='Confirm password',widget = forms.PasswordInput())
 
 	def clean(self):
-		# Calls our parent (forms.Form) .clean function, gets a dictionary
-		# of cleaned data as a result
 		cleaned_data = super(ChangePasswordForm, self).clean()
 
 		# Confirms that the two password fields match
@@ -103,13 +82,7 @@ class ChangePasswordForm(forms.Form):
 		if password1 and password2 and password1 != password2:
 			raise forms.ValidationError("Passwords did not match.")
 
-		# Generally return the cleaned data we got from our parent.
 		return cleaned_data
-
-#Form for getting the initial email to send reset password link to
-class ResetPasswordForm(forms.Form):
-	email = forms.EmailField(max_length = 50, 
-								label='Enter Registered Email ID', widget = forms.EmailInput())
 
 
 class FoodReviewForm(forms.ModelForm):
