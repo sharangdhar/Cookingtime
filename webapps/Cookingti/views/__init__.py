@@ -283,6 +283,16 @@ def change_password(request):
 	if not form.is_valid():
 		return render(request, 'general/change_password.html', context)
 
+	new_password = form.cleaned_data['password1']
+
+	currentUser =  User.objects.get(id= request.user.id)
+	currentUser.set_password(new_password)
+	currentUser.save()
+
+	currentUser = authenticate(username=currentUser.username, password=new_password)
+
+	login(request,currentUser)
+
 	return redirect('/profile/' + str(request.user.id))
 
 
