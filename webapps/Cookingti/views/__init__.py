@@ -228,7 +228,7 @@ def image_decode(img):
 	scanner.parse_config('enable')
 
 	#getting image data
-	pil = Image.open(img).convert('L')
+	pil = Image.open(settings.MEDIA_ROOT + img).convert('L')
 
 	# width data for image
 	width = pil.size[0]
@@ -245,9 +245,8 @@ def image_decode(img):
 	scanner.scan(image)
 
 	for info in image:
-		print 'found' + info.type + '=' + info.data
+		print 'found' + str(info.type) + '=' + str(info.data)
 
-	del(image)
 
 
 def barcode(request):
@@ -263,9 +262,9 @@ def barcode(request):
 		context['error'] = form.errors
 		return render(request, 'general/barcode_scan.html', context)
 
-	# form.save()
-	# barcode_data = img_decode(bc_image)
-
+	item = form.save()
+	barcode_data = image_decode(item.picture.name)
+	item.delete()
 	return redirect(reverse('register'))
 
 
