@@ -33,7 +33,13 @@
         <div style="text-align;center;">Or</div>
         <button id="new_button_barcode_button">Upload barcode</button>
         <div id="new_item_barcode_wrapper" >
-            <input style="display:inline-block;" type="file"><button>Submit</button>
+            <input style="display:inline-block;" id="barcode_image" type="file">
+            <select name="item_type" id="barcode_new_type">
+                <option value="food">Food</option>
+                <option value="equipment">Equipment</option>
+            </select>
+            <button id="barcode_submit">Submit</button>
+            <div id="barcode_new_response"></div>
         </div>
         
         <script src="{% static 'src/search_widget/search.js' %}"></script>

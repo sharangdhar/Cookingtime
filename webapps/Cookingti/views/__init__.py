@@ -276,7 +276,7 @@ def barcode(request):
 	item.delete()
 	
 	if data == None:
-		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode found'}]})
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode found in image'}]})
 		return HttpResponse(resp, content_type='application/json')
 
 	

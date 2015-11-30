@@ -26,7 +26,7 @@ from Cookingti.forms import *
 
 #amaozn product api
 from amazonproduct import API
-
+import lxml
 
 
 def home(request):	
@@ -96,6 +96,9 @@ def newItemSearch(request):
 	if request.method == 'GET':
 		return redirect('Cookingti/home')
 
+	if request.method != "POST":
+		raise Http404
+
 	# Check authentication
 	if not request.user.is_authenticated():
 		return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
@@ -141,6 +144,13 @@ def newItemSearch(request):
 @transaction.atomic
 def newItemCreate(request):
 	
+	if not request.user.is_authenticated():
+		return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+	
+	
+	if request.method != "POST":
+		raise Http404
+	
 	if not 'type' in request.POST or not request.POST['type']:
 		print('no type')
 		raise Http404
@@ -170,3 +180,84 @@ def newItemCreate(request):
 	return redirect('item', request.POST['type'], item.id)
 
 
+@transaction.atomic
+def newByBarcode(request):
+
+	if request.method != "POST":
+		raise Http404
+		
+	if not request.user.is_authenticated():
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Login required'}]})
+		return HttpResponse(resp, content_type='application/json')
+		
+	
+	errors = {}
+	if not 'barcode' in request.POST or not request.POST['barcode']:
+		resp = json.dumps({'status':'error','errors':{'barcode': ['This item is required']}})
+		return HttpResponse(resp, content_type='application/json')
+	barcode = request.POST['barcode']
+	
+	
+	if not 'barcode_type' in request.POST or not request.POST['barcode_type']:
+		resp = json.dumps({'status':'error','errors':{'barcode_type': ['This item is required']}})
+		return HttpResponse(resp, content_type='application/json')
+	barcode_type = request.POST['barcode_type']
+	if barcode_type == "UPCA":
+		barcode_type = "UPC"
+	
+	if not 'item_type' in request.POST or not request.POST['item_type']:
+		resp = json.dumps({'status':'error','errors':{'item_type': ['This item is required']}})
+		return HttpResponse(resp, content_type='application/json')	
+	item_type = request.POST['item_type']
+
+	catagory = ""
+	if item_type == 'food':
+		catagory = 'Grocery'
+	elif item_type == 'equipment':
+		catagory = 'HomeGarden'
+	
+	api = API(locale='us')
+	
+	
+	try:
+		results = api.item_lookup(barcode, IdType=barcode_type, SearchIndex=catagory, ResponseGroup="ItemAttributes, OfferSummary, Images", paginate=False)
+	except:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'Amazon database lookup error. Please create by name.'}]})
+		return HttpResponse(resp, content_type='application/json')
+		
+	# print(lxml.etree.tostring(results.Items.Item, pretty_print=True))
+	result = results.Items.Item
+	asin = result.ASIN	
+	name = result.ItemAttributes.Title
+	
+	
+	# Check that doesn't already exist
+	if item_type == 'food':
+		try:
+			item = Food.objects.get(asin=asin)
+			
+			resp = json.dumps({'status':'error','custom_errors':[{'message': 'Item already exists', 'id':item.id}]})
+			return HttpResponse(resp, content_type='application/json')
+		except:
+			item = Food(user=request.user, name=name, asin=asin)
+	elif item_type == 'equipment':
+		try:
+			item = Equipment.objects.get(asin=asin)
+			
+			resp = json.dumps({'status':'error','custom_errors':[{'message': 'Item already exists', 'id':item.id}]})
+			return HttpResponse(resp, content_type='application/json')
+		except:
+			item = Equipment(user=request.user, name=name, asin=asin)
+			
+	item.save()
+			
+	
+			
+			
+	resp = json.dumps(
+	{
+		'status':'success',
+		'id':item.id
+	})
+	return HttpResponse(resp, content_type='application/json')
+	 

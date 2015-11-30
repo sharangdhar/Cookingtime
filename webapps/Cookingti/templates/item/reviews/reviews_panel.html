@@ -49,6 +49,8 @@
     <div id="reviews_wrapper">
         {% for review in item.reviews.all %}
             {% include 'item/reviews/review_panel.html' with review=review %}
+        {% empty %}
+            <p>No reviews</p>
         {% endfor %}     
     </div><!-- review wrapper -->
     
