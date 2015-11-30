@@ -93,7 +93,7 @@ def search(request):
 
 
 
-
+@ensure_csrf_cookie
 @transaction.atomic
 def register(request):
 
@@ -243,29 +243,47 @@ def image_decode(img):
 
 	#scan for image barcode
 	scanner.scan(image)
-
+	
+	
 	for info in image:
-		print 'found' + str(info.type) + '=' + str(info.data)
-
-
+		return info
 
 def barcode(request):
 	context = {}
 	if request.method == 'GET':
-		context['form'] = BarcodePhotoForm()
-		return render(request, 'general/barcode_scan.html', context)
-
+		print("method not post")
+		raise Http404
+		
 	form = BarcodePhotoForm(request.POST,request.FILES)
 
 	if not form.is_valid():
-		context['form'] = form
-		context['error'] = form.errors
-		return render(request, 'general/barcode_scan.html', context)
+		resp = json.dumps(
+		{
+			'status':'error',
+			'errors': dict(form.errors.items())
+		})
+		return HttpResponse(resp, content_type='application/json')
 
 	item = form.save()
-	barcode_data = image_decode(item.picture.name)
+	data = image_decode(item.picture.name)
 	item.delete()
-	return redirect(reverse('register'))
+	
+	if data == None:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode'}]})
+		return HttpResponse(resp, content_type='application/json')
+
+	
+	resp = json.dumps(
+	{
+		'status':'success', 
+		'data':
+		{
+			'type':str(data.type),
+			'code':str(data.data)
+		}
+	})
+	
+	return HttpResponse(resp, content_type='application/json')
 
 
 
