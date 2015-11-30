@@ -268,12 +268,22 @@ def barcode(request):
 	return redirect(reverse('register'))
 
 
-
+@transaction.atomic
+@login_required
 def change_password(request):
 	context = {}
 	if request.method == 'GET':
 		context['form'] = ChangePasswordForm()
 		return render(request, 'general/change_password.html', context)
+
+	form = ChangePasswordForm(request.POST)
+
+	context['form'] = form
+
+	if not form.is_valid():
+		return render(request, 'general/change_password.html', context)
+
+	return redirect('/profile/' + str(request.user.id))
 
 
 
