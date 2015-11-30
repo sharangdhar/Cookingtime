@@ -31,7 +31,7 @@
                             <li>{{ form.password1 }}{{ form.password1.errors.as_text }}</li>
                             <li>{{ form.password2 }}{{ form.password2.errors.as_text }}</li>
                             
-                            
+                            <input type="hidden" name="barcode" id="register_barcode">
                             <!--
                             <li><input type="text" name="username" placeholder="username"></li>
                             <li><input type="text" name="email" placeholder="email"></li>
@@ -49,6 +49,7 @@
             
             <div id="register_barcode_panel" class="panel">
                 <input type="file" id="register_upload_barcode_file">
+                <p id="register_upload_barcode_error"></p>
                 <button id="register_upload_barcode_submit">Submit</button>
                 <button id="register_upload_barcode_cancel">Cancel</button>
                 

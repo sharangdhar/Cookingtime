@@ -61,12 +61,66 @@ function register_barcode_submit(e)
         type: 'POST',
         success: function (data) 
 		{
-			console.log(data);
+			if(data.status == "success")
+			{
+				$("#register_barcode").val(data.data.barcode);
+				get_wattage(data.data.barcode);
+			}
+			else
+			{
+				var error = $("#register_upload_barcode_error");
+				if(data.custom_errors)
+				{
+					error.text(error.text() + " " + data.custom_errors[0].message);
+				}
+				
+				if(data.errors)
+				{
+					if(data.errors.picture)
+					{
+						error.text(errror.text()  + " " +  data.errors.picture.join(', '));
+					}
+				}
+			}
 		},
 		error: function(data, textStatus, errorThrown)
 		{
 			console.log(data, textStatus, errorThrown);
+			$("#register_upload_barcode_error").text(errorThrown);
 		}
 	});
 }
 
+function get_wattage(barcode)
+{
+	$.post("/lookup_wattage", {barcode:barcode}).done(function(data)
+	{
+		if(data.status == "success")
+		{
+			$("#id_wattage").val(data.data.wattage);
+			
+			$("#register_barcode_panel").hide(200);
+			$("#register_mask").hide(200);
+		}
+		else
+		{
+
+			var error = $("#register_upload_barcode_error");
+			
+			if(data.custom_errors)
+			{
+				error.text(error.text() + " " + data.custom_errors[0].message);
+			}
+		
+			
+			
+			return false;
+		}
+	}).fail(function()
+	{
+		console.log(data, textStatus, errorThrown);
+		$("#register_upload_barcode_error").text(errorThrown);
+	
+		return false;
+	});
+}

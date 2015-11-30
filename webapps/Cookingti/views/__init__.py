@@ -130,6 +130,12 @@ def register(request):
 
 	new_person = Person(user= new_user, wattage=request.POST["wattage"])
 	new_person.save()
+	
+	
+	
+	if request.POST['barcode']:
+		microwave = Microwave(barcode=request.POST['barcode'], wattage=request.POST['wattage'])
+		microwave.save()
 
 	return redirect(reverse('home'))
 
@@ -269,7 +275,7 @@ def barcode(request):
 	item.delete()
 	
 	if data == None:
-		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode'}]})
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode found'}]})
 		return HttpResponse(resp, content_type='application/json')
 
 	
@@ -279,19 +285,39 @@ def barcode(request):
 		'data':
 		{
 			'type':str(data.type),
-			'code':str(data.data)
+			'barcode':str(data.data)
 		}
 	})
 	
 	return HttpResponse(resp, content_type='application/json')
 
 
+def lookupWattage(request):
+	if request.method == 'GET':
+		print("method not post")
+		raise Http404
+	
+	if not 'barcode' in request.POST or not request.POST['barcode']:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No request barcode'}]})
+		return HttpResponse(resp, content_type='application/json')
 
+	
+	try:
+		microwave = Microwave.objects.get(barcode=request.POST['barcode'])
+	except:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No entry found. Please enter wattage manually.'}]})
+		return HttpResponse(resp, content_type='application/json')
 
-
-
-
-
+	resp = json.dumps(
+	{
+		'status':'success', 
+		'data':
+		{
+			'wattage': microwave.wattage,
+		}
+	})
+	
+	return HttpResponse(resp, content_type='application/json')
 
 
 
