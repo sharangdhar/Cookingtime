@@ -269,6 +269,12 @@ def barcode(request):
 
 
 
+def change_password(request):
+	context = {}
+	if request.method == 'GET':
+		context['form'] = ChangePasswordForm()
+		return render(request, 'general/change_password.html', context)
+
 
 
 
