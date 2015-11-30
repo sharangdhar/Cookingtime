@@ -82,8 +82,6 @@ class PasswordForm(forms.Form):
 
 		return cleaned_data
 		
-		
-		
 
 #Form for changing the password
 class ChangePasswordForm(forms.Form):
@@ -93,8 +91,6 @@ class ChangePasswordForm(forms.Form):
 								label='Confirm password',widget = forms.PasswordInput())
 
 	def clean(self):
-		# Calls our parent (forms.Form) .clean function, gets a dictionary
-		# of cleaned data as a result
 		cleaned_data = super(ChangePasswordForm, self).clean()
 
 		# Confirms that the two password fields match
@@ -105,11 +101,6 @@ class ChangePasswordForm(forms.Form):
 
 		# Generally return the cleaned data we got from our parent.
 		return cleaned_data
-
-#Form for getting the initial email to send reset password link to
-class ResetPasswordForm(forms.Form):
-	email = forms.EmailField(max_length = 50, 
-								label='Enter Registered Email ID', widget = forms.EmailInput())
 
 
 class FoodReviewForm(forms.ModelForm):
