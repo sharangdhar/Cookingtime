@@ -45,6 +45,9 @@ urlpatterns = [
 	url(r'^image/(?P<page_type>.+)/(?P<item_id>.+)/(?P<img_id>.+)$', 'Cookingti.views.getImage', name='image'),
 
 	url(r'^barcode_image$', 'Cookingti.views.barcode', name='barcode'),
+
+	#reset password over email
+	url(r'^reset_password$', 'Cookingti.views.resetPassword', name='resetPassword'),
 	
 
 ]

@@ -296,7 +296,9 @@ def change_password(request):
 	return redirect('/profile/' + str(request.user.id))
 
 
-
+def resetPassword(request):
+	context = {}
+	return 
 
 
 
