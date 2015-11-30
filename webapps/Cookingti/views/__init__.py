@@ -27,7 +27,7 @@ from Cookingti.forms import *
 # added for barcode decoding
 import zbar
 from PIL import Image
-
+import os
 
 def search(request):
 	
@@ -272,6 +272,7 @@ def barcode(request):
 
 	item = form.save()
 	data = image_decode(item.picture.name)
+	os.remove(settings.MEDIA_ROOT + item.picture.name)
 	item.delete()
 	
 	if data == None:

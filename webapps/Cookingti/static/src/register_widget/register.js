@@ -47,6 +47,8 @@ $(document).ready(function()
 
 function register_barcode_submit(e)
 {
+	$("#register_upload_barcode_error").text("");
+	
 	var fd = new FormData();
 	fd.append('picture', $("#register_upload_barcode_file")[0].files[0]);
 	

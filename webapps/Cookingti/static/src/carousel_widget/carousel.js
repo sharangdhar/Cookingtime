@@ -91,7 +91,7 @@ function carousel_upload(e)
 			{
 				console.log(data);
 				image = $(data.html);
-				image.find(".carousel_image_wrapper").click(function(e){carousel_delete(e);});
+				image.find(".carousel_image_delete").click(function(e){carousel_delete(e);});
 				$("#carousel_slider").prepend(image);
 			}
 			else

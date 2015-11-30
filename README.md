@@ -33,3 +33,4 @@
 - https://pypi.python.org/pypi/python-amazon-product-api/
 - https://davidwalsh.name/browser-camera
 - http://bl.ocks.org/jazzido/9435670
+- http://stackoverflow.com/questions/2878490/how-to-delete-old-image-when-update-imagefield
