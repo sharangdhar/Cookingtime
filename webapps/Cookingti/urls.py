@@ -48,6 +48,8 @@ urlpatterns = [
 
 	#reset password over email
 	url(r'^reset_password$', 'Cookingti.views.resetPassword', name='resetPassword'),
-	
+	url(r'^redirected_password/(?P<uname>[\w-]+)/(?P<token>[\w-]+)$', 'Cookingti.views.redirectedPassword', name='redirected_password'),
+
+
 
 ]
