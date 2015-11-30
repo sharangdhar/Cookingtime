@@ -24,6 +24,10 @@ from Cookingti.models import *
 from Cookingti.forms import *
 
 
+# added for barcode decoding
+import zbar
+from PIL import Image
+
 
 def search(request):
 	
@@ -213,6 +217,64 @@ def editProfile(request):
 	})
 	return HttpResponse(resp, content_type='application/json')
 	
+
+
+def image_decode(img):
+
+	#creating a reader
+	scanner = zbar.ImageScanner()
+
+	#configuring the reader
+	scanner.parse_config('enable')
+
+	#getting image data
+	pil = Image.open(img).convert('L')
+
+	# width data for image
+	width = pil.size[0]
+
+	#height data for image
+	height= pil.size[1]
+
+	raw_data = pil.tobytes()
+
+	# all image data added together
+	image = zbar.Image(width, height, 'Y800', raw_data)
+
+	#scan for image barcode
+	scanner.scan(image)
+
+	for info in image:
+		print 'found' + info.type + '=' + info.data
+
+	del(image)
+
+
+def barcode(request):
+	context = {}
+	if request.method == 'GET':
+		context['form'] = BarcodePhotoForm()
+		return render(request, 'general/barcode_scan.html', context)
+
+	form = BarcodePhotoForm(request.POST,request.FILES)
+
+	if not form.is_valid():
+		context['form'] = form
+		context['error'] = form.errors
+		return render(request, 'general/barcode_scan.html', context)
+
+	# form.save()
+	# barcode_data = img_decode(bc_image)
+
+	return redirect(reverse('register'))
+
+
+
+
+
+
+
+
 
 
 

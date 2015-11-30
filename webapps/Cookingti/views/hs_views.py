@@ -166,7 +166,7 @@ def newItemCreate(request):
 		item.asin = request.POST['asin']
 		
 	item.save()
-	
-	print("asin: ", item.asin)
-	
+
 	return redirect('item', request.POST['type'], item.id)
+
+
