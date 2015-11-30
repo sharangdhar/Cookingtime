@@ -307,12 +307,15 @@ http://%s%s
 """%(request.get_host(),
 	reverse('redirected_pass', args=(new_user.username, token)))
 
-	sub = "Password Reset Link for Network"
+	sub = "Password Reset Link for Cookingti"
 	send_mail(subject= sub,
 		message= email_body,
-		from_email = "sharangc@andrew.cmu.edu",
+		from_email = "abc@gmail.com",
 		recipient_list = [new_user.email])
 
+
+def redirectedPassword(request):
+	return
 
 def resetPassword(request):
 	context = {}
