@@ -296,6 +296,24 @@ def change_password(request):
 	return redirect('/profile/' + str(request.user.id))
 
 
+def sendEmail(new_user, request):
+	token = default_token_generator.make_token(new_user)
+	request.session["token"] = token
+
+	email_body = """
+This email contains the password reset link. Go to the link and reset password
+
+http://%s%s
+"""%(request.get_host(),
+	reverse('redirected_pass', args=(new_user.username, token)))
+
+	sub = "Password Reset Link for Network"
+	send_mail(subject= sub,
+		message= email_body,
+		from_email = "sharangc@andrew.cmu.edu",
+		recipient_list = [new_user.email])
+
+
 def resetPassword(request):
 	context = {}
 	return 
