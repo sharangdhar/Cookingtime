@@ -26,6 +26,7 @@ urlpatterns = [
 
 	url(r'^profile/(?P<id>.+)$', 'Cookingti.views.profile',  name='profile'),
 	url(r'^edit_profile/?$', 'Cookingti.views.editProfile',  name='edit_profile'),
+	url(r'^change_password$', 'Cookingti.views.change_password', name='change_password'),
 
 	url(r'^search$', 'Cookingti.views.search', name='search'),
     url(r'^new_item_search$', 'Cookingti.views.hs_views.newItemSearch', name='addItem'),
