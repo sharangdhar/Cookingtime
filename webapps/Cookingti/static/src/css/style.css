@@ -542,3 +542,8 @@ textarea
 	padding: 10px;
 }
 
+/* Facebook floating panel */
+._56zz
+{
+	z-index:10;
+}

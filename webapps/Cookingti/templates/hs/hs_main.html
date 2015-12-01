@@ -23,7 +23,7 @@
                 <option value="equipment">Equipment</option>
             </select>{{ new_form.item_type.errors }}
             
-            
+            {% csrf_token %}
             <button id="new_button" type='submit'>New</button>
             {% csrf_token %}
             

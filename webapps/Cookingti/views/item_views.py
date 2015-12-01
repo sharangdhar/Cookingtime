@@ -77,9 +77,10 @@ def item(request, item_type='', id = -1):
 	elif context['page_type'] == "equipment":
 		context['photo_form'] = EquipmentPhotoForm()
 		context['review_form'] = EquipmentReviewForm()
-		
-	if item_new.asin:
-		context['amazon'] = amazon_lookup(item_new.asin)
+	
+	if 'page_name' == 'food' or 'page_name' == 'equipment':
+		if item_new.asin:
+			context['amazon'] = amazon_lookup(item_new.asin)
 	
 	#created to keep track of information across this method and postReview method
 	session = {'page_type': item_type, 'item':	item_new}

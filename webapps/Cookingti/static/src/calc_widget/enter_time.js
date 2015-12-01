@@ -77,7 +77,7 @@ function submit_time(e)
 	}
 	if(joules < 0)
 	{
-		$("#calc_input_row").append($("<span id='enter_input_error'>Enter valid value</span>"));// Shouldn't have been enough time to melt everything	
+		$("#calc_input_row").append($("<span id='enter_input_error'>Impossibly<br>short</span>"));// Shouldn't have been enough time to melt everything	
 		return; 
 	}
 	

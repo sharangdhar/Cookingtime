@@ -100,7 +100,7 @@ def register(request):
 	context = {'page_name':'Register'}
 
 	if request.user.is_authenticated():
-		return redirect('Cookingti/home')
+		return redirect(reverse('/home'))
 
 	# Just display the registration form if this is a GET request.
 	if request.method == 'GET':
@@ -336,7 +336,7 @@ def sendEmail(new_user, request):
 This email contains the password reset link. Go to the link and reset password.
 
 http://%s%s
-"""%(request.get_host(),
+"""%('cookingti.me',
 	reverse('redirected_password', kwargs={'token': token}))
 
 	sub = "Password Reset Link for Cookingti"
