@@ -332,7 +332,7 @@ This email contains the password reset link. Go to the link and reset password.
 
 http://%s%s
 """%(request.get_host(),
-	reverse('redirected_password', args=(new_user.username, token)))
+	reverse('redirected_password', args=(token)))
 
 	sub = "Password Reset Link for Cookingti"
 	send_mail(subject= sub,
@@ -341,13 +341,60 @@ http://%s%s
 		recipient_list = [new_user.email])
 
 
-def redirectedPassword(request):
-	return
+def redirected_password(request,token):
+	#IMPORTANT - security issue - This works assuming that session variables cannot be changed
+
+	context = {}
+	print type(token)
+	if "token" in request.session:
+		old_token = request.session["token"]
+	else:
+		old_token = ""
+
+	if "fp_user" in request.session:
+		old_user = request.session["fp_user"]
+	else:
+		old_user = ""
+
+	# if session variable was deleted or token not equal, handle error
+	if ((old_token != token) or (old_user == "")):
+		context["showform"] = False
+		return render(request, 'general/email_reset_password.html', context)
+
+	if request.method == 'GET':
+		context["showform"] = True
+		context['token'] = token
+		context["form"] = ChangePasswordForm()
+		return render(request, 'general/email_reset_password.html', context)
+
+	form = ChangePasswordForm(request.POST)
+	context['form'] = form
+
+	if not form.is_valid():
+		context['token'] = token
+		context["showform"] = True
+		return render(request, 'general/email_reset_password.html', context)
+
+	new_password = form.cleaned_data['password1']
+
+	currentUser =  User.objects.get(email=old_user)
+	currentUser.set_password(new_password)
+	currentUser.save()
+
+	currentUser = authenticate(username=currentUser.username, password=new_password)
+
+	login(request,currentUser)
+	
+	del request.session["token"]
+	del request.session["fp_user"]
+
+	return redirect('/profile/' + str(request.user.id))
+
 
 def resetPassword(request):
 	context = {}
 	context["showmessage"] = False
-	# Just display the registration form if this is a GET request.
+
 	if request.method == 'GET':
 		context["form"] = resetPasswordForm()
 		return render(request, 'general/reset_password.html', context)
@@ -361,6 +408,9 @@ def resetPassword(request):
 	user_email = form.cleaned_data['email']
 
 	possible_user = User.objects.get(email= user_email)
+
+	request.session["fp_user"] =  possible_user.username
+
 	sendEmail(possible_user, request)
 	context["showmessage"] = True
 
