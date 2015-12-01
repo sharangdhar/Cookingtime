@@ -85,6 +85,14 @@ class ChangePasswordForm(forms.Form):
 		return cleaned_data
 
 
+
+class resetPassForm(forms.Form):
+    email = forms.EmailField(max_length = 50, 
+                                label='Enter Registered Email ID', widget = forms.EmailInput(attrs={'class': 'form-control'}))
+
+
+
+
 class FoodReviewForm(forms.ModelForm):
 	class Meta:
 		model = FoodReview
