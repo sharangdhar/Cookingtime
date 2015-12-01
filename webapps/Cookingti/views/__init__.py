@@ -301,6 +301,8 @@ def change_password(request):
 	context = {}
 	if request.method == 'GET':
 		context['form'] = ChangePasswordForm()
+		context["showform"] = True
+		context['change_pass'] = True
 		return render(request, 'general/change_password.html', context)
 
 	form = ChangePasswordForm(request.POST)
@@ -308,6 +310,8 @@ def change_password(request):
 	context['form'] = form
 
 	if not form.is_valid():
+		context['change_pass'] = True
+		context["showform"] = True
 		return render(request, 'general/change_password.html', context)
 
 	new_password = form.cleaned_data['password1']
@@ -322,17 +326,19 @@ def change_password(request):
 
 	return redirect('/profile/' + str(request.user.id))
 
-
+@transaction.atomic
 def sendEmail(new_user, request):
 	token = default_token_generator.make_token(new_user)
+
 	request.session["token"] = token
+	print type(token)
 
 	email_body = """
 This email contains the password reset link. Go to the link and reset password.
 
 http://%s%s
 """%(request.get_host(),
-	reverse('redirected_password', args=(token)))
+	reverse('redirected_password', kwargs={'token': token}))
 
 	sub = "Password Reset Link for Cookingti"
 	send_mail(subject= sub,
@@ -341,11 +347,12 @@ http://%s%s
 		recipient_list = [new_user.email])
 
 
+@transaction.atomic
 def redirected_password(request,token):
 	#IMPORTANT - security issue - This works assuming that session variables cannot be changed
 
 	context = {}
-	print type(token)
+	
 	if "token" in request.session:
 		old_token = request.session["token"]
 	else:
@@ -359,38 +366,43 @@ def redirected_password(request,token):
 	# if session variable was deleted or token not equal, handle error
 	if ((old_token != token) or (old_user == "")):
 		context["showform"] = False
-		return render(request, 'general/email_reset_password.html', context)
+		context['change_pass'] = False
+		return render(request, 'general/change_password.html', context)
 
 	if request.method == 'GET':
 		context["showform"] = True
+		context['change_pass'] = False
 		context['token'] = token
 		context["form"] = ChangePasswordForm()
-		return render(request, 'general/email_reset_password.html', context)
+		return render(request, 'general/change_password.html', context)
 
 	form = ChangePasswordForm(request.POST)
 	context['form'] = form
 
 	if not form.is_valid():
+		
 		context['token'] = token
+		context['change_pass'] = False
 		context["showform"] = True
-		return render(request, 'general/email_reset_password.html', context)
+		return render(request, 'general/change_password.html', context)
+
 
 	new_password = form.cleaned_data['password1']
 
-	currentUser =  User.objects.get(email=old_user)
+	currentUser =  User.objects.get(username=old_user)
 	currentUser.set_password(new_password)
 	currentUser.save()
 
 	currentUser = authenticate(username=currentUser.username, password=new_password)
 
 	login(request,currentUser)
-	
+
 	del request.session["token"]
 	del request.session["fp_user"]
 
-	return redirect('/profile/' + str(request.user.id))
+	return redirect(reverse('home'))
 
-
+@transaction.atomic
 def resetPassword(request):
 	context = {}
 	context["showmessage"] = False
