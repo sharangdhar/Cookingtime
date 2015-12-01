@@ -331,7 +331,6 @@ def sendEmail(new_user, request):
 	token = default_token_generator.make_token(new_user)
 
 	request.session["token"] = token
-	print type(token)
 
 	email_body = """
 This email contains the password reset link. Go to the link and reset password.
@@ -343,7 +342,7 @@ http://%s%s
 	sub = "Password Reset Link for Cookingti"
 	send_mail(subject= sub,
 		message= email_body,
-		from_email = "abc@gmail.com",
+		from_email = "cookingti@gmail.com",
 		recipient_list = [new_user.email])
 
 
