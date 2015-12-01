@@ -31,6 +31,7 @@ urlpatterns = [
 	url(r'^search$', 'Cookingti.views.search', name='search'),
     url(r'^new_item_search$', 'Cookingti.views.hs_views.newItemSearch', name='addItem'),
     url(r'^new_item_create$', 'Cookingti.views.hs_views.newItemCreate', name='newItemCreate'),	
+	url(r'^new_by_barcode$', 'Cookingti.views.hs_views.newByBarcode', name="new_by_barcode"),
 
     url(r'^post_img$', 'Cookingti.views.item_views.postImage', name='post_img'),
     url(r'^post_time$', 'Cookingti.views.item_views.postTime', name='post_time'),
@@ -44,7 +45,8 @@ urlpatterns = [
 	url(r'^item/(?P<item_type>[\w-]+)/(?P<id>\d+)$', 'Cookingti.views.item_views.item', name='item'),
 	url(r'^image/(?P<page_type>.+)/(?P<item_id>.+)/(?P<img_id>.+)$', 'Cookingti.views.getImage', name='image'),
 
-	url(r'^barcode_image$', 'Cookingti.views.barcode', name='barcode'),
+	url(r'^barcode_image/?$', 'Cookingti.views.barcode', name='barcode'),
+	url(r'^lookup_wattage/?$', 'Cookingti.views.lookupWattage', name="lookup_wattage"),
 
 	#reset password over email
 	url(r'^reset_password$', 'Cookingti.views.resetPassword', name='resetPassword'),

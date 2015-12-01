@@ -26,6 +26,7 @@ from Cookingti.forms import *
 
 from amazonproduct import API
 import lxml
+import os
 
 @ensure_csrf_cookie	 # Gives CSRF token for later requests.
 def item(request, item_type='', id = -1):
@@ -263,7 +264,7 @@ def postImage(request):
 	resp = json.dumps(
 	{
 		'status':'success',
-		'html': render_to_string('item/carousel/carousel_image.html', {'page_type':page_type, 'item':instance.item, 'image':instance})
+		'html': render_to_string('item/carousel/carousel_image.html', {'request':request, 'page_type':page_type, 'item':instance.item, 'image':instance})
 	})
 	return HttpResponse(resp, content_type='application/json')
 
@@ -293,7 +294,7 @@ def delImage(request):
 		resp = json.dumps({'status':'error','custom_errors':[{'message': 'not your photo'}]})
 		return HttpResponse(resp, content_type='application/json')
 		
-
+	os.remove(settings.MEDIA_ROOT + form.photo.picture.name)
 	form.photo.delete()
 	
 	resp = json.dumps({'status':'success'});

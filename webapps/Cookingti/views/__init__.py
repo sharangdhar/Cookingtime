@@ -27,7 +27,7 @@ from Cookingti.forms import *
 # added for barcode decoding
 import zbar
 from PIL import Image
-
+import os
 
 def search(request):
 	
@@ -93,7 +93,7 @@ def search(request):
 
 
 
-
+@ensure_csrf_cookie
 @transaction.atomic
 def register(request):
 
@@ -130,6 +130,12 @@ def register(request):
 
 	new_person = Person(user= new_user, wattage=request.POST["wattage"])
 	new_person.save()
+	
+	
+	
+	if request.POST['barcode']:
+		microwave = Microwave(barcode=request.POST['barcode'], wattage=request.POST['wattage'])
+		microwave.save()
 
 	return redirect(reverse('home'))
 
@@ -243,28 +249,50 @@ def image_decode(img):
 
 	#scan for image barcode
 	scanner.scan(image)
-
+	
+	
 	for info in image:
-		print 'found' + str(info.type) + '=' + str(info.data)
-
-
+		return info
 
 def barcode(request):
 	context = {}
 	if request.method == 'GET':
-		context['form'] = BarcodePhotoForm()
-		return render(request, 'general/barcode_scan.html', context)
-
+		print("method not post")
+		raise Http404
+		
 	form = BarcodePhotoForm(request.POST,request.FILES)
 
 	if not form.is_valid():
-		context['form'] = form
-		context['error'] = form.errors
-		return render(request, 'general/barcode_scan.html', context)
+		resp = json.dumps(
+		{
+			'status':'error',
+			'errors': dict(form.errors.items())
+		})
+		return HttpResponse(resp, content_type='application/json')
 
 	item = form.save()
-	barcode_data = image_decode(item.picture.name)
+	data = image_decode(item.picture.name)
+	os.remove(settings.MEDIA_ROOT + item.picture.name)
 	item.delete()
+<<<<<<< HEAD
+	
+	if data == None:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode found in image'}]})
+		return HttpResponse(resp, content_type='application/json')
+
+	
+	resp = json.dumps(
+	{
+		'status':'success', 
+		'data':
+		{
+			'type':str(data.type),
+			'barcode':str(data.data)
+		}
+	})
+	
+	return HttpResponse(resp, content_type='application/json')
+=======
 	return redirect(reverse('register'))
 
 
@@ -284,6 +312,7 @@ def change_password(request):
 		return render(request, 'general/change_password.html', context)
 
 	new_password = form.cleaned_data['password1']
+>>>>>>> 97c5ab539f09d5685c847d29bfec6abb82bd7a02
 
 	currentUser =  User.objects.get(id= request.user.id)
 	currentUser.set_password(new_password)
@@ -321,8 +350,32 @@ def resetPassword(request):
 	context = {}
 	return 
 
+def lookupWattage(request):
+	if request.method == 'GET':
+		print("method not post")
+		raise Http404
+	
+	if not 'barcode' in request.POST or not request.POST['barcode']:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No request barcode'}]})
+		return HttpResponse(resp, content_type='application/json')
 
+	
+	try:
+		microwave = Microwave.objects.get(barcode=request.POST['barcode'])
+	except:
+		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No entry found. Please enter wattage manually.'}]})
+		return HttpResponse(resp, content_type='application/json')
 
+	resp = json.dumps(
+	{
+		'status':'success', 
+		'data':
+		{
+			'wattage': microwave.wattage,
+		}
+	})
+	
+	return HttpResponse(resp, content_type='application/json')
 
 
 

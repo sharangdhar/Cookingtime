@@ -1,20 +1,21 @@
 {% load staticfiles %}
 
 <div id="photo_panel" class="panel">
-        
-    <div id="carousel_upload_box">
-        <!--<form id="carousel_upload_form" method="POST" action="{% url "post_img" %}" enctype="multipart/form-data">-->
-            <input type="file" id="carousel_file" name="picture">
-            {% comment %}{{ photo_form.picture }}{{ photo_form.non_field_errors}}{{photo_form.picture.errors}}{% endcomment %}
-            <input type="hidden" name="page_type" id="carousel_type" value="{{page_type}}">
-            <input type="hidden" name="item_id" id="carousel_id" value="{{item.id}}">
-            {% csrf_token %}
-            <button id="carousel_submit" onclick="return false;">Submit</button>
-            <span id="carousel_error"></span>
-        </form>
-    </div>
-    <button id="carousel_upload_button">Upload</button>
     
+    {% if request.user.is_authenticated %}
+        <div id="carousel_upload_box">
+            <!--<form id="carousel_upload_form" method="POST" action="{% url "post_img" %}" enctype="multipart/form-data">-->
+                <input type="file" id="carousel_file" name="picture">
+                {% comment %}{{ photo_form.picture }}{{ photo_form.non_field_errors}}{{photo_form.picture.errors}}{% endcomment %}
+                <input type="hidden" name="page_type" id="carousel_type" value="{{page_type}}">
+                <input type="hidden" name="item_id" id="carousel_id" value="{{item.id}}">
+                {% csrf_token %}
+                <button id="carousel_submit" onclick="return false;">Submit</button>
+                <span id="carousel_error"></span>
+            </form>
+        </div>
+        <button id="carousel_upload_button">Upload</button>
+    {% endif %}
 
 
     <div id="carousel_left_button">
