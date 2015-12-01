@@ -274,7 +274,7 @@ def barcode(request):
 	data = image_decode(item.picture.name)
 	os.remove(settings.MEDIA_ROOT + item.picture.name)
 	item.delete()
-<<<<<<< HEAD
+
 	
 	if data == None:
 		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode found in image'}]})
@@ -292,8 +292,7 @@ def barcode(request):
 	})
 	
 	return HttpResponse(resp, content_type='application/json')
-=======
-	return redirect(reverse('register'))
+
 
 
 @transaction.atomic
@@ -312,7 +311,6 @@ def change_password(request):
 		return render(request, 'general/change_password.html', context)
 
 	new_password = form.cleaned_data['password1']
->>>>>>> 97c5ab539f09d5685c847d29bfec6abb82bd7a02
 
 	currentUser =  User.objects.get(id= request.user.id)
 	currentUser.set_password(new_password)
@@ -330,11 +328,11 @@ def sendEmail(new_user, request):
 	request.session["token"] = token
 
 	email_body = """
-This email contains the password reset link. Go to the link and reset password
+This email contains the password reset link. Go to the link and reset password.
 
 http://%s%s
 """%(request.get_host(),
-	reverse('redirected_pass', args=(new_user.username, token)))
+	reverse('redirected_password', args=(new_user.username, token)))
 
 	sub = "Password Reset Link for Cookingti"
 	send_mail(subject= sub,
@@ -348,7 +346,26 @@ def redirectedPassword(request):
 
 def resetPassword(request):
 	context = {}
-	return 
+	context["showmessage"] = False
+	# Just display the registration form if this is a GET request.
+	if request.method == 'GET':
+		context["form"] = resetPasswordForm()
+		return render(request, 'general/reset_password.html', context)
+
+	form = resetPasswordForm(request.POST)
+	context['form'] = form
+	if not form.is_valid():
+		return render(request, 'general/reset_password.html', context)
+
+
+	user_email = form.cleaned_data['email']
+
+	possible_user = User.objects.get(email= user_email)
+	sendEmail(possible_user, request)
+	context["showmessage"] = True
+
+	return render(request, 'general/reset_password.html', context)
+	
 
 def lookupWattage(request):
 	if request.method == 'GET':

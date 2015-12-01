@@ -86,11 +86,20 @@ class ChangePasswordForm(forms.Form):
 
 
 
-class resetPassForm(forms.Form):
+class resetPasswordForm(forms.Form):
     email = forms.EmailField(max_length = 50, 
-                                label='Enter Registered Email ID', widget = forms.EmailInput(attrs={'class': 'form-control'}))
+                                label='Enter Registered Email ID', widget = forms.EmailInput())
 
+    def clean(self):
+		cleaned_data = super(resetPasswordForm, self).clean()
 
+		user_email = cleaned_data.get('email')
+		try:
+			self.person = User.objects.get(email= user_email)
+		except:
+			raise forms.ValidationError("Email not registerd.")
+		
+		return cleaned_data
 
 
 class FoodReviewForm(forms.ModelForm):
