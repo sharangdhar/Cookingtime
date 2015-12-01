@@ -23,7 +23,11 @@
                             <!--<li><input type="text" name="wattage" placeholder="wattage"></li> -->
                             <li>{{ form.wattage }}{{ form.wattage.errors.as_text }}</li>
 
+
+                             {% comment %}<li>or <button id="register_barcode_show" class="inline_button">Upload Barcode</button></li>{% endcomment %}
+
                              <li>or <button id="register_barcode_show" class="inline_button">Upload Barcode</button></li>
+
 
                              {% comment %}<li>or <a href= "{% url 'barcode' %}" class="inline_button">Scan Barcode</a></li>{% endcomment %}
 

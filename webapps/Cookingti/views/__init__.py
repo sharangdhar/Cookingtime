@@ -274,6 +274,7 @@ def barcode(request):
 	data = image_decode(item.picture.name)
 	os.remove(settings.MEDIA_ROOT + item.picture.name)
 	item.delete()
+
 	
 	if data == None:
 		resp = json.dumps({'status':'error','custom_errors':[{'message': 'No barcode found in image'}]})
@@ -299,6 +300,8 @@ def change_password(request):
 	context = {}
 	if request.method == 'GET':
 		context['form'] = ChangePasswordForm()
+		context["showform"] = True
+		context['change_pass'] = True
 		return render(request, 'general/change_password.html', context)
 
 	form = ChangePasswordForm(request.POST)
@@ -306,6 +309,8 @@ def change_password(request):
 	context['form'] = form
 
 	if not form.is_valid():
+		context['change_pass'] = True
+		context["showform"] = True
 		return render(request, 'general/change_password.html', context)
 
 	new_password = form.cleaned_data['password1']
@@ -320,10 +325,107 @@ def change_password(request):
 
 	return redirect('/profile/' + str(request.user.id))
 
+@transaction.atomic
+def sendEmail(new_user, request):
+	token = default_token_generator.make_token(new_user)
 
+	request.session["token"] = token
+
+	email_body = """
+This email contains the password reset link. Go to the link and reset password.
+
+http://%s%s
+"""%(request.get_host(),
+	reverse('redirected_password', kwargs={'token': token}))
+
+	sub = "Password Reset Link for Cookingti"
+	send_mail(subject= sub,
+		message= email_body,
+		from_email = "cookingti@gmail.com",
+		recipient_list = [new_user.email])
+
+
+@transaction.atomic
+def redirected_password(request,token):
+	#IMPORTANT - security issue - This works assuming that session variables cannot be changed
+
+	context = {}
+	
+	if "token" in request.session:
+		old_token = request.session["token"]
+	else:
+		old_token = ""
+
+	if "fp_user" in request.session:
+		old_user = request.session["fp_user"]
+	else:
+		old_user = ""
+
+	# if session variable was deleted or token not equal, handle error
+	if ((old_token != token) or (old_user == "")):
+		context["showform"] = False
+		context['change_pass'] = False
+		return render(request, 'general/change_password.html', context)
+
+	if request.method == 'GET':
+		context["showform"] = True
+		context['change_pass'] = False
+		context['token'] = token
+		context["form"] = ChangePasswordForm()
+		return render(request, 'general/change_password.html', context)
+
+	form = ChangePasswordForm(request.POST)
+	context['form'] = form
+
+	if not form.is_valid():
+		
+		context['token'] = token
+		context['change_pass'] = False
+		context["showform"] = True
+		return render(request, 'general/change_password.html', context)
+
+
+	new_password = form.cleaned_data['password1']
+
+	currentUser =  User.objects.get(username=old_user)
+	currentUser.set_password(new_password)
+	currentUser.save()
+
+	currentUser = authenticate(username=currentUser.username, password=new_password)
+
+	login(request,currentUser)
+
+	del request.session["token"]
+	del request.session["fp_user"]
+
+	return redirect(reverse('home'))
+
+@transaction.atomic
 def resetPassword(request):
 	context = {}
-	return 
+	context["showmessage"] = False
+
+	if request.method == 'GET':
+		context["form"] = resetPasswordForm()
+		return render(request, 'general/reset_password.html', context)
+
+	form = resetPasswordForm(request.POST)
+	context['form'] = form
+	if not form.is_valid():
+		return render(request, 'general/reset_password.html', context)
+
+
+	user_email = form.cleaned_data['email']
+
+	possible_user = User.objects.get(email= user_email)
+
+	request.session["fp_user"] =  possible_user.username
+
+	sendEmail(possible_user, request)
+	context["showmessage"] = True
+
+	return render(request, 'general/reset_password.html', context)
+	
 
 def lookupWattage(request):
 	if request.method == 'GET':
