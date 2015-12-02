@@ -24,7 +24,7 @@ urlpatterns = [
 	url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
 	url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'general/login.html', 'extra_context':{'page_name':'Log in'}}, name='login', ),
 	url(r'^register$', 'Cookingti.views.register', name='register'),
-
+	
 	url(r'^profile/(?P<id>.+)$', 'Cookingti.views.profile',  name='profile'),
 	url(r'^edit_profile/?$', 'Cookingti.views.editProfile',  name='edit_profile'),
 	url(r'^change_password$', 'Cookingti.views.change_password', name='change_password'),

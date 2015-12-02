@@ -94,7 +94,7 @@ def amazon_res(page_type, words):
 @transaction.atomic
 def newItemSearch(request):
 	if request.method == 'GET':
-		return redirect('Cookingti/home')
+		return redirect(reverse('home'))
 
 	if request.method != "POST":
 		raise Http404

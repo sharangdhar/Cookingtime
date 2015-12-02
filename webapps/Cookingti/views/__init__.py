@@ -100,7 +100,7 @@ def register(request):
 	context = {'page_name':'Register'}
 
 	if request.user.is_authenticated():
-		return redirect(reverse('/home'))
+		return redirect(reverse('home'))
 
 	# Just display the registration form if this is a GET request.
 	if request.method == 'GET':
@@ -292,7 +292,6 @@ def barcode(request):
 	})
 	
 	return HttpResponse(resp, content_type='application/json')
-
 
 
 @transaction.atomic
