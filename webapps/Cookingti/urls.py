@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from Cookingti.forms import *
 
 urlpatterns = [
   
@@ -49,9 +50,14 @@ urlpatterns = [
 	url(r'^lookup_wattage/?$', 'Cookingti.views.lookupWattage', name="lookup_wattage"),
 
 	#reset password over email
-	url(r'^reset_password$', 'Cookingti.views.resetPassword', name='resetPassword'),
-	url(r'^redirected_password/(?P<token>[\w-]+)$', 'Cookingti.views.redirected_password', name='redirected_password'),
+	#url(r'^reset_password$', 'Cookingti.views.resetPassword', name='resetPassword'),
+	#url(r'^redirected_password/(?P<token>[\w-]+)$', 'Cookingti.views.redirected_password', name='redirected_password'),
+	url(r'^forgot_password/?$', 'django.contrib.auth.views.password_reset', {'template_name':'general/reset_password.html' , 'password_reset_form':resetPasswordForm}, name='forgot_password',),
+    url(r'^forgot_password_sent/?$', 'django.contrib.auth.views.password_reset_done', {'template_name':'general/password_reset_done.html' , 'extra_context':{'complete':False}}, name='password_reset_done',),
 
+    url(r'^forgot_password_reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+     'django.contrib.auth.views.password_reset_confirm', {'template_name':'general/password_new_reset.html'} , name='password_reset_confirm',),
 
-
+    url(r'^forgot_password_complete/?$', 'django.contrib.auth.views.password_reset_complete', {'template_name':'general/password_reset_done.html',
+    	'extra_context':{'complete':True}}, name='password_reset_complete',),
 ]
