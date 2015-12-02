@@ -50,17 +50,17 @@ def search(request):
 	query = request.GET['query']
 	
 	if request.GET['type'] == 'food':
-		items = Food.objects.filter(name__contains=query)
+		items = Food.objects.filter(name__icontains=query)
 		if len(items) == 0:
 			print("len = 0")
 			raise Http404()
 	elif request.GET['type'] == 'recipe':
-		items = Recipe.objects.filter(name__contains=query)
+		items = Recipe.objects.filter(name__icontains=query)
 		if len(items) == 0:
 			print("len = 0")
 			raise Http404()
 	elif request.GET['type'] == 'equipment':
-		items = Equipment.objects.filter(name__contains=query)
+		items = Equipment.objects.filter(name__icontains=query)
 		if len(items) == 0:
 			print("len = 0")
 			raise Http404()
