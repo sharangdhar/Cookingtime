@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 from Cookingti.models import *
 
+from django.contrib.auth.forms import PasswordResetForm
+
 class RegistrationForm(forms.Form):
 	username = forms.CharField(max_length = 20, widget = forms.TextInput(attrs={"placeholder":"username"}))
 	password1 = forms.CharField(max_length = 200, 
@@ -86,20 +88,15 @@ class ChangePasswordForm(forms.Form):
 
 
 
-class resetPasswordForm(forms.Form):
-    email = forms.EmailField(max_length = 50, 
-                                label='Enter Registered Email ID', widget = forms.EmailInput())
-
-    def clean(self):
-		cleaned_data = super(resetPasswordForm, self).clean()
-
-		user_email = cleaned_data.get('email')
+class resetPasswordForm(PasswordResetForm):
+    def clean_email(self):
+		user_email = self.cleaned_data['email']
 		try:
 			self.person = User.objects.get(email= user_email)
 		except:
 			raise forms.ValidationError("Email not registerd.")
 		
-		return cleaned_data
+		return user_email
 
 
 class FoodReviewForm(forms.ModelForm):

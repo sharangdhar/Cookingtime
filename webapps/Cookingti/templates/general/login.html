@@ -16,7 +16,7 @@
                             <li class="form_li"><div class="div_cell"><input type="text" name="username" placeholder="username"></div>{{ form.username.errors.as_text}}</li>
                             <li class="form_li"><div class="div_cell"><input type="password" name="password" placeholder="password">{{ form.username.errors.as_text }}</div></li>
                         </ul>
-                        <a href="{% url 'resetPassword' %}">Forgot Password?</a>
+                        <a href="{% url 'forgot_password' %}">Forgot Password?</a>
                         <button id="login_submit">Submit</button>
                         {% csrf_token %}
                         <input type="hidden" name="redirect">

@@ -50,8 +50,6 @@ urlpatterns = [
 	url(r'^lookup_wattage/?$', 'Cookingti.views.lookupWattage', name="lookup_wattage"),
 
 	#reset password over email
-	#url(r'^reset_password$', 'Cookingti.views.resetPassword', name='resetPassword'),
-	#url(r'^redirected_password/(?P<token>[\w-]+)$', 'Cookingti.views.redirected_password', name='redirected_password'),
 	url(r'^forgot_password/?$', 'django.contrib.auth.views.password_reset', {'template_name':'general/reset_password.html' , 'password_reset_form':resetPasswordForm}, name='forgot_password',),
     url(r'^forgot_password_sent/?$', 'django.contrib.auth.views.password_reset_done', {'template_name':'general/password_reset_done.html' , 'extra_context':{'complete':False}}, name='password_reset_done',),
 
