@@ -83,19 +83,22 @@ function new_item_barcode_submit(e)
 							error.text(error.text() + " " + data.custom_errors[0].message);
 						}
 						
-						if(data.errors.barcode)
+						if(data.errors)
 						{
-							error.text(error.text()  + " " +  data.errors.barcode.join(', '));
-						}
+							if(data.errors.barcode)
+							{
+								error.text(error.text()  + " " +  data.errors.barcode.join(', '));
+							}
 						
-						if(data.errors.barcode_type)
-						{
-							error.text(error.text()  + " " +  data.errors.barcode_type.join(', '));
-						}
+							if(data.errors.barcode_type)
+							{
+								error.text(error.text()  + " " +  data.errors.barcode_type.join(', '));
+							}
 						
-						if(data.errors.item_type)
-						{
-							error.text(error.text()  + " " +  data.errors.item_type.join(', '));
+							if(data.errors.item_type)
+							{
+								error.text(error.text()  + " " +  data.errors.item_type.join(', '));
+							}
 						}
 					}
 				}).fail(function(data, textStatus, errorThrown)

@@ -37,7 +37,7 @@ class Food(models.Model):
 
 class Equipment(models.Model):
 	user = models.ForeignKey(User, blank=True, null=True)
-	amazon_id = models.IntegerField(blank=True, null=True)
+	asin = models.CharField(max_length=20, blank=True, null=True)
 	name = models.CharField(max_length=TEXT_SIZE)
 	date = models.DateTimeField(auto_now_add=True, blank=True)
 	stars = models.IntegerField(blank=True, null=True)

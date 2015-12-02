@@ -14,7 +14,7 @@
     
     background-color: hsla(0, 0%, 73%, 0.25);
     
-    z-index: 5;
+    z-index: 1;
 }
 
 #carousel_left_button
@@ -59,7 +59,7 @@
 #carousel_upload_button
 {
     position: absolute;
-    z-index:5;
+    z-index:1;
     background-color: hsla(0, 0%, 100%, 0.5);
     top: 216px;
     left: 46px;
@@ -70,7 +70,7 @@
     height: 33px;
     left: 120px;
     top: 216px;
-    z-index: 5;
+    z-index: 1;
     background-color: hsla(0, 0%, 100%, 0.5);
     display: none;
 }

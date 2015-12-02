@@ -392,6 +392,10 @@ button:hover
 .bulk_sidebar_name
 {
     font-size: 17px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 200px;
 }
 
 select
@@ -542,3 +546,8 @@ textarea
 	padding: 10px;
 }
 
+/* Facebook floating panel */
+._56zz
+{
+	z-index:10;
+}
