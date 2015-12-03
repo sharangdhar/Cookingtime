@@ -41,3 +41,10 @@
 - https://davidwalsh.name/browser-camera
 - http://bl.ocks.org/jazzido/9435670
 - http://stackoverflow.com/questions/2878490/how-to-delete-old-image-when-update-imagefield
+- https://github.com/ZBar/ZBar/tree/master/python/examples
+- https://github.com/npinchot/zbar
+- http://stackoverflow.com/questions/11501837/resetting-password-in-django
+- http://stackoverflow.com/questions/27734185/inform-user-that-email-is-invalid-using-djangos-password-reset
+- http://stackoverflow.com/questions/23538522/scanning-qr-code-via-zbar-and-raspicam-modul
+- https://github.com/ZBar/ZBar
+- http://stackoverflow.com/questions/27233351/how-to-decode-a-qr-code-image-in-preferably-pure-python
