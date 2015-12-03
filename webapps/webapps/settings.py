@@ -24,7 +24,7 @@ PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__)) + '/'
 SECRET_KEY = os.environ['COOK_KEY'] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['cookingti.me', '127.0.0.1', 'localhost']
 
