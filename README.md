@@ -1,5 +1,12 @@
 # Readme
 
+## Image source
+
+- Wikipedia
+- Wikimedia
+- Barcodes from http://www.upcindex.com/
+
+
 ## References
 
 - Stock photography from

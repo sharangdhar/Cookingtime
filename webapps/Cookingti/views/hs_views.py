@@ -174,7 +174,7 @@ def newItemCreate(request):
 		pass
 	else:
 		item.asin = request.POST['asin']
-		
+	item.stars = 0
 	item.save()
 
 	return redirect('item', request.POST['type'], item.id)
@@ -254,6 +254,7 @@ def newByBarcode(request):
 		except:
 			item = Equipment(user=request.user, name=name, asin=asin)
 			
+	item.stars = 0
 	item.save()
 			
 	
