@@ -48,3 +48,6 @@
 - http://stackoverflow.com/questions/23538522/scanning-qr-code-via-zbar-and-raspicam-modul
 - https://github.com/ZBar/ZBar
 - http://stackoverflow.com/questions/27233351/how-to-decode-a-qr-code-image-in-preferably-pure-python
+- http://docs.aws.amazon.com/AWSECommerceService/latest/GSG/Welcome.html
+- http://python-amazon-product-api.readthedocs.org/en/latest/
+- https://developers.facebook.com/docs/plugins/like-button
