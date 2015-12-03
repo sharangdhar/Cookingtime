@@ -27,7 +27,7 @@ urlpatterns = [
 	
 	url(r'^profile/(?P<id>.+)$', 'Cookingti.views.profile',  name='profile'),
 	url(r'^edit_profile/?$', 'Cookingti.views.editProfile',  name='edit_profile'),
-	url(r'^change_password$', 'Cookingti.views.change_password', name='change_password'),
+	url(r'^change_password$', 'Cookingti.views.change_password',  name='change_password'),
 
 	url(r'^search$', 'Cookingti.views.search', name='search'),
     url(r'^new_item_search$', 'Cookingti.views.hs_views.newItemSearch', name='addItem'),
@@ -50,7 +50,7 @@ urlpatterns = [
 	url(r'^lookup_wattage/?$', 'Cookingti.views.lookupWattage', name="lookup_wattage"),
 
 	#reset password over email
-	url(r'^forgot_password/?$', 'django.contrib.auth.views.password_reset', {'template_name':'general/reset_password.html' , 'password_reset_form':resetPasswordForm}, name='forgot_password',),
+	url(r'^forgot_password/?$', 'django.contrib.auth.views.password_reset', {'template_name':'general/reset_password.html' , 'password_reset_form':resetPasswordForm, 'email_template_name':'general/password_reset.html'}, name='forgot_password',),
     url(r'^forgot_password_sent/?$', 'django.contrib.auth.views.password_reset_done', {'template_name':'general/password_reset_done.html' , 'extra_context':{'complete':False}}, name='password_reset_done',),
 
     url(r'^forgot_password_reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
