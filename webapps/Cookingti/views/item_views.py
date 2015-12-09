@@ -78,8 +78,9 @@ def item(request, item_type='', id = -1):
 		context['photo_form'] = EquipmentPhotoForm()
 		context['review_form'] = EquipmentReviewForm()
 	
-	if 'page_name' == 'food' or 'page_name' == 'equipment':
-		if item_new.asin:
+
+	if item_type == 'food' or item_type == 'equipment':
+		if not item_new.asin is None:
 			context['amazon'] = amazon_lookup(item_new.asin)
 	
 	#created to keep track of information across this method and postReview method
