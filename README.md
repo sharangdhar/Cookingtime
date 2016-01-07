@@ -1,5 +1,8 @@
 # Readme
 
+# About
+Cookingti.me leverages crowd sourced data gathering to provide personalized cooking times that continually improve along with being a one-stop shop food social network, where you can post recipes, and reviews, and find out what you can cook with what you have available.
+
 ## Image source
 
 - Wikipedia
